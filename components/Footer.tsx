@@ -46,9 +46,12 @@ export default function Footer() {
               >
                 FUND<span style={{ color: "var(--color-accent)" }}>AUX</span>
               </a>
-              <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem" }}>
+              <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem", marginBottom: "1rem" }}>
                 Achieve Your Financial Goals Through Us
               </p>
+              <a href="mailto:rahansanthosh765@gmail.com" style={{ color: "var(--color-text-secondary)", fontSize: "0.9rem", textDecoration: "none", transition: "color 0.2s ease", display: "inline-block" }} onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+                rahansanthosh765@gmail.com
+              </a>
             </div>
 
             <div>

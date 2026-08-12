@@ -72,9 +72,16 @@ export default function Contact() {
             </AnimatedSection>
             
             <AnimatedSection delay={0.2}>
-              <p style={{ fontSize: "1.1rem", color: "var(--color-text-secondary)", lineHeight: 1.7, maxWidth: "500px" }}>
+              <p style={{ fontSize: "1.1rem", color: "var(--color-text-secondary)", lineHeight: 1.7, maxWidth: "500px", marginBottom: "2rem" }}>
                 Start a conversation about your financial goals and discover a structured path forward.
               </p>
+              
+              <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
+                <span style={{ fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--color-text-muted)", fontWeight: 600 }}>Email Us</span>
+                <a href="mailto:rahansanthosh765@gmail.com" style={{ fontSize: "1.1rem", color: "var(--color-text-primary)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+                  rahansanthosh765@gmail.com
+                </a>
+              </div>
             </AnimatedSection>
           </div>
 
