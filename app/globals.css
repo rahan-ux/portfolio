@@ -1,39 +1,33 @@
-/* Fonts: Inter is loaded via next/font/google in layout.tsx */
 @import "tailwindcss";
 
-/* ─── CSS Custom Properties ─────────────────────────────────────────────────── */
 :root {
-  /* Dark mode only for Fundaux */
-  --color-bg: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-2: #141414;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
-  --color-border: #27272a;
-  --color-accent: #bffc5c;
-  --color-accent-hover: #d4ff7a;
-  --color-navy: #000000;
+  --color-bg: #05070A;
+  --color-surface: #0A0F14;
+  --color-surface-2: #0D131A;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A7ADB5;
+  --color-text-muted: #6B7280;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-accent: #F5E500;
+  --color-accent-hover: #FFF133;
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-card-hover: 0 8px 40px rgba(191, 252, 92, 0.1);
+  --shadow-card-hover: 0 8px 40px rgba(245, 229, 0, 0.05);
 }
 
 .dark {
-  --color-bg: #000000;
-  --color-surface: #0a0a0a;
-  --color-surface-2: #141414;
-  --color-text-primary: #ffffff;
-  --color-text-secondary: #a1a1aa;
-  --color-text-muted: #71717a;
-  --color-border: #27272a;
-  --color-accent: #bffc5c;
-  --color-accent-hover: #d4ff7a;
-  --color-navy: #000000;
+  --color-bg: #05070A;
+  --color-surface: #0A0F14;
+  --color-surface-2: #0D131A;
+  --color-text-primary: #FFFFFF;
+  --color-text-secondary: #A7ADB5;
+  --color-text-muted: #6B7280;
+  --color-border: rgba(255, 255, 255, 0.08);
+  --color-accent: #F5E500;
+  --color-accent-hover: #FFF133;
   --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.4);
-  --shadow-card-hover: 0 8px 40px rgba(191, 252, 92, 0.1);
+  --shadow-card-hover: 0 8px 40px rgba(245, 229, 0, 0.05);
 }
 
-/* ─── Base Styles ────────────────────────────────────────────────────────────── */
 *,
 *::before,
 *::after {
@@ -48,25 +42,23 @@ html {
 body {
   background-color: var(--color-bg);
   color: var(--color-text-primary);
-  font-family: "Inter", system-ui, -apple-system, sans-serif;
+  font-family: var(--font-inter), system-ui, -apple-system, sans-serif;
   line-height: 1.7;
-  transition: background-color 0.3s ease, color 0.3s ease;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
 }
 
-/* ─── Typography ─────────────────────────────────────────────────────────────── */
 h1,
 h2,
 h3,
 h4,
 h5 {
-  font-family: "Inter", system-ui, sans-serif;
+  font-family: var(--font-inter), system-ui, sans-serif;
   letter-spacing: -0.02em;
   line-height: 1.2;
 }
 
-/* ─── Scrollbar ──────────────────────────────────────────────────────────────── */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -78,188 +70,130 @@ h5 {
   border-radius: 3px;
 }
 
-/* ─── Section utility ────────────────────────────────────────────────────────── */
 .section-container {
-  max-width: 1200px;
+  max-width: 1280px;
   margin: 0 auto;
   padding: 0 1.5rem;
 }
 
-/* ─── Accent line ───────────────────────────────────────────────────────── */
-.gold-divider {
-  width: 3rem;
-  height: 3px;
-  background: var(--color-accent);
-  border-radius: 2px;
-}
-
-/* ─── Timeline connector ─────────────────────────────────────────────────────── */
-.timeline-line {
+/* Background system */
+.bg-glow {
   position: absolute;
-  left: 1.25rem;
-  top: 2.5rem;
-  bottom: 0;
-  width: 2px;
-  background: linear-gradient(
-    180deg,
-    var(--color-accent) 0%,
-    transparent 100%
-  );
+  pointer-events: none;
+  z-index: 0;
+  background: radial-gradient(circle, rgba(245, 229, 0, 0.03) 0%, rgba(5, 7, 10, 0) 70%);
 }
 
-/* ─── Card glass effect ──────────────────────────────────────────────────────── */
+.bg-grid {
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 4rem 4rem;
+  z-index: 0;
+  pointer-events: none;
+  mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
+}
+
+/* Cards */
 .glass-card {
-  background: var(--color-surface);
+  background: var(--color-surface-2);
   border: 1px solid var(--color-border);
   border-radius: 1rem;
   box-shadow: var(--shadow-card);
   transition: box-shadow 0.3s ease, transform 0.3s ease, border-color 0.3s ease;
+  overflow: hidden;
 }
 
 .glass-card:hover {
   box-shadow: var(--shadow-card-hover);
-  transform: translateY(-2px);
-  border-color: var(--color-accent);
+  transform: translateY(-4px);
+  border-color: rgba(245, 229, 0, 0.3);
 }
 
-/* ─── Skill bar ──────────────────────────────────────────────────────────────── */
-.skill-bar-track {
-  background: var(--color-border);
-  border-radius: 9999px;
-  height: 6px;
-  overflow: hidden;
-}
-
-.skill-bar-fill {
-  height: 100%;
-  border-radius: 9999px;
-  background: var(--color-accent);
-  transition: width 1.2s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-/* ─── Button variants ────────────────────────────────────────────────────────── */
+/* Buttons */
 .btn-primary {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
+  padding: 0.75rem 2rem;
   background: var(--color-accent);
   color: #000;
-  font-family: "Inter", sans-serif;
+  font-family: var(--font-inter), sans-serif;
   font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
+  font-size: 0.95rem;
   border-radius: 0.5rem;
-  border: 2px solid var(--color-accent);
+  border: 1px solid var(--color-accent);
   text-decoration: none;
-  transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.2s ease;
+  transition: background 0.3s ease, transform 0.2s ease, box-shadow 0.3s ease;
   cursor: pointer;
 }
 
 .btn-primary:hover {
   background: var(--color-accent-hover);
   border-color: var(--color-accent-hover);
-  transform: translateY(-1px);
-  box-shadow: 0 6px 20px rgba(191, 252, 92, 0.35);
+  transform: translateY(-2px);
+  box-shadow: 0 4px 20px rgba(245, 229, 0, 0.2);
 }
 
 .btn-outline {
   display: inline-flex;
   align-items: center;
+  justify-content: center;
   gap: 0.5rem;
-  padding: 0.75rem 1.75rem;
-  background: transparent;
+  padding: 0.75rem 2rem;
+  background: rgba(255, 255, 255, 0.03);
   color: var(--color-text-primary);
-  font-family: "Inter", sans-serif;
-  font-weight: 600;
-  font-size: 0.9rem;
-  letter-spacing: 0.02em;
+  font-family: var(--font-inter), sans-serif;
+  font-weight: 500;
+  font-size: 0.95rem;
   border-radius: 0.5rem;
-  border: 2px solid var(--color-border);
+  border: 1px solid var(--color-border);
   text-decoration: none;
-  transition: border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  transition: border-color 0.3s ease, color 0.3s ease, background 0.3s ease;
   cursor: pointer;
 }
 
 .btn-outline:hover {
-  border-color: var(--color-accent);
-  color: var(--color-accent);
-  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.05);
+  color: #FFF;
 }
 
-/* ─── Section heading style ──────────────────────────────────────────────────── */
+/* Typography styles */
+.text-gradient {
+  background: linear-gradient(to right, #FFFFFF, #A7ADB5);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
 .section-label {
-  font-family: "Inter", sans-serif;
+  display: inline-block;
+  font-family: var(--font-inter), sans-serif;
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.15em;
   text-transform: uppercase;
-  color: var(--color-accent);
+  color: var(--color-text-secondary);
+  margin-bottom: 1rem;
+  padding: 0.25rem 0.75rem;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--color-border);
+  border-radius: 9999px;
 }
 
-/* ─── Testimonial quote mark ─────────────────────────────────────────────────── */
-.quote-mark {
-  font-family: "Inter", sans-serif;
-  font-size: 5rem;
-  line-height: 1;
-  color: var(--color-accent);
-  opacity: 0.3;
-  position: absolute;
-  top: -1rem;
-  left: 1rem;
-  pointer-events: none;
-  user-select: none;
-}
-
-/* ─── Nav link active state ──────────────────────────────────────────────────── */
+/* Nav links */
 .nav-link {
-  position: relative;
-  font-family: "Inter", sans-serif;
-  font-size: 0.875rem;
+  font-size: 0.9rem;
   font-weight: 500;
   color: var(--color-text-secondary);
-  text-decoration: none;
-  padding: 0.25rem 0;
   transition: color 0.2s ease;
-}
-
-.nav-link::after {
-  content: "";
-  position: absolute;
-  bottom: -2px;
-  left: 0;
-  width: 0;
-  height: 2px;
-  background: var(--color-accent);
-  border-radius: 1px;
-  transition: width 0.3s ease;
+  text-decoration: none;
 }
 
 .nav-link:hover,
 .nav-link.active {
-  color: var(--color-accent);
-}
-
-.nav-link:hover::after,
-.nav-link.active::after {
-  width: 100%;
-}
-
-/* ─── Certification badge ────────────────────────────────────────────────────── */
-.cert-badge {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 1.5rem 1rem;
-  background: var(--color-surface);
-  border: 1px solid var(--color-border);
-  border-radius: 0.75rem;
-  text-align: center;
-  transition: border-color 0.3s ease, transform 0.3s ease;
-}
-
-.cert-badge:hover {
-  border-color: var(--color-accent);
-  transform: translateY(-2px);
+  color: var(--color-text-primary);
 }

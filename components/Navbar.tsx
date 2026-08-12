@@ -2,18 +2,21 @@
 
 import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { Menu, X } from "lucide-react";
 
 const NAV_LINKS = [
+  { label: "Home", href: "#hero" },
   { label: "Mission", href: "#mission" },
   { label: "Commitments", href: "#commitments" },
+  { label: "Services", href: "#services" },
   { label: "Performance", href: "#performance" },
   { label: "Framework", href: "#framework" },
-  { label: "Founder", href: "#founder" },
+  { label: "About", href: "#founder" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("");
+  const [activeSection, setActiveSection] = useState("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
 
   // Detect scroll to apply backdrop-blur background
@@ -25,7 +28,7 @@ export default function Navbar() {
 
   // IntersectionObserver for active section highlighting
   useEffect(() => {
-    const sectionIds = NAV_LINKS.map((l) => l.href.replace("#", ""));
+    const sectionIds = [...NAV_LINKS.map((l) => l.href.replace("#", "")), "contact"];
     const observers: IntersectionObserver[] = [];
 
     sectionIds.forEach((id) => {
@@ -67,13 +70,11 @@ export default function Navbar() {
         left: 0,
         right: 0,
         zIndex: 50,
-        transition: "background 0.3s ease, box-shadow 0.3s ease",
-        background: scrolled
-          ? "rgba(10, 10, 10, 0.92)"
-          : "transparent",
+        transition: "background 0.3s ease, border-color 0.3s ease",
+        background: scrolled ? "rgba(5, 7, 10, 0.85)" : "transparent",
         backdropFilter: scrolled ? "blur(12px)" : "none",
         WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
-        borderBottom: scrolled ? "1px solid var(--color-border)" : "none",
+        borderBottom: scrolled ? "1px solid var(--color-border)" : "1px solid transparent",
       }}
     >
       <div className="section-container">
@@ -82,23 +83,20 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: "4.5rem",
+            height: "5rem",
           }}
         >
           {/* Logo / Name */}
           <a
-            href="#"
-            onClick={(e) => {
-              e.preventDefault();
-              window.scrollTo({ top: 0, behavior: "smooth" });
-            }}
+            href="#hero"
+            onClick={(e) => handleNavClick(e, "#hero")}
             style={{
               fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-              fontSize: "1.5rem",
+              fontSize: "1.4rem",
               fontWeight: 700,
               color: "var(--color-text-primary)",
               textDecoration: "none",
-              letterSpacing: "0.05em",
+              letterSpacing: "0.08em",
             }}
           >
             FUND<span style={{ color: "var(--color-accent)" }}>AUX</span>
@@ -119,9 +117,27 @@ export default function Navbar() {
                 key={link.href}
                 href={link.href}
                 onClick={(e) => handleNavClick(e, link.href)}
-                className={`nav-link${activeSection === link.href.replace("#", "") ? " active" : ""}`}
+                className={`nav-link ${activeSection === link.href.replace("#", "") ? "active" : ""}`}
+                style={{
+                  position: "relative",
+                  padding: "0.5rem 0",
+                }}
               >
                 {link.label}
+                {activeSection === link.href.replace("#", "") && (
+                  <motion.div
+                    layoutId="activeNavIndicator"
+                    style={{
+                      position: "absolute",
+                      bottom: 0,
+                      left: 0,
+                      right: 0,
+                      height: "2px",
+                      background: "var(--color-accent)",
+                      borderRadius: "2px",
+                    }}
+                  />
+                )}
               </a>
             ))}
           </nav>
@@ -134,74 +150,33 @@ export default function Navbar() {
               gap: "1rem",
             }}
           >
-            {/* CTA — desktop only */}
             <a
               href="#contact"
               onClick={(e) => handleNavClick(e, "#contact")}
               className="btn-primary hidden-mobile"
-              style={{ fontSize: "0.8rem", padding: "0.5rem 1.2rem" }}
+              style={{ fontSize: "0.85rem", padding: "0.6rem 1.5rem" }}
             >
-              Get in Touch
+              Get Started
             </a>
 
             {/* Mobile Hamburger */}
             <button
-              id="mobile-menu-toggle"
               onClick={() => setMobileOpen((o) => !o)}
               aria-label="Toggle mobile menu"
               aria-expanded={mobileOpen}
               className="show-mobile"
               style={{
-                width: "2.5rem",
-                height: "2.5rem",
                 display: "flex",
-                flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "5px",
                 background: "none",
                 border: "none",
+                color: "var(--color-text-primary)",
                 cursor: "pointer",
-                padding: "0.25rem",
+                padding: "0.5rem",
               }}
             >
-              <span
-                style={{
-                  display: "block",
-                  width: "22px",
-                  height: "2px",
-                  background: "var(--color-text-primary)",
-                  borderRadius: "1px",
-                  transition: "transform 0.25s ease, opacity 0.25s ease",
-                  transform: mobileOpen
-                    ? "translateY(7px) rotate(45deg)"
-                    : "none",
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  width: "22px",
-                  height: "2px",
-                  background: "var(--color-text-primary)",
-                  borderRadius: "1px",
-                  opacity: mobileOpen ? 0 : 1,
-                  transition: "opacity 0.25s ease",
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  width: "22px",
-                  height: "2px",
-                  background: "var(--color-text-primary)",
-                  borderRadius: "1px",
-                  transition: "transform 0.25s ease, opacity 0.25s ease",
-                  transform: mobileOpen
-                    ? "translateY(-7px) rotate(-45deg)"
-                    : "none",
-                }}
-              />
+              {mobileOpen ? <X size={28} /> : <Menu size={28} />}
             </button>
           </div>
         </div>
@@ -211,21 +186,22 @@ export default function Navbar() {
       <AnimatePresence>
         {mobileOpen && (
           <motion.div
-            initial={{ opacity: 0, y: -10 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -10 }}
-            transition={{ duration: 0.25 }}
+            initial={{ opacity: 0, height: 0 }}
+            animate={{ opacity: 1, height: "auto" }}
+            exit={{ opacity: 0, height: 0 }}
+            transition={{ duration: 0.3 }}
             style={{
               background: "var(--color-surface)",
               borderTop: "1px solid var(--color-border)",
-              padding: "1.5rem",
+              overflow: "hidden",
             }}
           >
             <nav
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "1.25rem",
+                gap: "1.5rem",
+                padding: "2rem 1.5rem",
               }}
               aria-label="Mobile navigation"
             >
@@ -235,8 +211,8 @@ export default function Navbar() {
                   href={link.href}
                   onClick={(e) => handleNavClick(e, link.href)}
                   style={{
-                    fontFamily: "'Inter', sans-serif",
-                    fontSize: "1rem",
+                    fontFamily: "var(--font-inter, 'Inter', sans-serif)",
+                    fontSize: "1.1rem",
                     fontWeight: 500,
                     color:
                       activeSection === link.href.replace("#", "")
@@ -253,9 +229,9 @@ export default function Navbar() {
                 href="#contact"
                 onClick={(e) => handleNavClick(e, "#contact")}
                 className="btn-primary"
-                style={{ textAlign: "center", marginTop: "0.5rem" }}
+                style={{ textAlign: "center", marginTop: "1rem" }}
               >
-                Get in Touch
+                Get Started
               </a>
             </nav>
           </motion.div>
@@ -263,11 +239,11 @@ export default function Navbar() {
       </AnimatePresence>
 
       <style>{`
-        @media (min-width: 768px) {
+        @media (min-width: 1024px) {
           .hidden-mobile { display: flex !important; }
           .show-mobile { display: none !important; }
         }
-        @media (max-width: 767px) {
+        @media (max-width: 1023px) {
           .hidden-mobile { display: none !important; }
           .show-mobile { display: flex !important; }
         }

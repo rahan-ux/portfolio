@@ -13,9 +13,9 @@ const inter = Inter({
 
 /* ─── SEO Metadata ───────────────────────────────────────────────────────────── */
 export const metadata: Metadata = {
-  title: "Fundaux | Achieve Your Financial Goals",
+  title: "FUNDAUX | Achieve Your Financial Goals",
   description:
-    "Professional fund management designed for consistent monthly growth and financial independence.",
+    "FUNDAUX provides structured financial strategies designed to help individuals and organizations pursue their financial goals with clarity and discipline.",
   keywords: [
     "fundaux",
     "financial goals",
@@ -30,9 +30,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website",
     url: "https://fundaux.finance",
-    title: "Fundaux | Achieve Your Financial Goals",
+    title: "FUNDAUX | Achieve Your Financial Goals",
     description:
-      "Empowering your future with consistent 2.5% fixed monthly returns.",
+      "FUNDAUX provides structured financial strategies designed to help individuals and organizations pursue their financial goals with clarity and discipline.",
     images: [
       {
         url: "/og-image.jpg",
@@ -44,9 +44,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Fundaux | Achieve Your Financial Goals",
+    title: "FUNDAUX | Achieve Your Financial Goals",
     description:
-      "Empowering your future with consistent 2.5% fixed monthly returns.",
+      "FUNDAUX provides structured financial strategies designed to help individuals and organizations pursue their financial goals with clarity and discipline.",
     creator: "@fundaux",
   },
   robots: {
