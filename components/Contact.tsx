@@ -14,6 +14,7 @@ export default function Contact() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [apiError, setApiError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -58,6 +59,7 @@ export default function Contact() {
 
       if (result.success) {
         setStatus("success");
+        setApiError(null);
         setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
         
         setTimeout(() => {
@@ -65,10 +67,12 @@ export default function Contact() {
         }, 5000);
       } else {
         setStatus("error");
+        setApiError(result.message || "Failed to send message. Please check your access key.");
       }
-    } catch (error) {
+    } catch (error: any) {
       console.error("Error submitting form:", error);
       setStatus("error");
+      setApiError(error.message || "Network error. Please try again later.");
     }
   };
 
@@ -253,7 +257,7 @@ export default function Contact() {
                     {status === "error" && (
                       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#ef4444", fontSize: "0.9rem" }}>
                         <AlertCircle size={16} />
-                        Something went wrong. Please try again.
+                        {apiError || "Something went wrong. Please try again."}
                       </div>
                     )}
 
