@@ -5,6 +5,18 @@ import { motion } from "framer-motion";
 import { Send, CheckCircle, AlertCircle } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
+const INPUT_STYLE = {
+  width: "100%",
+  padding: "1rem 1.25rem",
+  background: "rgba(255,255,255,0.03)",
+  border: "1px solid var(--color-border)",
+  borderRadius: "0.5rem",
+  color: "var(--color-text-primary)",
+  outline: "none",
+  transition: "border-color 0.3s ease",
+  fontSize: "1rem",
+};
+
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
@@ -14,7 +26,6 @@ export default function Contact() {
     message: "",
   });
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
-  const [apiError, setApiError] = useState<string | null>(null);
   const [errors, setErrors] = useState<Record<string, string>>({});
 
   const validate = () => {
@@ -26,7 +37,6 @@ export default function Contact() {
       newErrors.email = "Invalid email format";
     }
     if (!formData.message.trim()) newErrors.message = "Message is required";
-    
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -34,56 +44,49 @@ export default function Contact() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-
     setStatus("loading");
-    
+
     try {
+      const data = new FormData();
+      data.append("access_key", "0e1f2bf4-5205-44a7-84e9-8ace61976b96");
+      data.append("name", formData.name.trim());
+      data.append("email", formData.email.trim());
+      data.append("phone", formData.phone.trim());
+      data.append("subject", formData.subject.trim() || "New Enquiry from FUNDAUX Website");
+      data.append("message", formData.message.trim());
+      data.append("from_name", "FUNDAUX Website");
+
       const response = await fetch("https://api.web3forms.com/submit", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "0e1f2bf4-5205-44a7-84e9-8ace61976b96",
-          name: formData.name,
-          email: formData.email,
-          phone: formData.phone,
-          subject: formData.subject,
-          message: formData.message,
-          from_name: "FUNDAUX Website Contact",
-        }),
+        body: data,
       });
 
       const result = await response.json();
 
       if (result.success) {
         setStatus("success");
-        setApiError(null);
         setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-        
-        setTimeout(() => {
-          setStatus("idle");
-        }, 5000);
+        setTimeout(() => setStatus("idle"), 6000);
       } else {
+        console.error("Web3Forms error:", result);
         setStatus("error");
-        setApiError(result.message || "Failed to send message. Please check your access key.");
       }
-    } catch (error: any) {
-      console.error("Error submitting form:", error);
+    } catch (err) {
+      console.error("Fetch error:", err);
       setStatus("error");
-      setApiError(error.message || "Network error. Please try again later.");
     }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
-    // Clear error when user types
-    if (errors[name]) {
-      setErrors((prev) => ({ ...prev, [name]: "" }));
-    }
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
   };
+
+  const getInputStyle = (fieldError?: string) => ({
+    ...INPUT_STYLE,
+    border: `1px solid ${fieldError ? "#ef4444" : "var(--color-border)"}`,
+  });
 
   return (
     <section id="contact" style={{ padding: "8rem 0", background: "var(--color-bg)", borderTop: "1px solid var(--color-border)" }}>
@@ -94,19 +97,21 @@ export default function Contact() {
             <AnimatedSection>
               <span className="section-label">Contact Us</span>
               <h2 style={{ fontSize: "clamp(2.5rem, 4vw, 3.5rem)", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "1.5rem", lineHeight: 1.1 }}>
-                LET’S BUILD YOUR <br />
+                LET&apos;S BUILD YOUR <br />
                 <span style={{ color: "var(--color-accent)" }}>FINANCIAL ROADMAP.</span>
               </h2>
             </AnimatedSection>
-            
+
             <AnimatedSection delay={0.2}>
               <p style={{ fontSize: "1.1rem", color: "var(--color-text-secondary)", lineHeight: 1.7, maxWidth: "500px", marginBottom: "2rem" }}>
                 Start a conversation about your financial goals and discover a structured path forward.
               </p>
-              
               <div style={{ display: "flex", flexDirection: "column", gap: "0.5rem" }}>
                 <span style={{ fontSize: "0.85rem", textTransform: "uppercase", letterSpacing: "0.05em", color: "var(--color-text-muted)", fontWeight: 600 }}>Email Us</span>
-                <a href="mailto:rahansanthosh765@gmail.com" style={{ fontSize: "1.1rem", color: "var(--color-text-primary)", textDecoration: "none", display: "inline-flex", alignItems: "center", gap: "0.5rem" }}>
+                <a
+                  href="mailto:rahansanthosh765@gmail.com"
+                  style={{ fontSize: "1.1rem", color: "var(--color-text-primary)", textDecoration: "none" }}
+                >
                   rahansanthosh765@gmail.com
                 </a>
               </div>
@@ -116,15 +121,9 @@ export default function Contact() {
           {/* Right Form */}
           <div>
             <AnimatedSection delay={0.3} direction="left">
-              <div 
-                className="glass-card"
-                style={{
-                  padding: "2.5rem",
-                  background: "var(--color-surface-2)"
-                }}
-              >
+              <div className="glass-card" style={{ padding: "2.5rem", background: "var(--color-surface-2)" }}>
                 {status === "success" ? (
-                  <motion.div 
+                  <motion.div
                     initial={{ opacity: 0, scale: 0.9 }}
                     animate={{ opacity: 1, scale: 1 }}
                     style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", padding: "3rem 0" }}
@@ -132,13 +131,14 @@ export default function Contact() {
                     <div style={{ width: "64px", height: "64px", borderRadius: "50%", background: "rgba(245, 229, 0, 0.1)", display: "flex", alignItems: "center", justifyContent: "center", marginBottom: "1.5rem" }}>
                       <CheckCircle size={32} style={{ color: "var(--color-accent)" }} />
                     </div>
-                    <h3 style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "0.5rem" }}>Message Received</h3>
+                    <h3 style={{ fontSize: "1.5rem", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "0.5rem" }}>Message Received!</h3>
                     <p style={{ color: "var(--color-text-secondary)" }}>
-                      Thank you for reaching out. We will get back to you shortly to discuss your financial goals.
+                      Thank you for reaching out. We will get back to you shortly.
                     </p>
                   </motion.div>
                 ) : (
                   <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+                    {/* Name */}
                     <div>
                       <input
                         type="text"
@@ -148,20 +148,12 @@ export default function Contact() {
                         placeholder="Full Name *"
                         disabled={status === "loading"}
                         className="form-input"
-                        style={{
-                          width: "100%",
-                          padding: "1rem 1.25rem",
-                          background: "rgba(255,255,255,0.03)",
-                          border: `1px solid ${errors.name ? "#ef4444" : "var(--color-border)"}`,
-                          borderRadius: "0.5rem",
-                          color: "var(--color-text-primary)",
-                          outline: "none",
-                          transition: "border-color 0.3s ease"
-                        }}
+                        style={getInputStyle(errors.name)}
                       />
                       {errors.name && <div style={{ color: "#ef4444", fontSize: "0.8rem", marginTop: "0.25rem" }}>{errors.name}</div>}
                     </div>
 
+                    {/* Email + Phone */}
                     <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))", gap: "1.25rem" }}>
                       <div>
                         <input
@@ -172,16 +164,7 @@ export default function Contact() {
                           placeholder="Email Address *"
                           disabled={status === "loading"}
                           className="form-input"
-                          style={{
-                            width: "100%",
-                            padding: "1rem 1.25rem",
-                            background: "rgba(255,255,255,0.03)",
-                            border: `1px solid ${errors.email ? "#ef4444" : "var(--color-border)"}`,
-                            borderRadius: "0.5rem",
-                            color: "var(--color-text-primary)",
-                            outline: "none",
-                            transition: "border-color 0.3s ease"
-                          }}
+                          style={getInputStyle(errors.email)}
                         />
                         {errors.email && <div style={{ color: "#ef4444", fontSize: "0.8rem", marginTop: "0.25rem" }}>{errors.email}</div>}
                       </div>
@@ -194,20 +177,12 @@ export default function Contact() {
                           placeholder="Phone Number"
                           disabled={status === "loading"}
                           className="form-input"
-                          style={{
-                            width: "100%",
-                            padding: "1rem 1.25rem",
-                            background: "rgba(255,255,255,0.03)",
-                            border: "1px solid var(--color-border)",
-                            borderRadius: "0.5rem",
-                            color: "var(--color-text-primary)",
-                            outline: "none",
-                            transition: "border-color 0.3s ease"
-                          }}
+                          style={getInputStyle()}
                         />
                       </div>
                     </div>
 
+                    {/* Subject */}
                     <div>
                       <input
                         type="text"
@@ -217,19 +192,11 @@ export default function Contact() {
                         placeholder="Subject"
                         disabled={status === "loading"}
                         className="form-input"
-                        style={{
-                          width: "100%",
-                          padding: "1rem 1.25rem",
-                          background: "rgba(255,255,255,0.03)",
-                          border: "1px solid var(--color-border)",
-                          borderRadius: "0.5rem",
-                          color: "var(--color-text-primary)",
-                          outline: "none",
-                          transition: "border-color 0.3s ease"
-                        }}
+                        style={getInputStyle()}
                       />
                     </div>
 
+                    {/* Message */}
                     <div>
                       <textarea
                         name="message"
@@ -239,28 +206,20 @@ export default function Contact() {
                         rows={4}
                         disabled={status === "loading"}
                         className="form-input"
-                        style={{
-                          width: "100%",
-                          padding: "1rem 1.25rem",
-                          background: "rgba(255,255,255,0.03)",
-                          border: `1px solid ${errors.message ? "#ef4444" : "var(--color-border)"}`,
-                          borderRadius: "0.5rem",
-                          color: "var(--color-text-primary)",
-                          outline: "none",
-                          resize: "vertical",
-                          transition: "border-color 0.3s ease"
-                        }}
+                        style={{ ...getInputStyle(errors.message), resize: "vertical" }}
                       />
                       {errors.message && <div style={{ color: "#ef4444", fontSize: "0.8rem", marginTop: "0.25rem" }}>{errors.message}</div>}
                     </div>
 
+                    {/* Error */}
                     {status === "error" && (
                       <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", color: "#ef4444", fontSize: "0.9rem" }}>
                         <AlertCircle size={16} />
-                        {apiError || "Something went wrong. Please try again."}
+                        Something went wrong. Please try again or email us directly.
                       </div>
                     )}
 
+                    {/* Submit */}
                     <button
                       type="submit"
                       disabled={status === "loading"}
@@ -268,7 +227,7 @@ export default function Contact() {
                       style={{
                         width: "100%",
                         opacity: status === "loading" ? 0.7 : 1,
-                        cursor: status === "loading" ? "not-allowed" : "pointer"
+                        cursor: status === "loading" ? "not-allowed" : "pointer",
                       }}
                     >
                       {status === "loading" ? "SENDING..." : "GET IN TOUCH"}
