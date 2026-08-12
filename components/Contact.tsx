@@ -30,22 +30,46 @@ export default function Contact() {
     return Object.keys(newErrors).length === 0;
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
 
     setStatus("loading");
     
-    // Simulate API call
-    setTimeout(() => {
-      setStatus("success");
-      setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
-      
-      // Reset success state after a few seconds
-      setTimeout(() => {
-        setStatus("idle");
-      }, 5000);
-    }, 1500);
+    try {
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: process.env.NEXT_PUBLIC_WEB3FORMS_KEY || "YOUR_ACCESS_KEY_HERE",
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+          from_name: "FUNDAUX Website Contact",
+        }),
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("success");
+        setFormData({ name: "", email: "", phone: "", subject: "", message: "" });
+        
+        setTimeout(() => {
+          setStatus("idle");
+        }, 5000);
+      } else {
+        setStatus("error");
+      }
+    } catch (error) {
+      console.error("Error submitting form:", error);
+      setStatus("error");
+    }
   };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
