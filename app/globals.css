@@ -352,6 +352,12 @@ textarea:-webkit-autofill:active {
     height: 3rem !important;
   }
 
+  /* ── Founder Photo ── */
+  .founder-photo-container {
+    max-width: 200px !important;
+    margin: 0 auto 2rem auto !important;
+  }
+
   /* ── Footer ── */
   footer { padding-top: 3rem !important; padding-bottom: 1.5rem !important; }
   .footer-nav { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem 1.5rem !important; }

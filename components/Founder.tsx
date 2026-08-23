@@ -12,6 +12,7 @@ export default function Founder() {
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <AnimatedSection direction="left">
               <div
+                className="founder-photo-container"
                 style={{
                   width: "100%",
                   maxWidth: "340px",
