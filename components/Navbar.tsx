@@ -112,7 +112,7 @@ export default function Navbar() {
               className="btn-primary hidden-mobile"
               style={{ fontSize: "0.85rem", padding: "0.55rem 1.4rem" }}
             >
-              Get Started
+              Contact Us
             </Link>
 
             <button
@@ -190,7 +190,7 @@ export default function Navbar() {
                 className="btn-primary"
                 style={{ textAlign: "center", marginTop: "0.75rem" }}
               >
-                Get Started
+                Contact Us
               </Link>
             </nav>
           </motion.div>
