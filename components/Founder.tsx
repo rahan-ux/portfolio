@@ -1,4 +1,3 @@
-import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 
 export default function Founder() {
@@ -14,22 +13,25 @@ export default function Founder() {
             <AnimatedSection direction="left">
               <div
                 style={{
-                  position: "relative",
                   width: "100%",
-                  maxWidth: "360px",
-                  aspectRatio: "3/4",
+                  maxWidth: "340px",
                   borderRadius: "1.25rem",
                   border: "1px solid var(--color-border)",
                   overflow: "hidden",
                   boxShadow: "var(--shadow-card)",
+                  lineHeight: 0,
                 }}
               >
-                <Image
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
                   src="/founder.png"
                   alt="Rahan Santhosh – Founder of FUNDAUX"
-                  fill
-                  style={{ objectFit: "cover", objectPosition: "top center" }}
-                  priority
+                  style={{
+                    width: "100%",
+                    height: "auto",
+                    display: "block",
+                    objectFit: "cover",
+                  }}
                 />
               </div>
             </AnimatedSection>
