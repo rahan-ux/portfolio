@@ -239,3 +239,121 @@ textarea:-webkit-autofill:active {
   height: 1px;
   background: var(--color-border);
 }
+
+/* ═══════════════════════════════════════════════════════════════════════════════
+   MOBILE OVERRIDES  (≤ 767px)
+   These only affect phones. All desktop styles remain unchanged.
+   ═══════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 767px) {
+
+  /* Base font scale — slightly smaller on phones */
+  html { font-size: 14px; }
+
+  /* Tighter horizontal padding so content doesn't touch edges */
+  .section-container { padding: 0 1rem; }
+
+  /* ── Headings ── */
+  h1 { font-size: clamp(1.75rem, 8vw, 2.4rem) !important; }
+  h2 { font-size: clamp(1.5rem, 6.5vw, 2rem) !important; }
+  h3 { font-size: clamp(1rem, 4.5vw, 1.25rem) !important; }
+
+  /* ── Buttons: slimmer on mobile ── */
+  .btn-primary, .btn-outline {
+    padding: 0.65rem 1.4rem !important;
+    font-size: 0.82rem !important;
+    width: 100%;
+    text-align: center;
+  }
+
+  /* ── All sections: cut vertical padding in half ── */
+  section { padding-top: 3.5rem !important; padding-bottom: 3.5rem !important; }
+
+  /* ── Page-hero banner: reduce top padding on mobile ── */
+  .page-hero {
+    padding: 5.5rem 0 2.5rem !important;
+  }
+  .page-hero .section-container h1 {
+    font-size: clamp(1.65rem, 7vw, 2.2rem) !important;
+  }
+  .page-hero .section-container p {
+    font-size: 0.88rem !important;
+    margin-top: 0.75rem !important;
+  }
+
+  /* ── Section label pill ── */
+  .section-label {
+    font-size: 0.65rem !important;
+    padding: 0.25rem 0.75rem !important;
+  }
+
+  /* ── Glass cards: less padding on mobile ── */
+  .glass-card { border-radius: 0.75rem !important; }
+
+  /* ── Hero section ── */
+  #hero {
+    padding-top: 5.5rem !important;
+    padding-bottom: 3rem !important;
+    min-height: unset !important;
+  }
+  /* hero badge tag */
+  #hero [style*="inline-flex"] > span:last-child {
+    font-size: 0.62rem !important;
+  }
+  /* hero stat row */
+  .hero-stats-row {
+    gap: 1.25rem !important;
+    flex-wrap: wrap !important;
+  }
+  .hero-stats-row > div {
+    min-width: 0;
+  }
+  .hero-stats-row > div > div:first-child {
+    font-size: 1.15rem !important;
+  }
+  .hero-stats-row > div > div:last-child {
+    font-size: 0.7rem !important;
+  }
+
+  /* ── Contact form card inner padding ── */
+  .contact-form-card {
+    padding: 1.5rem !important;
+  }
+
+  /* ── Performance stats ── */
+  .perf-stats-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+  }
+  .perf-stat-item {
+    padding: 1.25rem 1rem !important;
+  }
+  .perf-stat-item div:last-child {
+    font-size: 1.4rem !important;
+  }
+
+  /* ── Services / Commitments / Reasons grids ── */
+  .services-grid,
+  .commitments-grid,
+  .reasons-grid {
+    grid-template-columns: 1fr !important;
+    gap: 0.85rem !important;
+  }
+
+  /* ── Trust strip ── */
+  .trust-grid {
+    grid-template-columns: repeat(2, 1fr) !important;
+    gap: 0.75rem !important;
+    padding: 1.5rem 0 !important;
+  }
+
+  /* ── Timeline (Framework) ── */
+  .timeline-number-wrapper {
+    width: 3rem !important;
+    height: 3rem !important;
+  }
+
+  /* ── Footer ── */
+  footer { padding-top: 3rem !important; padding-bottom: 1.5rem !important; }
+  .footer-nav { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem 1.5rem !important; }
+}
+

@@ -163,6 +163,7 @@ export default function Contact() {
           <div>
             <AnimatedSection delay={0.3} direction="left">
               <div
+                className="contact-form-card"
                 style={{
                   padding: "2.5rem",
                   background: "var(--color-surface)",

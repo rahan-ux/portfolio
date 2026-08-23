@@ -138,7 +138,7 @@ export default function Hero() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.4}>
-              <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
+              <div className="hero-stats-row" style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
                 {[
                   { value: "30%", label: "Portfolio Growth" },
                   { value: "NISM", label: "Certified" },
