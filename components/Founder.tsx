@@ -1,6 +1,4 @@
-"use client";
-
-import { User } from "lucide-react";
+import Image from "next/image";
 import AnimatedSection from "./AnimatedSection";
 
 export default function Founder() {
@@ -11,7 +9,7 @@ export default function Founder() {
     >
       <div className="section-container">
         <div className="founder-grid">
-          {/* Left: Image / Visual */}
+          {/* Left: Photo */}
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <AnimatedSection direction="left">
               <div
@@ -20,59 +18,19 @@ export default function Founder() {
                   width: "100%",
                   maxWidth: "360px",
                   aspectRatio: "3/4",
-                  background: "linear-gradient(135deg, var(--color-surface-2), var(--color-surface-3))",
                   borderRadius: "1.25rem",
                   border: "1px solid var(--color-border)",
                   overflow: "hidden",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
                   boxShadow: "var(--shadow-card)",
                 }}
               >
-                <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "radial-gradient(circle at 30% 40%, rgba(29,78,216,0.08) 0%, transparent 60%)",
-                  }}
+                <Image
+                  src="/founder.png"
+                  alt="Rahan Santhosh – Founder of FUNDAUX"
+                  fill
+                  style={{ objectFit: "cover", objectPosition: "top center" }}
+                  priority
                 />
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    gap: "0.75rem",
-                    color: "var(--color-text-muted)",
-                    zIndex: 1,
-                  }}
-                >
-                  <div
-                    style={{
-                      width: "80px",
-                      height: "80px",
-                      borderRadius: "50%",
-                      background: "var(--color-accent-light)",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      border: "2px solid rgba(30,58,138,0.15)",
-                    }}
-                  >
-                    <User size={40} style={{ color: "var(--color-accent)", opacity: 0.6 }} />
-                  </div>
-                  <span
-                    style={{
-                      fontSize: "0.78rem",
-                      letterSpacing: "0.08em",
-                      textTransform: "uppercase",
-                      color: "var(--color-text-muted)",
-                      fontWeight: 600,
-                    }}
-                  >
-                    Founder Portrait
-                  </span>
-                </div>
               </div>
             </AnimatedSection>
           </div>
