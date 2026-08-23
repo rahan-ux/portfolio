@@ -168,7 +168,7 @@ export default function Performance() {
               <div style={{ display: "flex", flexDirection: "column" }}>
                 {[
                   { label: "Performance", value: "Pending" },
-                  { label: "Growth", value: "Pending" },
+                  { label: "Growth", value: "+30%" },
                   { label: "Risk", value: "Assessing" },
                   { label: "Strategy", value: "Active" },
                 ].map((stat, i) => (

@@ -140,9 +140,9 @@ export default function Hero() {
             <AnimatedSection delay={0.4}>
               <div style={{ display: "flex", gap: "2rem", flexWrap: "wrap" }}>
                 {[
+                  { value: "30%", label: "Portfolio Growth" },
                   { value: "NISM", label: "Certified" },
                   { value: "100%", label: "Transparent" },
-                  { value: "Goal", label: "Oriented" },
                 ].map((stat) => (
                   <div key={stat.label}>
                     <div style={{ fontSize: "1.4rem", fontWeight: 800, color: "var(--color-accent)", letterSpacing: "-0.02em" }}>{stat.value}</div>
@@ -201,7 +201,7 @@ export default function Hero() {
                       <div style={{ fontSize: "1.9rem", fontWeight: 800, color: "var(--color-text-primary)", letterSpacing: "-0.03em" }}>₹ --,---,---</div>
                     </div>
                     <div style={{ padding: "0.5rem 1rem", background: "rgba(29,78,216,0.1)", borderRadius: "2rem", color: "var(--color-accent-mid)", fontSize: "0.82rem", fontWeight: 700, display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                      <TrendingUp size={15} /> +--.--%
+                      <TrendingUp size={15} /> +30%
                     </div>
                   </div>
 
