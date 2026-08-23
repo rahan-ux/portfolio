@@ -24,7 +24,7 @@ export default function Founder() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  src="/founder.png"
+                  src="/founder.jpg"
                   alt="Rahan Santhosh – Founder of FUNDAUX"
                   style={{
                     width: "100%",
