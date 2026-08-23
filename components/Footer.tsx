@@ -45,7 +45,7 @@ export default function Footer() {
                 Achieve Your Financial Goals Through Strategic, Disciplined Management.
               </p>
               <a
-                href="mailto:rahansanthosh765@gmail.com"
+                href="mailto:fundauxin@gmail.com"
                 style={{
                   color: "rgba(255,255,255,0.6)",
                   fontSize: "0.88rem",
@@ -56,7 +56,7 @@ export default function Footer() {
                 onMouseEnter={(e) => (e.currentTarget.style.color = "#60A5FA")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
               >
-                rahansanthosh765@gmail.com
+                fundauxin@gmail.com
               </a>
             </div>
 

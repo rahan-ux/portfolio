@@ -150,10 +150,10 @@ export default function Contact() {
                   Email Us
                 </div>
                 <a
-                  href="mailto:rahansanthosh765@gmail.com"
+                  href="mailto:fundauxin@gmail.com"
                   style={{ fontSize: "1rem", color: "var(--color-accent)", textDecoration: "none", fontWeight: 600 }}
                 >
-                  rahansanthosh765@gmail.com
+                  fundauxin@gmail.com
                 </a>
               </div>
             </AnimatedSection>
