@@ -103,120 +103,51 @@ export default function Performance() {
               </div>
             </div>
 
-            {/* Dashboard Content */}
-            <div className="dashboard-grid" style={{ display: "grid", gridTemplateColumns: "1fr", borderBottom: "1px solid var(--color-border)" }}>
-              {/* Chart Area */}
-              <div
-                style={{
-                  padding: "2.5rem 2rem",
-                  position: "relative",
-                  minHeight: "300px",
-                  display: "flex",
-                  flexDirection: "column",
-                  borderRight: "1px solid var(--color-border)",
-                }}
-                className="chart-area"
-              >
-                <div style={{ marginBottom: "2rem" }}>
-                  <div style={{ fontSize: "0.85rem", color: "var(--color-text-muted)", marginBottom: "0.4rem", fontWeight: 500 }}>
-                    Value Tracked
-                  </div>
-                  <div
-                    style={{
-                      fontSize: "2rem",
-                      fontWeight: 800,
-                      color: "var(--color-text-primary)",
-                      letterSpacing: "-0.02em",
-                    }}
-                  >
-                    Data will be updated
-                  </div>
-                </div>
 
-                {/* Chart Placeholder */}
+
+            {/* Stats Grid */}
+            <div className="perf-stats-grid" style={{ borderBottom: "1px solid var(--color-border)" }}>
+              {[
+                { label: "Performance", value: "Pending" },
+                { label: "Growth", value: "+30%" },
+                { label: "Risk", value: "Assessing" },
+                { label: "Strategy", value: "Active" },
+              ].map((stat, i) => (
                 <div
+                  key={i}
                   style={{
-                    flex: 1,
-                    position: "relative",
-                    borderLeft: "1px solid var(--color-border)",
-                    borderBottom: "1px solid var(--color-border)",
-                    background: "var(--color-surface-2)",
-                    borderRadius: "0 0 0 4px",
+                    padding: "2rem",
+                    borderRight: i < 3 ? "1px solid var(--color-border)" : "none",
+                    display: "flex",
+                    flexDirection: "column",
+                    justifyContent: "center",
                   }}
+                  className="perf-stat-item"
                 >
-                  <div style={{ position: "absolute", top: "25%", left: 0, right: 0, borderTop: "1px dashed var(--color-border)" }} />
-                  <div style={{ position: "absolute", top: "50%", left: 0, right: 0, borderTop: "1px dashed var(--color-border)" }} />
-                  <div style={{ position: "absolute", top: "75%", left: 0, right: 0, borderTop: "1px dashed var(--color-border)" }} />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      color: "var(--color-text-muted)",
-                      fontSize: "0.88rem",
-                      fontStyle: "italic",
-                    }}
-                  >
-                    Performance visualization will appear here
+                  <div style={{ fontSize: "0.78rem", color: "var(--color-text-muted)", marginBottom: "0.5rem", fontWeight: 600, textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                    {stat.label}
+                  </div>
+                  <div style={{ fontSize: "1.5rem", fontWeight: 800, color: stat.label === "Growth" ? "var(--color-accent-mid)" : "var(--color-text-primary)", letterSpacing: "-0.01em" }}>
+                    {stat.value}
                   </div>
                 </div>
-              </div>
-
-              {/* Sidebar Stats */}
-              <div style={{ display: "flex", flexDirection: "column" }}>
-                {[
-                  { label: "Performance", value: "Pending" },
-                  { label: "Growth", value: "+30%" },
-                  { label: "Risk", value: "Assessing" },
-                  { label: "Strategy", value: "Active" },
-                ].map((stat, i) => (
-                  <div
-                    key={i}
-                    style={{
-                      padding: "1.75rem 2rem",
-                      borderBottom: i < 3 ? "1px solid var(--color-border)" : "none",
-                      flex: 1,
-                      display: "flex",
-                      flexDirection: "column",
-                      justifyContent: "center",
-                    }}
-                  >
-                    <div style={{ fontSize: "0.8rem", color: "var(--color-text-muted)", marginBottom: "0.4rem", fontWeight: 500, textTransform: "uppercase", letterSpacing: "0.06em" }}>
-                      {stat.label}
-                    </div>
-                    <div style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--color-text-primary)" }}>
-                      {stat.value}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            {/* Disclaimer */}
-            <div
-              style={{
-                padding: "0.9rem 2rem",
-                background: "var(--color-surface-2)",
-                fontSize: "0.75rem",
-                color: "var(--color-text-muted)",
-                textAlign: "center",
-                borderTop: "1px solid var(--color-border)",
-              }}
-            >
-              * Data is currently being updated. Real performance metrics will be populated securely.
+              ))}
             </div>
           </div>
         </AnimatedSection>
       </div>
 
       <style>{`
-        @media (min-width: 1024px) {
-          .dashboard-grid { grid-template-columns: 3fr 1fr !important; }
+        .perf-stats-grid {
+          display: grid;
+          grid-template-columns: repeat(2, 1fr);
         }
-        @media (max-width: 1023px) {
-          .chart-area { border-right: none !important; border-bottom: 1px solid var(--color-border); }
+        @media (min-width: 768px) {
+          .perf-stats-grid { grid-template-columns: repeat(4, 1fr); }
+        }
+        @media (max-width: 767px) {
+          .perf-stat-item { border-right: none !important; border-bottom: 1px solid var(--color-border); }
+          .perf-stat-item:last-child { border-bottom: none; }
         }
       `}</style>
     </section>
