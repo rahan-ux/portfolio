@@ -1,38 +1,77 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { User } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
 export default function Founder() {
   return (
-    <section id="founder" style={{ padding: "8rem 0", background: "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}>
+    <section
+      id="founder"
+      style={{ padding: "6rem 0", background: "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}
+    >
       <div className="section-container">
         <div className="founder-grid">
           {/* Left: Image / Visual */}
           <div style={{ display: "flex", justifyContent: "center", alignItems: "center" }}>
             <AnimatedSection direction="left">
-              <div 
-                style={{ 
+              <div
+                style={{
                   position: "relative",
-                  width: "100%", 
-                  maxWidth: "400px", 
+                  width: "100%",
+                  maxWidth: "360px",
                   aspectRatio: "3/4",
-                  background: "var(--color-surface-2)",
-                  borderRadius: "1rem",
+                  background: "linear-gradient(135deg, var(--color-surface-2), var(--color-surface-3))",
+                  borderRadius: "1.25rem",
                   border: "1px solid var(--color-border)",
                   overflow: "hidden",
                   display: "flex",
                   alignItems: "center",
-                  justifyContent: "center"
+                  justifyContent: "center",
+                  boxShadow: "var(--shadow-card)",
                 }}
               >
-                <div style={{ position: "absolute", inset: 0, background: "radial-gradient(circle, rgba(245, 229, 0, 0.05) 0%, transparent 70%)" }} />
-                
-                {/* Placeholder Image Content */}
-                <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "1rem", color: "var(--color-text-muted)", zIndex: 1 }}>
-                  <User size={64} style={{ opacity: 0.5 }} />
-                  <span style={{ fontSize: "0.85rem", letterSpacing: "0.05em", textTransform: "uppercase" }}>Founder Portrait</span>
+                <div
+                  style={{
+                    position: "absolute",
+                    inset: 0,
+                    background: "radial-gradient(circle at 30% 40%, rgba(29,78,216,0.08) 0%, transparent 60%)",
+                  }}
+                />
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: "0.75rem",
+                    color: "var(--color-text-muted)",
+                    zIndex: 1,
+                  }}
+                >
+                  <div
+                    style={{
+                      width: "80px",
+                      height: "80px",
+                      borderRadius: "50%",
+                      background: "var(--color-accent-light)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "2px solid rgba(30,58,138,0.15)",
+                    }}
+                  >
+                    <User size={40} style={{ color: "var(--color-accent)", opacity: 0.6 }} />
+                  </div>
+                  <span
+                    style={{
+                      fontSize: "0.78rem",
+                      letterSpacing: "0.08em",
+                      textTransform: "uppercase",
+                      color: "var(--color-text-muted)",
+                      fontWeight: 600,
+                    }}
+                  >
+                    Founder Portrait
+                  </span>
                 </div>
               </div>
             </AnimatedSection>
@@ -42,26 +81,35 @@ export default function Founder() {
           <div style={{ display: "flex", flexDirection: "column", justifyContent: "center" }}>
             <AnimatedSection>
               <span className="section-label">Leadership</span>
-              <h2 style={{ fontSize: "clamp(2.5rem, 4vw, 3.5rem)", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "0.5rem", lineHeight: 1.1 }}>
+              <h2
+                style={{
+                  fontSize: "clamp(2rem, 4vw, 3rem)",
+                  fontWeight: 800,
+                  color: "var(--color-text-primary)",
+                  marginBottom: "0.4rem",
+                  lineHeight: 1.1,
+                  marginTop: "0.5rem",
+                }}
+              >
                 MEET THE FOUNDER
               </h2>
-              <h3 style={{ fontSize: "1.5rem", color: "var(--color-accent)", fontWeight: 500, marginBottom: "2.5rem" }}>
+              <h3 style={{ fontSize: "1.4rem", color: "var(--color-accent-mid)", fontWeight: 600, marginBottom: "2rem" }}>
                 Rahan Santhosh
               </h3>
             </AnimatedSection>
 
             <AnimatedSection delay={0.2}>
-              <blockquote 
-                style={{ 
-                  fontSize: "1.25rem", 
-                  fontWeight: 500, 
+              <blockquote
+                style={{
+                  fontSize: "1.15rem",
+                  fontWeight: 500,
                   color: "var(--color-text-primary)",
                   fontStyle: "italic",
-                  lineHeight: 1.6,
+                  lineHeight: 1.65,
                   paddingLeft: "1.5rem",
-                  borderLeft: "2px solid var(--color-accent)",
+                  borderLeft: "3px solid var(--color-accent-mid)",
                   marginBottom: "2.5rem",
-                  position: "relative"
+                  position: "relative",
                 }}
               >
                 "Financial progress begins with clarity, discipline and the right strategy."
@@ -69,18 +117,38 @@ export default function Founder() {
             </AnimatedSection>
 
             <AnimatedSection delay={0.3}>
-              <div style={{ display: "flex", flexDirection: "column", gap: "2rem" }}>
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--color-text-primary)", marginBottom: "0.5rem" }}>Vision</h4>
-                  <p style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}>
-                    To create a robust financial ecosystem where structured strategies lead to sustainable and long-term financial independence.
+              <div style={{ display: "flex", flexDirection: "column", gap: "1.75rem" }}>
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    background: "var(--color-surface-2)",
+                    borderRadius: "0.75rem",
+                    border: "1px solid var(--color-border)",
+                  }}
+                >
+                  <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    Vision
+                  </h4>
+                  <p style={{ color: "var(--color-text-secondary)", lineHeight: 1.7, fontSize: "0.92rem" }}>
+                    To create a robust financial ecosystem where structured strategies lead to
+                    sustainable and long-term financial independence.
                   </p>
                 </div>
-                
-                <div>
-                  <h4 style={{ fontSize: "1.1rem", fontWeight: 600, color: "var(--color-text-primary)", marginBottom: "0.5rem" }}>Leadership Philosophy</h4>
-                  <p style={{ color: "var(--color-text-secondary)", lineHeight: 1.7 }}>
-                    Believing in data-driven decisions, complete transparency, and a disciplined approach to managing risk and identifying opportunities.
+
+                <div
+                  style={{
+                    padding: "1.5rem",
+                    background: "var(--color-surface-2)",
+                    borderRadius: "0.75rem",
+                    border: "1px solid var(--color-border)",
+                  }}
+                >
+                  <h4 style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "0.5rem", textTransform: "uppercase", letterSpacing: "0.06em" }}>
+                    Leadership Philosophy
+                  </h4>
+                  <p style={{ color: "var(--color-text-secondary)", lineHeight: 1.7, fontSize: "0.92rem" }}>
+                    Believing in data-driven decisions, complete transparency, and a disciplined approach
+                    to managing risk and identifying opportunities.
                   </p>
                 </div>
               </div>
@@ -93,12 +161,13 @@ export default function Founder() {
         .founder-grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 4rem;
+          gap: 3.5rem;
         }
         @media (min-width: 1024px) {
           .founder-grid {
-            grid-template-columns: 0.8fr 1.2fr;
-            gap: 6rem;
+            grid-template-columns: 0.75fr 1.25fr;
+            gap: 5rem;
+            align-items: center;
           }
         }
       `}</style>

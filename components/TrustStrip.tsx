@@ -12,13 +12,19 @@ const TRUST_ITEMS = [
 
 export default function TrustStrip() {
   return (
-    <section style={{ borderTop: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)", background: "var(--color-surface)" }}>
+    <section
+      style={{
+        borderTop: "1px solid var(--color-border)",
+        borderBottom: "1px solid var(--color-border)",
+        background: "var(--color-surface)",
+      }}
+    >
       <div className="section-container">
         <div
           style={{
             display: "grid",
             gridTemplateColumns: "repeat(2, 1fr)",
-            gap: "1.5rem",
+            gap: "1rem",
             padding: "2rem 0",
           }}
           className="trust-grid"
@@ -34,11 +40,24 @@ export default function TrustStrip() {
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
-                gap: "0.75rem",
+                gap: "0.65rem",
               }}
             >
-              <item.icon size={20} style={{ color: "var(--color-accent)" }} />
-              <span style={{ fontSize: "0.95rem", fontWeight: 500, color: "var(--color-text-secondary)" }}>
+              <div
+                style={{
+                  width: "32px",
+                  height: "32px",
+                  borderRadius: "8px",
+                  background: "var(--color-accent-light)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  flexShrink: 0,
+                }}
+              >
+                <item.icon size={17} style={{ color: "var(--color-accent-mid)" }} />
+              </div>
+              <span style={{ fontSize: "0.9rem", fontWeight: 600, color: "var(--color-text-secondary)" }}>
                 {item.label}
               </span>
             </motion.div>

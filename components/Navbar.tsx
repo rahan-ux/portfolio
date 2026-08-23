@@ -1,79 +1,54 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
-  { label: "Home", href: "#hero" },
-  { label: "Mission", href: "#mission" },
-  { label: "Commitments", href: "#commitments" },
-  { label: "Services", href: "#services" },
-  { label: "Performance", href: "#performance" },
-  { label: "Framework", href: "#framework" },
-  { label: "About", href: "#founder" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Performance", href: "/performance" },
+  { label: "FAQ", href: "/faq" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState("hero");
   const [mobileOpen, setMobileOpen] = useState(false);
+  const pathname = usePathname();
 
-  // Detect scroll to apply backdrop-blur background
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // IntersectionObserver for active section highlighting
+  // Close mobile menu on route change
   useEffect(() => {
-    const sectionIds = [...NAV_LINKS.map((l) => l.href.replace("#", "")), "contact"];
-    const observers: IntersectionObserver[] = [];
+    setMobileOpen(false);
+  }, [pathname]);
 
-    sectionIds.forEach((id) => {
-      const el = document.getElementById(id);
-      if (!el) return;
-      const obs = new IntersectionObserver(
-        ([entry]) => {
-          if (entry.isIntersecting) setActiveSection(id);
-        },
-        { threshold: 0.3, rootMargin: "-80px 0px -40% 0px" }
-      );
-      obs.observe(el);
-      observers.push(obs);
-    });
-
-    return () => observers.forEach((obs) => obs.disconnect());
-  }, []);
-
-  const handleNavClick = useCallback(
-    (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        target.scrollIntoView({ behavior: "smooth", block: "start" });
-      }
-      setMobileOpen(false);
-    },
-    []
-  );
+  const isActive = (href: string) =>
+    href === "/" ? pathname === "/" : pathname.startsWith(href);
 
   return (
     <motion.header
-      initial={{ y: -100, opacity: 0 }}
+      initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
         zIndex: 50,
-        transition: "background 0.3s ease, border-color 0.3s ease",
-        background: scrolled ? "rgba(5, 7, 10, 0.85)" : "transparent",
-        backdropFilter: scrolled ? "blur(12px)" : "none",
-        WebkitBackdropFilter: scrolled ? "blur(12px)" : "none",
+        transition: "background 0.3s ease, box-shadow 0.3s ease",
+        background: scrolled ? "rgba(255, 255, 255, 0.95)" : "rgba(255,255,255,0.85)",
+        backdropFilter: "blur(12px)",
+        WebkitBackdropFilter: "blur(12px)",
+        boxShadow: scrolled ? "var(--shadow-nav)" : "none",
         borderBottom: scrolled ? "1px solid var(--color-border)" : "1px solid transparent",
       }}
     >
@@ -83,83 +58,63 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: "5rem",
+            height: "4.5rem",
           }}
         >
-          {/* Logo / Name */}
-          <a
-            href="#hero"
-            onClick={(e) => handleNavClick(e, "#hero")}
+          {/* Logo */}
+          <Link
+            href="/"
             style={{
               fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-              fontSize: "1.4rem",
-              fontWeight: 700,
+              fontSize: "1.35rem",
+              fontWeight: 800,
               color: "var(--color-text-primary)",
               textDecoration: "none",
-              letterSpacing: "0.08em",
+              letterSpacing: "0.06em",
             }}
           >
-            FUND<span style={{ color: "var(--color-accent)" }}>AUX</span>
-          </a>
+            FUND<span style={{ color: "var(--color-accent-mid)" }}>AUX</span>
+          </Link>
 
           {/* Desktop Nav */}
           <nav
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "2rem",
-            }}
+            style={{ display: "flex", alignItems: "center", gap: "0.25rem" }}
             aria-label="Main navigation"
             className="hidden-mobile"
           >
-            {NAV_LINKS.map((link) => (
-              <a
-                key={link.href}
-                href={link.href}
-                onClick={(e) => handleNavClick(e, link.href)}
-                className={`nav-link ${activeSection === link.href.replace("#", "") ? "active" : ""}`}
-                style={{
-                  position: "relative",
-                  padding: "0.5rem 0",
-                }}
-              >
-                {link.label}
-                {activeSection === link.href.replace("#", "") && (
-                  <motion.div
-                    layoutId="activeNavIndicator"
-                    style={{
-                      position: "absolute",
-                      bottom: 0,
-                      left: 0,
-                      right: 0,
-                      height: "2px",
-                      background: "var(--color-accent)",
-                      borderRadius: "2px",
-                    }}
-                  />
-                )}
-              </a>
-            ))}
+            {NAV_LINKS.map((link) => {
+              const active = isActive(link.href);
+              return (
+                <Link
+                  key={link.href}
+                  href={link.href}
+                  className={`nav-link ${active ? "active" : ""}`}
+                  style={{
+                    position: "relative",
+                    padding: "0.5rem 0.85rem",
+                    borderRadius: "0.4rem",
+                    background: active ? "var(--color-accent-light)" : "transparent",
+                    fontWeight: active ? 600 : 500,
+                    color: active ? "var(--color-accent)" : "var(--color-text-secondary)",
+                    transition: "background 0.2s ease, color 0.2s ease",
+                  }}
+                >
+                  {link.label}
+                </Link>
+              );
+            })}
           </nav>
 
-          {/* Right side: CTA */}
-          <div
-            style={{
-              display: "flex",
-              alignItems: "center",
-              gap: "1rem",
-            }}
-          >
-            <a
-              href="#contact"
-              onClick={(e) => handleNavClick(e, "#contact")}
+          {/* Right: CTA + Hamburger */}
+          <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            <Link
+              href="/contact"
               className="btn-primary hidden-mobile"
-              style={{ fontSize: "0.85rem", padding: "0.6rem 1.5rem" }}
+              style={{ fontSize: "0.85rem", padding: "0.55rem 1.4rem" }}
             >
               Get Started
-            </a>
+            </Link>
 
-            {/* Mobile Hamburger */}
             <button
               onClick={() => setMobileOpen((o) => !o)}
               aria-label="Toggle mobile menu"
@@ -170,13 +125,15 @@ export default function Navbar() {
                 alignItems: "center",
                 justifyContent: "center",
                 background: "none",
-                border: "none",
+                border: "1px solid var(--color-border-strong)",
                 color: "var(--color-text-primary)",
                 cursor: "pointer",
                 padding: "0.5rem",
+                borderRadius: "0.5rem",
+                transition: "background 0.2s ease",
               }}
             >
-              {mobileOpen ? <X size={28} /> : <Menu size={28} />}
+              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
             </button>
           </div>
         </div>
@@ -189,7 +146,7 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.25 }}
             style={{
               background: "var(--color-surface)",
               borderTop: "1px solid var(--color-border)",
@@ -200,39 +157,41 @@ export default function Navbar() {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "1.5rem",
-                padding: "2rem 1.5rem",
+                gap: "0.25rem",
+                padding: "1.25rem 1.5rem",
               }}
               aria-label="Mobile navigation"
             >
-              {NAV_LINKS.map((link) => (
-                <a
-                  key={link.href}
-                  href={link.href}
-                  onClick={(e) => handleNavClick(e, link.href)}
-                  style={{
-                    fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-                    fontSize: "1.1rem",
-                    fontWeight: 500,
-                    color:
-                      activeSection === link.href.replace("#", "")
-                        ? "var(--color-accent)"
-                        : "var(--color-text-primary)",
-                    textDecoration: "none",
-                    transition: "color 0.2s ease",
-                  }}
-                >
-                  {link.label}
-                </a>
-              ))}
-              <a
-                href="#contact"
-                onClick={(e) => handleNavClick(e, "#contact")}
+              {NAV_LINKS.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    style={{
+                      fontFamily: "var(--font-inter, 'Inter', sans-serif)",
+                      fontSize: "1rem",
+                      fontWeight: active ? 600 : 500,
+                      color: active ? "var(--color-accent)" : "var(--color-text-secondary)",
+                      textDecoration: "none",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "0.5rem",
+                      background: active ? "var(--color-accent-light)" : "transparent",
+                      transition: "background 0.2s ease, color 0.2s ease",
+                      display: "block",
+                    }}
+                  >
+                    {link.label}
+                  </Link>
+                );
+              })}
+              <Link
+                href="/contact"
                 className="btn-primary"
-                style={{ textAlign: "center", marginTop: "1rem" }}
+                style={{ textAlign: "center", marginTop: "0.75rem" }}
               >
                 Get Started
-              </a>
+              </Link>
             </nav>
           </motion.div>
         )}

@@ -1,6 +1,5 @@
 "use client";
 
-import { motion } from "framer-motion";
 import { Eye, ShieldCheck, Gem, Target } from "lucide-react";
 import AnimatedSection from "./AnimatedSection";
 
@@ -33,16 +32,16 @@ const COMMITMENTS = [
 
 export default function Commitments() {
   return (
-    <section id="commitments" style={{ padding: "8rem 0", background: "var(--color-bg)", position: "relative" }}>
-      {/* Background decoration */}
-      <div style={{ position: "absolute", top: "10%", right: "0", width: "40vw", height: "40vw", background: "radial-gradient(circle, rgba(245, 229, 0, 0.02) 0%, transparent 70%)", pointerEvents: "none" }} />
-      
+    <section
+      id="commitments"
+      style={{ padding: "6rem 0", background: "var(--color-surface-2)", position: "relative", borderTop: "1px solid var(--color-border)" }}
+    >
       <div className="section-container" style={{ position: "relative", zIndex: 10 }}>
         <AnimatedSection>
-          <div style={{ textAlign: "center", marginBottom: "4rem" }}>
+          <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>
             <span className="section-label">Our Principles</span>
-            <h2 style={{ fontSize: "clamp(2rem, 3vw, 2.5rem)", fontWeight: 700, color: "var(--color-text-primary)" }}>
-              OUR <span style={{ color: "var(--color-accent)" }}>COMMITMENTS</span>
+            <h2 style={{ fontSize: "clamp(2rem, 3vw, 2.6rem)", fontWeight: 800, color: "var(--color-text-primary)", marginTop: "0.5rem" }}>
+              OUR <span style={{ color: "var(--color-accent-mid)" }}>COMMITMENTS</span>
             </h2>
           </div>
         </AnimatedSection>
@@ -50,39 +49,43 @@ export default function Commitments() {
         <div className="commitments-grid">
           {COMMITMENTS.map((item, index) => (
             <AnimatedSection key={index} delay={index * 0.1}>
-              <div 
-                className="glass-card commitment-card"
-                style={{ 
-                  padding: "2.5rem", 
-                  position: "relative", 
+              <div
+                className="commitment-card"
+                style={{
+                  padding: "2.25rem",
+                  background: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "1rem",
+                  position: "relative",
                   height: "100%",
                   display: "flex",
                   flexDirection: "column",
+                  transition: "box-shadow 0.3s ease, border-color 0.3s ease, transform 0.3s ease",
                 }}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "2rem" }}>
-                  <div style={{ 
-                    width: "3rem", 
-                    height: "3rem", 
-                    borderRadius: "0.75rem", 
-                    background: "rgba(255,255,255,0.05)", 
-                    display: "flex", 
-                    alignItems: "center", 
-                    justifyContent: "center",
-                    border: "1px solid rgba(255,255,255,0.05)"
-                  }}>
-                    <item.icon size={24} style={{ color: "var(--color-accent)" }} />
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "flex-start", marginBottom: "1.75rem" }}>
+                  <div
+                    style={{
+                      width: "2.75rem",
+                      height: "2.75rem",
+                      borderRadius: "0.6rem",
+                      background: "var(--color-accent-light)",
+                      display: "flex",
+                      alignItems: "center",
+                      justifyContent: "center",
+                      border: "1px solid rgba(30,58,138,0.12)",
+                    }}
+                  >
+                    <item.icon size={20} style={{ color: "var(--color-accent-mid)" }} />
                   </div>
-                  <span style={{ fontSize: "3rem", fontWeight: 700, color: "rgba(255,255,255,0.03)", lineHeight: 1 }}>
+                  <span style={{ fontSize: "2.5rem", fontWeight: 800, color: "var(--color-border)", lineHeight: 1 }}>
                     {item.num}
                   </span>
                 </div>
-                
-                <h3 style={{ fontSize: "1.25rem", fontWeight: 600, color: "var(--color-text-primary)", marginBottom: "1rem" }}>
+                <h3 style={{ fontSize: "1.15rem", fontWeight: 700, color: "var(--color-text-primary)", marginBottom: "0.75rem" }}>
                   {item.title}
                 </h3>
-                
-                <p style={{ color: "var(--color-text-secondary)", lineHeight: 1.6, fontSize: "0.95rem" }}>
+                <p style={{ color: "var(--color-text-secondary)", lineHeight: 1.65, fontSize: "0.92rem" }}>
                   {item.description}
                 </p>
               </div>
@@ -95,29 +98,18 @@ export default function Commitments() {
         .commitments-grid {
           display: grid;
           grid-template-columns: 1fr;
-          gap: 1.5rem;
+          gap: 1.25rem;
         }
-        @media (min-width: 768px) {
-          .commitments-grid {
-            grid-template-columns: repeat(2, 1fr);
-          }
+        @media (min-width: 640px) {
+          .commitments-grid { grid-template-columns: repeat(2, 1fr); }
         }
         @media (min-width: 1024px) {
-          .commitments-grid {
-            grid-template-columns: repeat(4, 1fr);
-          }
+          .commitments-grid { grid-template-columns: repeat(4, 1fr); }
         }
-        .commitment-card::before {
-          content: '';
-          position: absolute;
-          inset: 0;
-          background: linear-gradient(180deg, rgba(255,255,255,0.03) 0%, transparent 100%);
-          opacity: 0;
-          transition: opacity 0.3s ease;
-          pointer-events: none;
-        }
-        .commitment-card:hover::before {
-          opacity: 1;
+        .commitment-card:hover {
+          border-color: rgba(30,58,138,0.25);
+          box-shadow: 0 10px 35px rgba(30,58,138,0.08);
+          transform: translateY(-3px);
         }
       `}</style>
     </section>

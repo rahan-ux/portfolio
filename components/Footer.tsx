@@ -1,94 +1,109 @@
 "use client";
 
-import { motion } from "framer-motion";
+import Link from "next/link";
 
 const FOOTER_LINKS = [
-  { label: "Home", href: "#hero" },
-  { label: "Mission", href: "#mission" },
-  { label: "Commitments", href: "#commitments" },
-  { label: "Services", href: "#services" },
-  { label: "Performance", href: "#performance" },
-  { label: "Framework", href: "#framework" },
-  { label: "About", href: "#founder" },
-  { label: "Contact", href: "#contact" },
+  { label: "Home", href: "/" },
+  { label: "About", href: "/about" },
+  { label: "Services", href: "/services" },
+  { label: "Performance", href: "/performance" },
+  { label: "FAQ", href: "/faq" },
+  { label: "Contact", href: "/contact" },
 ];
 
 export default function Footer() {
-  const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
-    e.preventDefault();
-    const target = document.querySelector(href);
-    if (target) {
-      target.scrollIntoView({ behavior: "smooth", block: "start" });
-    }
-  };
-
   return (
-    <footer style={{ background: "var(--color-bg)", borderTop: "1px solid var(--color-border)", paddingTop: "4rem", paddingBottom: "2rem" }}>
+    <footer
+      style={{
+        background: "var(--color-text-primary)",
+        paddingTop: "4rem",
+        paddingBottom: "2rem",
+      }}
+    >
       <div className="section-container">
         <div style={{ display: "flex", flexDirection: "column", gap: "3rem" }}>
-          
+
           {/* Top Section */}
           <div className="footer-top">
             <div style={{ flex: 1 }}>
-              <a
-                href="#hero"
-                onClick={(e) => handleNavClick(e, "#hero")}
+              <Link
+                href="/"
                 style={{
                   fontFamily: "var(--font-inter, 'Inter', sans-serif)",
                   fontSize: "1.5rem",
-                  fontWeight: 700,
-                  color: "var(--color-text-primary)",
+                  fontWeight: 800,
+                  color: "#FFFFFF",
                   textDecoration: "none",
-                  letterSpacing: "0.08em",
+                  letterSpacing: "0.06em",
                   display: "inline-block",
-                  marginBottom: "0.5rem"
+                  marginBottom: "0.75rem",
                 }}
               >
-                FUND<span style={{ color: "var(--color-accent)" }}>AUX</span>
-              </a>
-              <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem", marginBottom: "1rem" }}>
-                Achieve Your Financial Goals Through Us
+                FUND<span style={{ color: "#60A5FA" }}>AUX</span>
+              </Link>
+              <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.92rem", marginBottom: "1rem", maxWidth: "280px", lineHeight: 1.65 }}>
+                Achieve Your Financial Goals Through Strategic, Disciplined Management.
               </p>
-              <a href="mailto:rahansanthosh765@gmail.com" style={{ color: "var(--color-text-secondary)", fontSize: "0.9rem", textDecoration: "none", transition: "color 0.2s ease", display: "inline-block" }} onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-text-primary)"} onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}>
+              <a
+                href="mailto:rahansanthosh765@gmail.com"
+                style={{
+                  color: "rgba(255,255,255,0.6)",
+                  fontSize: "0.88rem",
+                  textDecoration: "none",
+                  transition: "color 0.2s ease",
+                  display: "inline-block",
+                }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#60A5FA")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
+              >
                 rahansanthosh765@gmail.com
               </a>
             </div>
 
             <div>
-              <h4 style={{ fontSize: "1rem", fontWeight: 600, color: "var(--color-text-primary)", marginBottom: "1rem" }}>Navigation</h4>
+              <h4 style={{ fontSize: "0.8rem", fontWeight: 700, color: "rgba(255,255,255,0.4)", marginBottom: "1rem", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+                Navigation
+              </h4>
               <nav className="footer-nav">
                 {FOOTER_LINKS.map((link) => (
-                  <a
+                  <Link
                     key={link.href}
                     href={link.href}
-                    onClick={(e) => handleNavClick(e, link.href)}
                     style={{
-                      color: "var(--color-text-secondary)",
+                      color: "rgba(255,255,255,0.6)",
                       textDecoration: "none",
                       fontSize: "0.9rem",
-                      transition: "color 0.2s ease"
+                      transition: "color 0.2s ease",
+                      fontWeight: 500,
                     }}
-                    onMouseEnter={(e) => e.currentTarget.style.color = "var(--color-text-primary)"}
-                    onMouseLeave={(e) => e.currentTarget.style.color = "var(--color-text-secondary)"}
+                    onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                    onMouseLeave={(e) => (e.currentTarget.style.color = "rgba(255,255,255,0.6)")}
                   >
                     {link.label}
-                  </a>
+                  </Link>
                 ))}
               </nav>
             </div>
           </div>
 
-          <div style={{ width: "100%", height: "1px", background: "var(--color-border)" }} />
+          {/* Divider */}
+          <div style={{ width: "100%", height: "1px", background: "rgba(255,255,255,0.08)" }} />
 
           {/* Bottom Section */}
-          <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-            <p style={{ fontSize: "0.75rem", color: "var(--color-text-muted)", lineHeight: 1.6, textAlign: "justify" }}>
-              <strong>Disclaimer:</strong> Financial markets involve risk, including the possible loss of principal. Past performance is not indicative of future results. Information provided on this website is for informational purposes only and should not be construed as investment, tax, or legal advice. Please consult with a qualified professional before making any financial decisions. FUNDAUX does not guarantee specific investment returns.
+          <div style={{ display: "flex", flexDirection: "column", gap: "1.25rem" }}>
+            <p style={{ fontSize: "0.75rem", color: "rgba(255,255,255,0.35)", lineHeight: 1.65, textAlign: "justify" }}>
+              <strong style={{ color: "rgba(255,255,255,0.5)" }}>Disclaimer:</strong> Financial markets involve risk, including the possible loss of principal.
+              Past performance is not indicative of future results. Information provided on this website is for informational purposes
+              only and should not be construed as investment, tax, or legal advice. Please consult with a qualified professional
+              before making any financial decisions. FUNDAUX does not guarantee specific investment returns.
             </p>
-            
-            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "1rem" }}>
-              <p style={{ fontSize: "0.85rem", color: "var(--color-text-secondary)" }}>
+
+            <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "0.75rem" }}>
+              <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.4)" }}>
                 &copy; 2026 FUNDAUX. All rights reserved.
+              </p>
+              <p style={{ fontSize: "0.82rem", color: "rgba(255,255,255,0.3)" }}>
+                Built with precision & discipline.
               </p>
             </div>
           </div>
@@ -99,12 +114,12 @@ export default function Footer() {
         .footer-top {
           display: flex;
           flex-direction: column;
-          gap: 2rem;
+          gap: 2.5rem;
         }
         .footer-nav {
           display: grid;
           grid-template-columns: repeat(2, 1fr);
-          gap: 0.75rem 2rem;
+          gap: 0.65rem 2.5rem;
         }
         @media (min-width: 768px) {
           .footer-top {
