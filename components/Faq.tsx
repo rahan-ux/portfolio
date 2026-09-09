@@ -70,11 +70,11 @@ export default function Faq() {
                 <div
                   style={{
                     background: "var(--color-surface)",
-                    border: `1px solid ${isOpen ? "rgba(29,78,216,0.30)" : "var(--color-border)"}`,
+                    border: `1px solid ${isOpen ? "var(--color-accent-mid)" : "var(--color-border)"}`,
                     borderRadius: "0.75rem",
                     overflow: "hidden",
                     transition: "border-color 0.3s ease, box-shadow 0.3s ease",
-                    boxShadow: isOpen ? "0 4px 20px rgba(29,78,216,0.08)" : "var(--shadow-sm)",
+                    boxShadow: isOpen ? "0 4px 20px var(--color-accent-glow)" : "var(--shadow-sm)",
                   }}
                 >
                   <button

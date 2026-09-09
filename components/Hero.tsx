@@ -17,7 +17,7 @@ export default function Hero() {
         paddingTop: "6rem",
         paddingBottom: "4rem",
         overflow: "hidden",
-        background: "linear-gradient(160deg, #F8FAFC 0%, #EEF2FF 50%, #F1F5F9 100%)",
+      background: "linear-gradient(160deg, var(--hero-bg-start) 0%, var(--hero-bg-mid) 50%, var(--hero-bg-end) 100%)",
       }}
     >
       {/* Decorative blobs */}
@@ -89,7 +89,7 @@ export default function Hero() {
               ACHIEVE YOUR <br />
               <span
                 style={{
-                  background: "linear-gradient(135deg, #1E3A8A 0%, #1D4ED8 100%)",
+                background: "linear-gradient(135deg, var(--hero-text-gradient-start) 0%, var(--hero-text-gradient-end) 100%)",
                   WebkitBackgroundClip: "text",
                   WebkitTextFillColor: "transparent",
                   backgroundClip: "text",

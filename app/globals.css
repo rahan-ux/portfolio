@@ -23,6 +23,49 @@
   --shadow-card: 0 4px 24px rgba(15, 30, 75, 0.08);
   --shadow-card-hover: 0 12px 40px rgba(30, 58, 138, 0.14);
   --shadow-nav: 0 1px 0 rgba(30, 58, 138, 0.08), 0 4px 16px rgba(15, 30, 75, 0.06);
+
+  /* Hero-specific gradient tokens (light) */
+  --hero-bg-start: #F8FAFC;
+  --hero-bg-mid: #EEF2FF;
+  --hero-bg-end: #F1F5F9;
+  --hero-text-gradient-start: #1E3A8A;
+  --hero-text-gradient-end: #1D4ED8;
+  /* Navbar translucent bg */
+  --navbar-rgb: 255, 255, 255;
+}
+
+/* ─── Dark Mode Tokens ────────────────────────────────────────────────────────── */
+html.dark {
+  --color-bg: #080E1E;
+  --color-surface: #0F1827;
+  --color-surface-2: #0A1220;
+  --color-surface-3: #111E30;
+  --color-border: rgba(148, 163, 184, 0.10);
+  --color-border-strong: rgba(148, 163, 184, 0.22);
+
+  --color-text-primary: #E8EFF8;
+  --color-text-secondary: #94A3B8;
+  --color-text-muted: #64748B;
+
+  --color-accent: #3B82F6;
+  --color-accent-mid: #60A5FA;
+  --color-accent-hover: #2563EB;
+  --color-accent-light: rgba(59, 130, 246, 0.12);
+  --color-accent-glow: rgba(59, 130, 246, 0.20);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.35), 0 1px 2px rgba(0, 0, 0, 0.25);
+  --shadow-card: 0 4px 24px rgba(0, 0, 0, 0.45);
+  --shadow-card-hover: 0 12px 40px rgba(59, 130, 246, 0.18);
+  --shadow-nav: 0 1px 0 rgba(148, 163, 184, 0.08), 0 4px 16px rgba(0, 0, 0, 0.35);
+
+  /* Hero-specific gradient tokens (dark) */
+  --hero-bg-start: #080E1E;
+  --hero-bg-mid: #0D1729;
+  --hero-bg-end: #0A1220;
+  --hero-text-gradient-start: #60A5FA;
+  --hero-text-gradient-end: #93C5FD;
+  /* Navbar translucent bg */
+  --navbar-rgb: 8, 14, 30;
 }
 
 /* ─── Reset ───────────────────────────────────────────────────────────────────── */
@@ -47,6 +90,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 h1, h2, h3, h4, h5 {
@@ -60,6 +104,28 @@ h1, h2, h3, h4, h5 {
 ::-webkit-scrollbar-track { background: var(--color-bg); }
 ::-webkit-scrollbar-thumb { background: var(--color-accent-glow); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--color-accent-mid); }
+
+/* ─── Theme Toggle Button ──────────────────────────────────────────────────────── */
+.theme-toggle {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 0.5rem;
+  border: 1.5px solid var(--color-border-strong);
+  background: var(--color-accent-light);
+  color: var(--color-accent);
+  cursor: pointer;
+  transition: background 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+  flex-shrink: 0;
+}
+.theme-toggle:hover {
+  background: var(--color-accent-light);
+  border-color: var(--color-accent);
+  color: var(--color-accent-mid);
+  transform: rotate(12deg) scale(1.05);
+}
 
 /* ─── Layout Utilities ────────────────────────────────────────────────────────── */
 .section-container {
@@ -86,6 +152,11 @@ h1, h2, h3, h4, h5 {
   z-index: 0;
   pointer-events: none;
   mask-image: radial-gradient(ellipse 80% 50% at 50% 0%, #000 70%, transparent 100%);
+}
+html.dark .bg-grid {
+  background-image:
+    linear-gradient(to right, rgba(59, 130, 246, 0.06) 1px, transparent 1px),
+    linear-gradient(to bottom, rgba(59, 130, 246, 0.06) 1px, transparent 1px);
 }
 
 /* ─── Cards ───────────────────────────────────────────────────────────────────── */
@@ -193,6 +264,10 @@ h1, h2, h3, h4, h5 {
   position: relative;
   overflow: hidden;
 }
+/* Dark mode: slightly deeper gradient for the page hero */
+html.dark .page-hero {
+  background: linear-gradient(135deg, #060d1f 0%, #0F1E4B 60%, #1E3A8A 100%);
+}
 
 .page-hero::before {
   content: '';
@@ -228,9 +303,17 @@ textarea:-webkit-autofill,
 textarea:-webkit-autofill:hover,
 textarea:-webkit-autofill:focus,
 textarea:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 1000px #FFFFFF inset !important;
+  -webkit-box-shadow: 0 0 0 1000px var(--color-surface) inset !important;
   -webkit-text-fill-color: var(--color-text-primary) !important;
   transition: background-color 5000s ease-in-out 0s;
+}
+html.dark input:-webkit-autofill,
+html.dark input:-webkit-autofill:hover,
+html.dark input:-webkit-autofill:focus,
+html.dark textarea:-webkit-autofill,
+html.dark textarea:-webkit-autofill:hover,
+html.dark textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: 0 0 0 1000px #0F1827 inset !important;
 }
 
 /* ─── Divider ─────────────────────────────────────────────────────────────────── */

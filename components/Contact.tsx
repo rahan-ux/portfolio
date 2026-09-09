@@ -189,7 +189,7 @@ export default function Contact() {
                         width: "64px",
                         height: "64px",
                         borderRadius: "50%",
-                        background: "rgba(29,78,216,0.08)",
+                        background: "var(--color-accent-light)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
@@ -329,8 +329,8 @@ export default function Contact() {
           }
         }
         .form-input:focus {
-          border-color: rgba(29,78,216,0.5) !important;
-          box-shadow: 0 0 0 3px rgba(29,78,216,0.08) !important;
+          border-color: var(--color-accent-mid) !important;
+          box-shadow: 0 0 0 3px var(--color-accent-light) !important;
           outline: none !important;
         }
       `}</style>

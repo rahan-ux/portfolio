@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/ThemeProvider";
+import { ScrollToTop } from "@/components/ScrollToTop";
 
 /* ─── Fonts ──────────────────────────────────────────────────────────────────── */
 const inter = Inter({
@@ -67,6 +68,9 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
+        {/* Zero-height anchor at the absolute top — gives Next.js scroll a fixed target at y=0 */}
+        <div id="top" style={{ position: "absolute", top: 0, left: 0, height: 0, width: 0 }} aria-hidden="true" />
+        <ScrollToTop />
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

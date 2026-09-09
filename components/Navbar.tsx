@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Sun, Moon } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useTheme } from "./ThemeProvider";
 
 const NAV_LINKS = [
   { label: "Home", href: "/" },
@@ -12,12 +13,14 @@ const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
+  { label: "Rahan Santhosh", href: "/rahan-santhosh" },
 ];
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const [mobileOpen, setMobileOpen] = useState(false);
   const pathname = usePathname();
+  const { theme, toggleTheme } = useTheme();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 20);
@@ -45,7 +48,9 @@ export default function Navbar() {
         right: 0,
         zIndex: 50,
         transition: "background 0.3s ease, box-shadow 0.3s ease",
-        background: scrolled ? "rgba(255, 255, 255, 0.95)" : "rgba(255,255,255,0.85)",
+        background: scrolled
+          ? "rgba(var(--navbar-rgb, 255, 255, 255), 0.97)"
+          : "rgba(var(--navbar-rgb, 255, 255, 255), 0.87)",
         backdropFilter: "blur(12px)",
         WebkitBackdropFilter: "blur(12px)",
         boxShadow: scrolled ? "var(--shadow-nav)" : "none",
@@ -105,8 +110,42 @@ export default function Navbar() {
             })}
           </nav>
 
-          {/* Right: CTA + Hamburger */}
+          {/* Right: Theme Toggle + CTA + Hamburger */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+            {/* Theme Toggle — desktop */}
+            <button
+              id="theme-toggle-desktop"
+              onClick={toggleTheme}
+              aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+              className="theme-toggle hidden-mobile"
+            >
+              <AnimatePresence mode="wait" initial={false}>
+                {theme === "dark" ? (
+                  <motion.span
+                    key="sun"
+                    initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ display: "flex" }}
+                  >
+                    <Sun size={17} />
+                  </motion.span>
+                ) : (
+                  <motion.span
+                    key="moon"
+                    initial={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                    animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                    exit={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                    transition={{ duration: 0.2 }}
+                    style={{ display: "flex" }}
+                  >
+                    <Moon size={17} />
+                  </motion.span>
+                )}
+              </AnimatePresence>
+            </button>
+
             <Link
               href="/contact"
               className="btn-primary hidden-mobile"
@@ -185,6 +224,47 @@ export default function Navbar() {
                   </Link>
                 );
               })}
+
+              {/* Theme Toggle — mobile */}
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", padding: "0.5rem 1rem" }}>
+                <button
+                  id="theme-toggle-mobile"
+                  onClick={toggleTheme}
+                  aria-label={theme === "dark" ? "Switch to light mode" : "Switch to dark mode"}
+                  className="theme-toggle"
+                  style={{ width: "2.5rem", height: "2.5rem" }}
+                >
+                  <AnimatePresence mode="wait" initial={false}>
+                    {theme === "dark" ? (
+                      <motion.span
+                        key="sun-m"
+                        initial={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ display: "flex" }}
+                      >
+                        <Sun size={18} />
+                      </motion.span>
+                    ) : (
+                      <motion.span
+                        key="moon-m"
+                        initial={{ opacity: 0, rotate: 90, scale: 0.6 }}
+                        animate={{ opacity: 1, rotate: 0, scale: 1 }}
+                        exit={{ opacity: 0, rotate: -90, scale: 0.6 }}
+                        transition={{ duration: 0.2 }}
+                        style={{ display: "flex" }}
+                      >
+                        <Moon size={18} />
+                      </motion.span>
+                    )}
+                  </AnimatePresence>
+                </button>
+                <span style={{ fontSize: "0.88rem", color: "var(--color-text-secondary)", fontWeight: 500 }}>
+                  {theme === "dark" ? "Light Mode" : "Dark Mode"}
+                </span>
+              </div>
+
               <Link
                 href="/contact"
                 className="btn-primary"

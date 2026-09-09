@@ -40,7 +40,7 @@ export default function About() {
                   BUILDING BETTER{" "}
                   <span
                     style={{
-                      background: "linear-gradient(135deg, #1E3A8A, #1D4ED8)",
+                      background: "linear-gradient(135deg, var(--hero-text-gradient-start), var(--hero-text-gradient-end))",
                       WebkitBackgroundClip: "text",
                       WebkitTextFillColor: "transparent",
                       backgroundClip: "text",
@@ -213,11 +213,11 @@ export default function About() {
                           flex: 1,
                           background:
                             i === 4
-                              ? "linear-gradient(180deg, #1D4ED8, #1E3A8A)"
-                              : "rgba(30,58,138,0.10)",
-                          border: "1px solid rgba(30,58,138,0.15)",
+                              ? "linear-gradient(180deg, var(--color-accent-mid), var(--color-accent))"
+                              : "var(--color-accent-light)",
+                          border: "1px solid var(--color-border-strong)",
                           borderRadius: "6px 6px 0 0",
-                          boxShadow: i === 4 ? "0 0 20px rgba(29,78,216,0.25)" : "none",
+                          boxShadow: i === 4 ? "0 0 20px var(--color-accent-glow)" : "none",
                         }}
                       />
                     ))}
@@ -241,7 +241,7 @@ export default function About() {
                       transition={{ duration: 1.5, delay: 0.5, ease: "easeInOut" }}
                       d="M 50,150 C 100,140 120,100 180,110 C 240,120 280,60 350,40"
                       fill="none"
-                      stroke="#1D4ED8"
+                      stroke="var(--color-accent-mid)"
                       strokeWidth="2"
                       strokeDasharray="6 4"
                     />
