@@ -23,6 +23,8 @@ import {
   AlertCircle,
   Copy,
   Check,
+  X,
+  ExternalLink,
 } from "lucide-react";
 
 const METRICS = [
@@ -103,6 +105,18 @@ export default function FounderPortfolioView() {
   const [scrolled, setScrolled] = useState(false);
   const [copiedEmail, setCopiedEmail] = useState(false);
   const [formHighlighted, setFormHighlighted] = useState(false);
+  const [emailModalOpen, setEmailModalOpen] = useState(false);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  // Direct Email Modal Form State
+  const [directEmailData, setDirectEmailData] = useState({
+    name: "",
+    email: "",
+    subject: "Direct Inquiry for Rahan Santhosh",
+    message: "",
+  });
+  const [directEmailStatus, setDirectEmailStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [directEmailErrors, setDirectEmailErrors] = useState<Record<string, string>>({});
 
   // Strategy Meeting Form State
   const [meetingData, setMeetingData] = useState({
@@ -124,14 +138,15 @@ export default function FounderPortfolioView() {
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
-  // Smooth scroll to strategy meeting form with auto-focus
+  // Smooth scroll to strategy meeting form with auto-focus and robust offset calculation
   const scrollToMeeting = (e?: React.MouseEvent) => {
     if (e) e.preventDefault();
     const el = document.getElementById("schedule-meeting");
     if (el) {
-      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      const y = el.getBoundingClientRect().top + window.pageYOffset - 80;
+      window.scrollTo({ top: Math.max(0, y), behavior: "smooth" });
       setFormHighlighted(true);
-      setTimeout(() => setFormHighlighted(false), 2000);
+      setTimeout(() => setFormHighlighted(false), 2500);
       setTimeout(() => {
         const input = document.getElementById("meeting-name");
         if (input) input.focus();
@@ -139,19 +154,96 @@ export default function FounderPortfolioView() {
     }
   };
 
-  // Direct mailto trigger
+  // Direct email click: copies email, opens native mailto, AND opens direct email modal
   const handleDirectEmail = (e: React.MouseEvent) => {
     e.preventDefault();
-    window.location.href = "mailto:fundauxin@gmail.com?subject=Strategy%20Consultation%20Inquiry%20-%20Rahan%20Santhosh";
+    e.stopPropagation();
+    try {
+      navigator.clipboard.writeText("fundauxin@gmail.com");
+      setCopiedEmail(true);
+      setTimeout(() => setCopiedEmail(false), 4000);
+    } catch (err) {
+      console.warn("Clipboard access failed:", err);
+    }
+
+    try {
+      window.location.href = "mailto:fundauxin@gmail.com?subject=Strategy%20Consultation%20Inquiry%20-%20Rahan%20Santhosh";
+    } catch (err) {
+      console.warn("Mailto launch failed:", err);
+    }
+
+    setEmailModalOpen(true);
+    setToastMessage("Copied fundauxin@gmail.com to clipboard! Email window opened.");
+    setTimeout(() => setToastMessage(null), 5000);
   };
 
-  // Copy email fallback
+  // Copy email fallback with toast
   const handleCopyEmail = (e: React.MouseEvent) => {
     e.preventDefault();
     e.stopPropagation();
     navigator.clipboard.writeText("fundauxin@gmail.com");
     setCopiedEmail(true);
-    setTimeout(() => setCopiedEmail(false), 3000);
+    setToastMessage("Email fundauxin@gmail.com copied to clipboard!");
+    setTimeout(() => {
+      setCopiedEmail(false);
+      setToastMessage(null);
+    }, 4000);
+  };
+
+  // Handle direct email modal submission via Web3Forms
+  const handleDirectEmailSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const errs: Record<string, string> = {};
+    if (!directEmailData.name.trim()) errs.name = "Name is required";
+    if (!directEmailData.email.trim()) {
+      errs.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(directEmailData.email.trim())) {
+      errs.email = "Invalid email format";
+    }
+    if (!directEmailData.message.trim()) errs.message = "Message is required";
+
+    if (Object.keys(errs).length > 0) {
+      setDirectEmailErrors(errs);
+      return;
+    }
+
+    setDirectEmailStatus("loading");
+
+    try {
+      const data = new FormData();
+      data.append("access_key", "7d4571bb-608c-4430-9c40-ac3336a16196");
+      data.append("name", directEmailData.name.trim());
+      data.append("email", directEmailData.email.trim());
+      data.append("subject", `[Direct Email] ${directEmailData.subject.trim()} (${directEmailData.name.trim()})`);
+      data.append("message", directEmailData.message.trim());
+      data.append("from_name", "Rahan Portfolio - Direct Email Modal");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setDirectEmailStatus("success");
+        setDirectEmailData({
+          name: "",
+          email: "",
+          subject: "Direct Inquiry for Rahan Santhosh",
+          message: "",
+        });
+        setTimeout(() => {
+          setDirectEmailStatus("idle");
+          setEmailModalOpen(false);
+        }, 3500);
+      } else {
+        setDirectEmailStatus("error");
+      }
+    } catch (err) {
+      console.error("Direct email error:", err);
+      setDirectEmailStatus("error");
+    }
   };
 
   const validate = () => {
@@ -1409,6 +1501,373 @@ export default function FounderPortfolioView() {
           </div>
         </div>
       </footer>
+
+      {/* ── DIRECT EMAIL MODAL ── */}
+      <AnimatePresence>
+        {emailModalOpen && (
+          <div
+            style={{
+              position: "fixed",
+              inset: 0,
+              zIndex: 1000,
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+              padding: "1.25rem",
+              background: "rgba(15, 23, 42, 0.75)",
+              backdropFilter: "blur(8px)",
+              WebkitBackdropFilter: "blur(8px)",
+            }}
+            onClick={() => setEmailModalOpen(false)}
+          >
+            <motion.div
+              initial={{ opacity: 0, scale: 0.95, y: 20 }}
+              animate={{ opacity: 1, scale: 1, y: 0 }}
+              exit={{ opacity: 0, scale: 0.95, y: 20 }}
+              transition={{ duration: 0.25 }}
+              onClick={(e) => e.stopPropagation()}
+              style={{
+                width: "100%",
+                maxWidth: "540px",
+                background: "var(--color-surface)",
+                borderRadius: "1.25rem",
+                border: "1px solid var(--color-border-strong)",
+                boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25)",
+                padding: "2rem",
+                position: "relative",
+                maxHeight: "90vh",
+                overflowY: "auto",
+              }}
+            >
+              {/* Close Button */}
+              <button
+                onClick={() => setEmailModalOpen(false)}
+                aria-label="Close modal"
+                style={{
+                  position: "absolute",
+                  top: "1.25rem",
+                  right: "1.25rem",
+                  background: "var(--color-surface-2)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "50%",
+                  width: "36px",
+                  height: "36px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  color: "var(--color-text-secondary)",
+                  cursor: "pointer",
+                }}
+              >
+                <X size={18} />
+              </button>
+
+              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem", marginBottom: "0.5rem" }}>
+                <div
+                  style={{
+                    padding: "0.6rem",
+                    borderRadius: "0.5rem",
+                    background: "var(--color-accent-light)",
+                    color: "var(--color-accent-mid)",
+                    display: "flex",
+                  }}
+                >
+                  <Mail size={22} />
+                </div>
+                <div>
+                  <h3 style={{ fontSize: "1.35rem", fontWeight: 700, color: "var(--color-text-primary)" }}>
+                    Direct Email to Rahan Santhosh
+                  </h3>
+                  <p style={{ fontSize: "0.85rem", color: "var(--color-text-secondary)" }}>
+                    Founder & CEO — FUNDAUX
+                  </p>
+                </div>
+              </div>
+
+              {/* Email pill box with copy & mailto */}
+              <div
+                style={{
+                  background: "var(--color-surface-2)",
+                  border: "1px solid var(--color-border)",
+                  borderRadius: "0.75rem",
+                  padding: "0.85rem 1rem",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  gap: "0.5rem",
+                  margin: "1.25rem 0 1.5rem",
+                }}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem", minWidth: 0 }}>
+                  <span style={{ fontSize: "0.92rem", fontWeight: 600, color: "var(--color-accent-mid)" }}>
+                    fundauxin@gmail.com
+                  </span>
+                </div>
+
+                <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                  <button
+                    onClick={handleCopyEmail}
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.35rem",
+                      padding: "0.4rem 0.75rem",
+                      borderRadius: "0.4rem",
+                      background: copiedEmail ? "#D1FAE5" : "var(--color-surface)",
+                      border: `1px solid ${copiedEmail ? "#10B981" : "var(--color-border)"}`,
+                      color: copiedEmail ? "#065F46" : "var(--color-text-primary)",
+                      fontSize: "0.82rem",
+                      fontWeight: 600,
+                      cursor: "pointer",
+                    }}
+                  >
+                    {copiedEmail ? (
+                      <>
+                        <Check size={14} color="#10B981" /> Copied!
+                      </>
+                    ) : (
+                      <>
+                        <Copy size={14} /> Copy
+                      </>
+                    )}
+                  </button>
+
+                  <a
+                    href="mailto:fundauxin@gmail.com?subject=Strategy%20Consultation%20Inquiry%20-%20Rahan%20Santhosh"
+                    style={{
+                      display: "inline-flex",
+                      alignItems: "center",
+                      gap: "0.35rem",
+                      padding: "0.4rem 0.75rem",
+                      borderRadius: "0.4rem",
+                      background: "var(--color-accent-mid)",
+                      color: "#FFFFFF",
+                      fontSize: "0.82rem",
+                      fontWeight: 600,
+                      textDecoration: "none",
+                    }}
+                  >
+                    <ExternalLink size={14} /> Mail App
+                  </a>
+                </div>
+              </div>
+
+              {/* Status alerts */}
+              {directEmailStatus === "success" && (
+                <div
+                  style={{
+                    padding: "1rem",
+                    borderRadius: "0.5rem",
+                    background: "#ECFDF5",
+                    border: "1px solid #10B981",
+                    color: "#065F46",
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                    marginBottom: "1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <CheckCircle2 size={20} color="#10B981" />
+                  Email sent directly to Rahan Santhosh!
+                </div>
+              )}
+
+              {directEmailStatus === "error" && (
+                <div
+                  style={{
+                    padding: "1rem",
+                    borderRadius: "0.5rem",
+                    background: "#FEF2F2",
+                    border: "1px solid #EF4444",
+                    color: "#991B1B",
+                    fontSize: "0.9rem",
+                    fontWeight: 500,
+                    marginBottom: "1rem",
+                    display: "flex",
+                    alignItems: "center",
+                    gap: "0.5rem",
+                  }}
+                >
+                  <AlertCircle size={20} color="#EF4444" />
+                  Submission failed. Please use your mail app or try again.
+                </div>
+              )}
+
+              {/* Direct Form */}
+              <form onSubmit={handleDirectEmailSubmit} style={{ display: "flex", flexDirection: "column", gap: "1rem" }}>
+                <div>
+                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.35rem" }}>
+                    Your Full Name *
+                  </label>
+                  <input
+                    type="text"
+                    value={directEmailData.name}
+                    onChange={(e) => {
+                      setDirectEmailData({ ...directEmailData, name: e.target.value });
+                      if (directEmailErrors.name) setDirectEmailErrors({ ...directEmailErrors, name: "" });
+                    }}
+                    placeholder="e.g. Alexander Vance"
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "0.5rem",
+                      border: `1px solid ${directEmailErrors.name ? "#EF4444" : "var(--color-border)"}`,
+                      background: "var(--color-bg)",
+                      color: "var(--color-text-primary)",
+                      outline: "none",
+                      fontSize: "0.9rem",
+                    }}
+                  />
+                  {directEmailErrors.name && (
+                    <span style={{ fontSize: "0.78rem", color: "#EF4444", marginTop: "0.2rem", display: "block" }}>
+                      {directEmailErrors.name}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.35rem" }}>
+                    Your Email Address *
+                  </label>
+                  <input
+                    type="email"
+                    value={directEmailData.email}
+                    onChange={(e) => {
+                      setDirectEmailData({ ...directEmailData, email: e.target.value });
+                      if (directEmailErrors.email) setDirectEmailErrors({ ...directEmailErrors, email: "" });
+                    }}
+                    placeholder="e.g. alexander@company.com"
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "0.5rem",
+                      border: `1px solid ${directEmailErrors.email ? "#EF4444" : "var(--color-border)"}`,
+                      background: "var(--color-bg)",
+                      color: "var(--color-text-primary)",
+                      outline: "none",
+                      fontSize: "0.9rem",
+                    }}
+                  />
+                  {directEmailErrors.email && (
+                    <span style={{ fontSize: "0.78rem", color: "#EF4444", marginTop: "0.2rem", display: "block" }}>
+                      {directEmailErrors.email}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.35rem" }}>
+                    Subject
+                  </label>
+                  <input
+                    type="text"
+                    value={directEmailData.subject}
+                    onChange={(e) => setDirectEmailData({ ...directEmailData, subject: e.target.value })}
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "0.5rem",
+                      border: "1px solid var(--color-border)",
+                      background: "var(--color-bg)",
+                      color: "var(--color-text-primary)",
+                      outline: "none",
+                      fontSize: "0.9rem",
+                    }}
+                  />
+                </div>
+
+                <div>
+                  <label style={{ display: "block", fontSize: "0.85rem", fontWeight: 600, marginBottom: "0.35rem" }}>
+                    Message *
+                  </label>
+                  <textarea
+                    rows={4}
+                    value={directEmailData.message}
+                    onChange={(e) => {
+                      setDirectEmailData({ ...directEmailData, message: e.target.value });
+                      if (directEmailErrors.message) setDirectEmailErrors({ ...directEmailErrors, message: "" });
+                    }}
+                    placeholder="Write your email message directly to Rahan Santhosh..."
+                    style={{
+                      width: "100%",
+                      padding: "0.75rem 1rem",
+                      borderRadius: "0.5rem",
+                      border: `1px solid ${directEmailErrors.message ? "#EF4444" : "var(--color-border)"}`,
+                      background: "var(--color-bg)",
+                      color: "var(--color-text-primary)",
+                      outline: "none",
+                      fontSize: "0.9rem",
+                      resize: "vertical",
+                    }}
+                  />
+                  {directEmailErrors.message && (
+                    <span style={{ fontSize: "0.78rem", color: "#EF4444", marginTop: "0.2rem", display: "block" }}>
+                      {directEmailErrors.message}
+                    </span>
+                  )}
+                </div>
+
+                <button
+                  type="submit"
+                  disabled={directEmailStatus === "loading"}
+                  className="btn-primary"
+                  style={{
+                    width: "100%",
+                    padding: "0.85rem",
+                    borderRadius: "0.5rem",
+                    background: "var(--color-accent-mid)",
+                    color: "#FFFFFF",
+                    fontWeight: 600,
+                    fontSize: "0.95rem",
+                    border: "none",
+                    cursor: "pointer",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    gap: "0.5rem",
+                    marginTop: "0.5rem",
+                  }}
+                >
+                  {directEmailStatus === "loading" ? "Sending Email..." : <><Send size={16} /> Send Email Now</>}
+                </button>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
+
+      {/* ── TOAST NOTIFICATION ── */}
+      <AnimatePresence>
+        {toastMessage && (
+          <motion.div
+            initial={{ opacity: 0, y: 50, scale: 0.9 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: 20, scale: 0.9 }}
+            style={{
+              position: "fixed",
+              bottom: "2rem",
+              right: "2rem",
+              zIndex: 1100,
+              background: "#0F172A",
+              color: "#FFFFFF",
+              padding: "0.85rem 1.4rem",
+              borderRadius: "0.75rem",
+              boxShadow: "0 10px 25px rgba(0, 0, 0, 0.3)",
+              border: "1px solid rgba(255, 255, 255, 0.15)",
+              display: "flex",
+              alignItems: "center",
+              gap: "0.75rem",
+              fontSize: "0.9rem",
+              fontWeight: 500,
+            }}
+          >
+            <CheckCircle2 size={18} color="#34D399" />
+            <span>{toastMessage}</span>
+          </motion.div>
+        )}
+      </AnimatePresence>
 
       {/* ── Responsive Styling ── */}
       <style>{`
