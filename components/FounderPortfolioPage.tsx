@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { motion } from "framer-motion";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -10,12 +10,7 @@ import {
   Target,
   Mail,
   ArrowRight,
-  Menu,
-  X,
-  Sparkles,
   CheckCircle2,
-  FileText,
-  MapPin,
   Building,
   ChevronRight,
   Compass,
@@ -24,19 +19,10 @@ import {
   Lightbulb,
 } from "lucide-react";
 
-
-const NAV_ITEMS = [
-  { label: "Overview", href: "#overview" },
-  { label: "About Rahan", href: "#about" },
-  { label: "Methodology", href: "#methodology" },
-  { label: "Leadership", href: "#leadership" },
-  { label: "Contact", href: "#contact" },
-];
-
 const METRICS = [
   { value: "NISM", label: "Series Certified", sub: "Regulatory Compliant" },
   { value: "100%", label: "Capital Focus", sub: "Risk Protection First" },
-  { value: "Option", label: "Derivatives Specialist", sub: "Structured Yield" },
+  { value: "Options", label: "Derivatives Specialist", sub: "Structured Yield" },
   { value: "FUNDAUX", label: "Founder & CEO", sub: "Strategic Leadership" },
 ];
 
@@ -96,12 +82,10 @@ const LEADERSHIP_VALUES = [
 
 export default function FounderPortfolioView() {
   const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [activeTab, setActiveTab] = useState("overview");
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 30);
+      setScrolled(window.scrollY > 20);
     };
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
@@ -111,13 +95,13 @@ export default function FounderPortfolioView() {
     <div
       style={{
         minHeight: "100vh",
-        background: "#090D16",
-        color: "#F1F5F9",
+        background: "var(--color-bg)",
+        color: "var(--color-text-primary)",
         fontFamily: "var(--font-inter, 'Inter', sans-serif)",
         overflowX: "hidden",
       }}
     >
-      {/* ── Standalone Navigation Bar ── */}
+      {/* ── Standalone Navigation Bar (Only Name + Get in Touch Button) ── */}
       <motion.header
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -129,241 +113,108 @@ export default function FounderPortfolioView() {
           right: 0,
           zIndex: 100,
           background: scrolled
-            ? "rgba(9, 13, 22, 0.92)"
-            : "rgba(9, 13, 22, 0.65)",
-          backdropFilter: "blur(16px)",
-          WebkitBackdropFilter: "blur(16px)",
-          borderBottom: "1px solid rgba(255, 255, 255, 0.08)",
-          transition: "background 0.3s ease",
+            ? "rgba(var(--navbar-rgb, 255, 255, 255), 0.97)"
+            : "rgba(var(--navbar-rgb, 255, 255, 255), 0.88)",
+          backdropFilter: "blur(12px)",
+          WebkitBackdropFilter: "blur(12px)",
+          boxShadow: scrolled ? "var(--shadow-nav)" : "none",
+          borderBottom: "1px solid var(--color-border)",
+          transition: "background 0.3s ease, box-shadow 0.3s ease",
         }}
       >
-        <div
-          style={{
-            maxWidth: "1240px",
-            margin: "0 auto",
-            padding: "0 1.5rem",
-            height: "4.75rem",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          {/* Rahan Personal Brand Monogram */}
-          <a
-            href="#overview"
+        <div className="section-container">
+          <div
             style={{
+              height: "4.5rem",
               display: "flex",
               alignItems: "center",
-              gap: "0.85rem",
-              textDecoration: "none",
+              justifyContent: "space-between",
             }}
           >
-            <div
+            {/* Left: Name & Monogram */}
+            <a
+              href="#overview"
               style={{
-                width: "42px",
-                height: "42px",
-                borderRadius: "0.75rem",
-                background:
-                  "linear-gradient(135deg, #3B82F6 0%, #1D4ED8 100%)",
                 display: "flex",
                 alignItems: "center",
-                justifyContent: "center",
-                fontWeight: 800,
-                fontSize: "1.1rem",
-                color: "#FFFFFF",
-                boxShadow: "0 0 20px rgba(59, 130, 246, 0.35)",
-                letterSpacing: "0.05em",
+                gap: "0.75rem",
+                textDecoration: "none",
               }}
             >
-              RS
-            </div>
-            <div style={{ display: "flex", flexDirection: "column" }}>
-              <span
+              <div
                 style={{
-                  fontSize: "1.15rem",
+                  width: "40px",
+                  height: "40px",
+                  borderRadius: "0.6rem",
+                  background: "var(--color-accent)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
                   fontWeight: 800,
+                  fontSize: "1.05rem",
                   color: "#FFFFFF",
-                  letterSpacing: "-0.01em",
-                  lineHeight: 1.2,
+                  letterSpacing: "0.04em",
+                  boxShadow: "var(--shadow-sm)",
                 }}
               >
-                Rahan Santhosh
-              </span>
-              <span
-                style={{
-                  fontSize: "0.72rem",
-                  fontWeight: 600,
-                  color: "#93C5FD",
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                }}
-              >
-                Founder & CEO
-              </span>
-            </div>
-          </a>
+                RS
+              </div>
+              <div style={{ display: "flex", flexDirection: "column" }}>
+                <span
+                  style={{
+                    fontSize: "1.15rem",
+                    fontWeight: 800,
+                    color: "var(--color-text-primary)",
+                    letterSpacing: "-0.01em",
+                    lineHeight: 1.2,
+                  }}
+                >
+                  Rahan Santhosh
+                </span>
+                <span
+                  style={{
+                    fontSize: "0.72rem",
+                    fontWeight: 600,
+                    color: "var(--color-accent-mid)",
+                    letterSpacing: "0.08em",
+                    textTransform: "uppercase",
+                  }}
+                >
+                  Founder & CEO
+                </span>
+              </div>
+            </a>
 
-          {/* Desktop Nav Items */}
-          <nav
-            style={{ display: "flex", alignItems: "center", gap: "2rem" }}
-            className="hidden-mobile-nav"
-          >
-            {NAV_ITEMS.map((item) => (
-              <a
-                key={item.href}
-                href={item.href}
-                style={{
-                  color: "rgba(241, 245, 249, 0.75)",
-                  textDecoration: "none",
-                  fontSize: "0.92rem",
-                  fontWeight: 500,
-                  transition: "color 0.2s ease",
-                }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#60A5FA")}
-                onMouseLeave={(e) =>
-                  (e.currentTarget.style.color = "rgba(241, 245, 249, 0.75)")
-                }
-              >
-                {item.label}
-              </a>
-            ))}
-          </nav>
-
-          {/* Action CTAs */}
-          <div
-            style={{ display: "flex", alignItems: "center", gap: "1rem" }}
-          >
+            {/* Right: Only Get in Touch CTA */}
             <a
               href="#contact"
-              className="hidden-mobile-nav"
+              className="btn-primary"
               style={{
-                padding: "0.6rem 1.35rem",
-                borderRadius: "0.5rem",
-                background: "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
-                color: "#FFFFFF",
-                fontWeight: 600,
                 fontSize: "0.88rem",
-                textDecoration: "none",
-                boxShadow: "0 4px 14px rgba(37, 99, 235, 0.35)",
-                transition: "transform 0.2s ease, box-shadow 0.2s ease",
-              }}
-              onMouseEnter={(e) => {
-                e.currentTarget.style.transform = "translateY(-1px)";
-                e.currentTarget.style.boxShadow =
-                  "0 6px 20px rgba(37, 99, 235, 0.5)";
-              }}
-              onMouseLeave={(e) => {
-                e.currentTarget.style.transform = "none";
-                e.currentTarget.style.boxShadow =
-                  "0 4px 14px rgba(37, 99, 235, 0.35)";
+                padding: "0.55rem 1.4rem",
               }}
             >
               Get in Touch
             </a>
-
-            {/* Mobile Menu Toggle */}
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="show-mobile-nav"
-              style={{
-                background: "rgba(255, 255, 255, 0.06)",
-                border: "1px solid rgba(255, 255, 255, 0.12)",
-                color: "#FFFFFF",
-                padding: "0.55rem",
-                borderRadius: "0.5rem",
-                cursor: "pointer",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-              aria-label="Toggle Navigation"
-            >
-              {mobileMenuOpen ? <X size={22} /> : <Menu size={22} />}
-            </button>
           </div>
         </div>
       </motion.header>
 
-      {/* Mobile Drawer */}
-      <AnimatePresence>
-        {mobileMenuOpen && (
-          <motion.div
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            style={{
-              position: "fixed",
-              top: "4.75rem",
-              left: 0,
-              right: 0,
-              zIndex: 99,
-              background: "#0B1120",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
-              padding: "1.5rem",
-            }}
-          >
-            <nav
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-              }}
-            >
-              {NAV_ITEMS.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  onClick={() => setMobileMenuOpen(false)}
-                  style={{
-                    color: "#F1F5F9",
-                    textDecoration: "none",
-                    fontSize: "1.05rem",
-                    fontWeight: 500,
-                    padding: "0.5rem 0",
-                    borderBottom: "1px solid rgba(255,255,255,0.05)",
-                  }}
-                >
-                  {item.label}
-                </a>
-              ))}
-              <a
-                href="#contact"
-                onClick={() => setMobileMenuOpen(false)}
-                style={{
-                  marginTop: "0.5rem",
-                  padding: "0.75rem",
-                  textAlign: "center",
-                  borderRadius: "0.5rem",
-                  background: "#2563EB",
-                  color: "#FFFFFF",
-                  fontWeight: 600,
-                  textDecoration: "none",
-                }}
-              >
-                Get in Touch
-              </a>
-            </nav>
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* ── SECTION 1: HERO OVERVIEW ── */}
+      {/* ── HERO OVERVIEW ── */}
       <section
         id="overview"
+        className="page-hero"
         style={{
-          position: "relative",
-          paddingTop: "9rem",
-          paddingBottom: "6rem",
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% -20%, rgba(37, 99, 235, 0.25), rgba(9, 13, 22, 0))",
+          paddingTop: "7.5rem",
+          paddingBottom: "5rem",
         }}
       >
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 1.5rem" }}>
+        <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "1fr",
-              gap: "4rem",
+              gap: "3.5rem",
               alignItems: "center",
             }}
             className="hero-grid"
@@ -375,60 +226,32 @@ export default function FounderPortfolioView() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.6 }}
               >
-                <div
-                  style={{
-                    display: "inline-flex",
-                    alignItems: "center",
-                    gap: "0.5rem",
-                    padding: "0.4rem 1rem",
-                    borderRadius: "2rem",
-                    background: "rgba(59, 130, 246, 0.12)",
-                    border: "1px solid rgba(59, 130, 246, 0.3)",
-                    color: "#93C5FD",
-                    fontSize: "0.85rem",
-                    fontWeight: 600,
-                    marginBottom: "1.5rem",
-                  }}
-                >
-                  <Sparkles size={16} />
-                  <span>Founder & CEO, FUNDAUX | NISM Certified</span>
-                </div>
+                <span className="page-hero-label">Founder & CEO</span>
 
                 <h1
                   style={{
-                    fontSize: "clamp(2.5rem, 5vw, 4.2rem)",
+                    fontSize: "clamp(2.4rem, 5vw, 4rem)",
                     fontWeight: 800,
                     lineHeight: 1.1,
                     letterSpacing: "-0.025em",
-                    marginBottom: "1.5rem",
+                    marginTop: "0.75rem",
+                    marginBottom: "1.25rem",
                     color: "#FFFFFF",
                   }}
                 >
-                  Engineering <br />
-                  <span
-                    style={{
-                      background:
-                        "linear-gradient(135deg, #60A5FA 0%, #3B82F6 50%, #93C5FD 100%)",
-                      WebkitBackgroundClip: "text",
-                      WebkitTextFillColor: "transparent",
-                    }}
-                  >
-                    Disciplined Wealth &
-                  </span>{" "}
-                  <br />
-                  Capital Protection.
+                  Rahan <span style={{ color: "#93C5FD" }}>Santhosh</span>
                 </h1>
 
                 <p
                   style={{
-                    fontSize: "1.125rem",
+                    fontSize: "1.1rem",
                     lineHeight: 1.7,
-                    color: "rgba(241, 245, 249, 0.75)",
+                    color: "rgba(255, 255, 255, 0.75)",
                     maxWidth: "540px",
-                    marginBottom: "2.5rem",
+                    marginBottom: "2.25rem",
                   }}
                 >
-                  Welcome to the personal site of <strong>Rahan Santhosh</strong>. As Founder & CEO of FUNDAUX, I pioneer quantitative derivatives management, risk mitigation, and structured growth strategies designed for long-term consistency.
+                  Personal portfolio of Rahan Santhosh — Founder & CEO of FUNDAUX. Pioneering quantitative derivatives management, risk mitigation, and structured financial strategies designed for long-term capital preservation.
                 </p>
 
                 <div
@@ -441,23 +264,15 @@ export default function FounderPortfolioView() {
                 >
                   <a
                     href="#contact"
+                    className="btn-primary"
                     style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "0.6rem",
-                      padding: "0.85rem 1.85rem",
-                      borderRadius: "0.6rem",
-                      background:
-                        "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
-                      color: "#FFFFFF",
-                      fontWeight: 600,
-                      fontSize: "0.95rem",
-                      textDecoration: "none",
-                      boxShadow: "0 8px 24px rgba(37, 99, 235, 0.4)",
-                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                      background: "#FFFFFF",
+                      color: "var(--color-accent)",
+                      borderColor: "#FFFFFF",
+                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
                     }}
                   >
-                    Schedule Strategy Meeting <ArrowRight size={18} />
+                    Schedule Strategy Meeting <ArrowRight size={16} />
                   </a>
 
                   <a
@@ -466,24 +281,24 @@ export default function FounderPortfolioView() {
                       display: "inline-flex",
                       alignItems: "center",
                       gap: "0.5rem",
-                      padding: "0.85rem 1.6rem",
-                      borderRadius: "0.6rem",
-                      background: "rgba(255, 255, 255, 0.05)",
-                      border: "1px solid rgba(255, 255, 255, 0.15)",
-                      color: "#F1F5F9",
+                      padding: "0.75rem 1.6rem",
+                      borderRadius: "0.5rem",
+                      background: "rgba(255, 255, 255, 0.12)",
+                      border: "1px solid rgba(255, 255, 255, 0.25)",
+                      color: "#FFFFFF",
                       fontWeight: 500,
-                      fontSize: "0.95rem",
+                      fontSize: "0.9rem",
                       textDecoration: "none",
                       transition: "background 0.2s ease",
                     }}
                   >
-                    View Investment Pillars
+                    View Strategic Pillars
                   </a>
                 </div>
               </motion.div>
             </div>
 
-            {/* Right Column: Hero Visual Card */}
+            {/* Right Column: Profile Photo Card */}
             <motion.div
               initial={{ opacity: 0, scale: 0.95 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -494,19 +309,18 @@ export default function FounderPortfolioView() {
                 style={{
                   position: "relative",
                   width: "100%",
-                  maxWidth: "420px",
-                  borderRadius: "1.5rem",
-                  padding: "1rem",
-                  background:
-                    "linear-gradient(135deg, rgba(255,255,255,0.08) 0%, rgba(255,255,255,0.02) 100%)",
-                  border: "1px solid rgba(255, 255, 255, 0.12)",
-                  boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.7)",
+                  maxWidth: "360px",
+                  borderRadius: "1.25rem",
+                  padding: "0.75rem",
+                  background: "rgba(255, 255, 255, 0.1)",
+                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  boxShadow: "0 20px 40px rgba(15, 30, 75, 0.25)",
                 }}
               >
                 <div
                   style={{
                     position: "relative",
-                    borderRadius: "1.25rem",
+                    borderRadius: "1rem",
                     overflow: "hidden",
                     aspectRatio: "1 / 1",
                   }}
@@ -527,7 +341,7 @@ export default function FounderPortfolioView() {
                       position: "absolute",
                       inset: 0,
                       background:
-                        "linear-gradient(to top, rgba(9, 13, 22, 0.85) 0%, rgba(9, 13, 22, 0) 60%)",
+                        "linear-gradient(to top, rgba(15, 30, 75, 0.85) 0%, rgba(15, 30, 75, 0) 65%)",
                     }}
                   />
                   <div
@@ -543,21 +357,21 @@ export default function FounderPortfolioView() {
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "0.4rem",
-                        padding: "0.3rem 0.75rem",
+                        padding: "0.25rem 0.7rem",
                         borderRadius: "1rem",
                         background: "rgba(16, 185, 129, 0.2)",
                         border: "1px solid rgba(16, 185, 129, 0.4)",
                         color: "#34D399",
-                        fontSize: "0.78rem",
+                        fontSize: "0.75rem",
                         fontWeight: 600,
-                        marginBottom: "0.5rem",
+                        marginBottom: "0.4rem",
                       }}
                     >
-                      <CheckCircle2 size={14} /> Active Founder & Executive
+                      <CheckCircle2 size={13} /> Active Founder & Executive
                     </div>
                     <h3
                       style={{
-                        fontSize: "1.35rem",
+                        fontSize: "1.25rem",
                         fontWeight: 800,
                         color: "#FFFFFF",
                         margin: 0,
@@ -567,9 +381,9 @@ export default function FounderPortfolioView() {
                     </h3>
                     <p
                       style={{
-                        fontSize: "0.85rem",
-                        color: "rgba(255,255,255,0.7)",
-                        margin: "0.2rem 0 0",
+                        fontSize: "0.82rem",
+                        color: "rgba(255,255,255,0.75)",
+                        margin: "0.15rem 0 0",
                       }}
                     >
                       Founder & CEO @ FUNDAUX
@@ -579,31 +393,35 @@ export default function FounderPortfolioView() {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
 
-          {/* ── Key Metrics Banner ── */}
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.4 }}
+      {/* ── KEY METRICS STRIP ── */}
+      <section style={{ padding: "3rem 0", background: "var(--color-surface)", borderBottom: "1px solid var(--color-border)" }}>
+        <div className="section-container">
+          <div
             style={{
-              marginTop: "5rem",
               display: "grid",
-              gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+              gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
               gap: "1.5rem",
-              padding: "2rem",
-              borderRadius: "1.25rem",
-              background: "rgba(15, 23, 42, 0.6)",
-              border: "1px solid rgba(255, 255, 255, 0.08)",
-              backdropFilter: "blur(12px)",
             }}
           >
             {METRICS.map((metric, idx) => (
-              <div key={idx} style={{ textAlign: "center", padding: "0.5rem" }}>
+              <div
+                key={idx}
+                style={{
+                  textAlign: "center",
+                  padding: "1.25rem",
+                  background: "var(--color-surface-2)",
+                  borderRadius: "0.75rem",
+                  border: "1px solid var(--color-border)",
+                }}
+              >
                 <div
                   style={{
-                    fontSize: "2rem",
+                    fontSize: "1.85rem",
                     fontWeight: 800,
-                    color: "#60A5FA",
+                    color: "var(--color-accent-mid)",
                     letterSpacing: "-0.02em",
                   }}
                 >
@@ -611,18 +429,18 @@ export default function FounderPortfolioView() {
                 </div>
                 <div
                   style={{
-                    fontSize: "0.95rem",
+                    fontSize: "0.9rem",
                     fontWeight: 700,
-                    color: "#FFFFFF",
-                    marginTop: "0.25rem",
+                    color: "var(--color-text-primary)",
+                    marginTop: "0.2rem",
                   }}
                 >
                   {metric.label}
                 </div>
                 <div
                   style={{
-                    fontSize: "0.8rem",
-                    color: "rgba(241, 245, 249, 0.55)",
+                    fontSize: "0.78rem",
+                    color: "var(--color-text-secondary)",
                     marginTop: "0.15rem",
                   }}
                 >
@@ -630,46 +448,34 @@ export default function FounderPortfolioView() {
                 </div>
               </div>
             ))}
-          </motion.div>
+          </div>
         </div>
       </section>
 
-      {/* ── SECTION 2: ABOUT RAHAN ── */}
+      {/* ── ABOUT RAHAN ── */}
       <section
         id="about"
         style={{
           padding: "6rem 0",
-          background: "#0B1120",
-          borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+          background: "var(--color-bg)",
         }}
       >
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 1.5rem" }}>
-          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 4rem" }}>
-            <span
-              style={{
-                color: "#60A5FA",
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-              }}
-            >
-              Executive Background
-            </span>
+        <div className="section-container">
+          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 3.5rem" }}>
+            <span className="section-label">Executive Background</span>
             <h2
               style={{
                 fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
                 fontWeight: 800,
-                color: "#FFFFFF",
+                color: "var(--color-text-primary)",
                 marginTop: "0.5rem",
-                letterSpacing: "-0.02em",
               }}
             >
               About Rahan Santhosh
             </h2>
             <p
               style={{
-                color: "rgba(241, 245, 249, 0.65)",
+                color: "var(--color-text-secondary)",
                 fontSize: "1.05rem",
                 marginTop: "0.75rem",
                 lineHeight: 1.65,
@@ -689,22 +495,22 @@ export default function FounderPortfolioView() {
           >
             {/* Vision Quote Card */}
             <div
+              className="glass-card"
               style={{
                 padding: "2.5rem",
-                borderRadius: "1.25rem",
-                background: "rgba(15, 23, 42, 0.7)",
-                border: "1px solid rgba(255, 255, 255, 0.08)",
-                position: "relative",
+                display: "flex",
+                flexDirection: "column",
+                justifyContent: "space-between",
               }}
             >
               <blockquote
                 style={{
-                  fontSize: "1.35rem",
+                  fontSize: "1.25rem",
                   fontWeight: 500,
                   fontStyle: "italic",
-                  lineHeight: 1.6,
-                  color: "#FFFFFF",
-                  borderLeft: "4px solid #3B82F6",
+                  lineHeight: 1.65,
+                  color: "var(--color-text-primary)",
+                  borderLeft: "4px solid var(--color-accent-mid)",
                   paddingLeft: "1.5rem",
                   margin: "0 0 2rem 0",
                 }}
@@ -718,7 +524,7 @@ export default function FounderPortfolioView() {
                   alignItems: "center",
                   gap: "1rem",
                   paddingTop: "1.5rem",
-                  borderTop: "1px solid rgba(255,255,255,0.08)",
+                  borderTop: "1px solid var(--color-border)",
                 }}
               >
                 <div
@@ -727,6 +533,7 @@ export default function FounderPortfolioView() {
                     height: "48px",
                     borderRadius: "50%",
                     overflow: "hidden",
+                    border: "2px solid var(--color-border)",
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -737,54 +544,42 @@ export default function FounderPortfolioView() {
                   />
                 </div>
                 <div>
-                  <div style={{ fontWeight: 700, color: "#FFFFFF", fontSize: "1rem" }}>
+                  <div style={{ fontWeight: 700, color: "var(--color-text-primary)", fontSize: "1rem" }}>
                     Rahan Santhosh
                   </div>
-                  <div style={{ fontSize: "0.82rem", color: "#60A5FA" }}>
+                  <div style={{ fontSize: "0.85rem", color: "var(--color-accent-mid)", fontWeight: 500 }}>
                     Founder & Chief Executive Officer
                   </div>
                 </div>
               </div>
             </div>
 
-            {/* Story & Background Cards */}
-            <div
-              style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1.5rem",
-              }}
-            >
+            {/* Background Details */}
+            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
               <div
                 style={{
                   padding: "2rem",
-                  borderRadius: "1.25rem",
-                  background: "rgba(15, 23, 42, 0.5)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "1rem",
+                  background: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                  boxShadow: "var(--shadow-sm)",
                 }}
               >
                 <h3
                   style={{
                     fontSize: "1.2rem",
                     fontWeight: 700,
-                    color: "#FFFFFF",
+                    color: "var(--color-text-primary)",
                     marginBottom: "0.75rem",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.6rem",
                   }}
                 >
-                  <Building size={20} color="#3B82F6" />
+                  <Building size={20} color="var(--color-accent-mid)" />
                   Building FUNDAUX
                 </h3>
-                <p
-                  style={{
-                    color: "rgba(241, 245, 249, 0.7)",
-                    fontSize: "0.95rem",
-                    lineHeight: 1.7,
-                    margin: 0,
-                  }}
-                >
+                <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
                   Rahan founded FUNDAUX with a singular mission: to strip away the opacity and emotional pitfalls of conventional asset management. Under his direction, FUNDAUX blends systematic derivatives strategies with client-first capital governance.
                 </p>
               </div>
@@ -792,33 +587,27 @@ export default function FounderPortfolioView() {
               <div
                 style={{
                   padding: "2rem",
-                  borderRadius: "1.25rem",
-                  background: "rgba(15, 23, 42, 0.5)",
-                  border: "1px solid rgba(255, 255, 255, 0.08)",
+                  borderRadius: "1rem",
+                  background: "var(--color-surface)",
+                  border: "1px solid var(--color-border)",
+                  boxShadow: "var(--shadow-sm)",
                 }}
               >
                 <h3
                   style={{
                     fontSize: "1.2rem",
                     fontWeight: 700,
-                    color: "#FFFFFF",
+                    color: "var(--color-text-primary)",
                     marginBottom: "0.75rem",
                     display: "flex",
                     alignItems: "center",
                     gap: "0.6rem",
                   }}
                 >
-                  <Award size={20} color="#3B82F6" />
+                  <Award size={20} color="var(--color-accent-mid)" />
                   Professional Certifications
                 </h3>
-                <p
-                  style={{
-                    color: "rgba(241, 245, 249, 0.7)",
-                    fontSize: "0.95rem",
-                    lineHeight: 1.7,
-                    margin: 0,
-                  }}
-                >
+                <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
                   Holding NISM certifications and deep domain knowledge in derivatives, covered options, and equity risk modeling. Rahan ensures that every strategic initiative adheres strictly to Indian regulatory frameworks.
                 </p>
               </div>
@@ -827,42 +616,32 @@ export default function FounderPortfolioView() {
         </div>
       </section>
 
-      {/* ── SECTION 3: METHODOLOGY ── */}
+      {/* ── METHODOLOGY FRAMEWORK ── */}
       <section
         id="methodology"
         style={{
           padding: "6rem 0",
-          background: "#090D16",
-          borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+          background: "var(--color-surface)",
+          borderTop: "1px solid var(--color-border)",
+          borderBottom: "1px solid var(--color-border)",
         }}
       >
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 1.5rem" }}>
-          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 4rem" }}>
-            <span
-              style={{
-                color: "#60A5FA",
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-              }}
-            >
-              Quantitative Framework
-            </span>
+        <div className="section-container">
+          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 3.5rem" }}>
+            <span className="section-label">Quantitative Framework</span>
             <h2
               style={{
                 fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
                 fontWeight: 800,
-                color: "#FFFFFF",
+                color: "var(--color-text-primary)",
                 marginTop: "0.5rem",
-                letterSpacing: "-0.02em",
               }}
             >
               Investment Methodology
             </h2>
             <p
               style={{
-                color: "rgba(241, 245, 249, 0.65)",
+                color: "var(--color-text-secondary)",
                 fontSize: "1.05rem",
                 marginTop: "0.75rem",
                 lineHeight: 1.65,
@@ -882,15 +661,11 @@ export default function FounderPortfolioView() {
             {METHODOLOGY_STEPS.map((step, idx) => {
               const IconComp = step.icon;
               return (
-                <motion.div
+                <div
                   key={idx}
-                  whileHover={{ y: -4 }}
-                  transition={{ duration: 0.2 }}
+                  className="glass-card"
                   style={{
-                    padding: "2.25rem 1.75rem",
-                    borderRadius: "1.25rem",
-                    background: "rgba(15, 23, 42, 0.6)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    padding: "2rem",
                     height: "100%",
                     display: "flex",
                     flexDirection: "column",
@@ -900,14 +675,14 @@ export default function FounderPortfolioView() {
                     style={{
                       width: "48px",
                       height: "48px",
-                      borderRadius: "0.75rem",
-                      background: "rgba(59, 130, 246, 0.15)",
-                      border: "1px solid rgba(59, 130, 246, 0.3)",
+                      borderRadius: "0.6rem",
+                      background: "var(--color-accent-light)",
+                      border: "1px solid var(--color-border)",
                       display: "flex",
                       alignItems: "center",
                       justifyContent: "center",
-                      color: "#60A5FA",
-                      marginBottom: "1.5rem",
+                      color: "var(--color-accent-mid)",
+                      marginBottom: "1.25rem",
                     }}
                   >
                     <IconComp size={24} />
@@ -916,15 +691,15 @@ export default function FounderPortfolioView() {
                     style={{
                       fontSize: "1.15rem",
                       fontWeight: 700,
-                      color: "#FFFFFF",
-                      marginBottom: "0.75rem",
+                      color: "var(--color-text-primary)",
+                      marginBottom: "0.65rem",
                     }}
                   >
                     {step.title}
                   </h3>
                   <p
                     style={{
-                      color: "rgba(241, 245, 249, 0.65)",
+                      color: "var(--color-text-secondary)",
                       fontSize: "0.92rem",
                       lineHeight: 1.65,
                       margin: 0,
@@ -932,49 +707,37 @@ export default function FounderPortfolioView() {
                   >
                     {step.description}
                   </p>
-                </motion.div>
+                </div>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ── SECTION 4: LEADERSHIP VALUES ── */}
+      {/* ── LEADERSHIP PRINCIPLES ── */}
       <section
         id="leadership"
         style={{
           padding: "6rem 0",
-          background: "#0B1120",
-          borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+          background: "var(--color-bg)",
         }}
       >
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 1.5rem" }}>
-          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 4rem" }}>
-            <span
-              style={{
-                color: "#60A5FA",
-                fontSize: "0.85rem",
-                fontWeight: 700,
-                textTransform: "uppercase",
-                letterSpacing: "0.1em",
-              }}
-            >
-              Leadership Principles
-            </span>
+        <div className="section-container">
+          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 3.5rem" }}>
+            <span className="section-label">Leadership Principles</span>
             <h2
               style={{
                 fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
                 fontWeight: 800,
-                color: "#FFFFFF",
+                color: "var(--color-text-primary)",
                 marginTop: "0.5rem",
-                letterSpacing: "-0.02em",
               }}
             >
               Core Leadership Values
             </h2>
             <p
               style={{
-                color: "rgba(241, 245, 249, 0.65)",
+                color: "var(--color-text-secondary)",
                 fontSize: "1.05rem",
                 marginTop: "0.75rem",
                 lineHeight: 1.65,
@@ -998,9 +761,10 @@ export default function FounderPortfolioView() {
                   key={idx}
                   style={{
                     padding: "2rem",
-                    borderRadius: "1.25rem",
-                    background: "rgba(15, 23, 42, 0.5)",
-                    border: "1px solid rgba(255, 255, 255, 0.08)",
+                    borderRadius: "0.75rem",
+                    background: "var(--color-surface)",
+                    border: "1px solid var(--color-border)",
+                    boxShadow: "var(--shadow-sm)",
                   }}
                 >
                   <div
@@ -1016,11 +780,11 @@ export default function FounderPortfolioView() {
                         width: "36px",
                         height: "36px",
                         borderRadius: "0.5rem",
-                        background: "rgba(59, 130, 246, 0.15)",
+                        background: "var(--color-accent-light)",
                         display: "flex",
                         alignItems: "center",
                         justifyContent: "center",
-                        color: "#60A5FA",
+                        color: "var(--color-accent-mid)",
                       }}
                     >
                       <IconComponent size={20} />
@@ -1029,7 +793,7 @@ export default function FounderPortfolioView() {
                       style={{
                         fontSize: "1.1rem",
                         fontWeight: 700,
-                        color: "#FFFFFF",
+                        color: "var(--color-text-primary)",
                         margin: 0,
                       }}
                     >
@@ -1038,7 +802,7 @@ export default function FounderPortfolioView() {
                   </div>
                   <p
                     style={{
-                      color: "rgba(241, 245, 249, 0.65)",
+                      color: "var(--color-text-secondary)",
                       fontSize: "0.92rem",
                       lineHeight: 1.65,
                       margin: 0,
@@ -1053,58 +817,51 @@ export default function FounderPortfolioView() {
         </div>
       </section>
 
-      {/* ── SECTION 5: DIRECT CONTACT & CONNECT ── */}
+      {/* ── DIRECT CONNECT & CONTACT ── */}
       <section
         id="contact"
         style={{
-          padding: "6rem 0",
-          background:
-            "radial-gradient(ellipse 80% 50% at 50% 120%, rgba(37, 99, 235, 0.25), rgba(9, 13, 22, 0))",
-          borderTop: "1px solid rgba(255, 255, 255, 0.06)",
+          padding: "5rem 0",
+          background: "linear-gradient(135deg, #0F1E4B 0%, #1E3A8A 100%)",
+          color: "#FFFFFF",
+          textAlign: "center",
         }}
       >
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 1.5rem" }}>
-          <div
-            style={{
-              padding: "3.5rem 2.5rem",
-              borderRadius: "1.75rem",
-              background:
-                "linear-gradient(135deg, rgba(30, 58, 138, 0.4) 0%, rgba(15, 23, 42, 0.8) 100%)",
-              border: "1px solid rgba(59, 130, 246, 0.3)",
-              boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.5)",
-              textAlign: "center",
-              maxWidth: "850px",
-              margin: "0 auto",
-            }}
-          >
+        <div className="section-container">
+          <div style={{ maxWidth: "750px", margin: "0 auto" }}>
             <span
               style={{
-                color: "#93C5FD",
-                fontSize: "0.85rem",
+                display: "inline-block",
+                fontSize: "0.72rem",
                 fontWeight: 700,
+                letterSpacing: "0.14em",
                 textTransform: "uppercase",
-                letterSpacing: "0.1em",
+                color: "rgba(255,255,255,0.7)",
+                marginBottom: "1rem",
+                padding: "0.3rem 0.9rem",
+                background: "rgba(255,255,255,0.1)",
+                border: "1px solid rgba(255,255,255,0.2)",
+                borderRadius: "9999px",
               }}
             >
               Direct Connect
             </span>
             <h2
               style={{
-                fontSize: "clamp(2rem, 4vw, 3rem)",
+                fontSize: "clamp(2rem, 4vw, 2.75rem)",
                 fontWeight: 800,
                 color: "#FFFFFF",
                 marginTop: "0.5rem",
-                letterSpacing: "-0.02em",
               }}
             >
               Connect with Rahan Santhosh
             </h2>
             <p
               style={{
-                color: "rgba(241, 245, 249, 0.75)",
+                color: "rgba(255, 255, 255, 0.75)",
                 fontSize: "1.05rem",
                 maxWidth: "540px",
-                margin: "1rem auto 2.5rem",
+                margin: "1rem auto 2.25rem",
                 lineHeight: 1.65,
               }}
             >
@@ -1121,19 +878,12 @@ export default function FounderPortfolioView() {
             >
               <a
                 href="mailto:fundauxin@gmail.com"
+                className="btn-primary"
                 style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.6rem",
-                  padding: "0.85rem 1.85rem",
-                  borderRadius: "0.6rem",
-                  background:
-                    "linear-gradient(135deg, #2563EB 0%, #1D4ED8 100%)",
-                  color: "#FFFFFF",
-                  fontWeight: 600,
-                  fontSize: "0.95rem",
-                  textDecoration: "none",
-                  boxShadow: "0 6px 20px rgba(37, 99, 235, 0.4)",
+                  background: "#FFFFFF",
+                  color: "var(--color-accent)",
+                  borderColor: "#FFFFFF",
+                  padding: "0.8rem 2rem",
                 }}
               >
                 <Mail size={18} /> Send Direct Email
@@ -1145,13 +895,13 @@ export default function FounderPortfolioView() {
                   display: "inline-flex",
                   alignItems: "center",
                   gap: "0.5rem",
-                  padding: "0.85rem 1.6rem",
-                  borderRadius: "0.6rem",
-                  background: "rgba(255, 255, 255, 0.08)",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
+                  padding: "0.8rem 1.8rem",
+                  borderRadius: "0.5rem",
+                  background: "rgba(255, 255, 255, 0.12)",
+                  border: "1px solid rgba(255, 255, 255, 0.25)",
                   color: "#FFFFFF",
                   fontWeight: 500,
-                  fontSize: "0.95rem",
+                  fontSize: "0.9rem",
                   textDecoration: "none",
                 }}
               >
@@ -1162,40 +912,40 @@ export default function FounderPortfolioView() {
         </div>
       </section>
 
-      {/* ── STANDALONE FOOTER ── */}
+      {/* ── FOOTER ── */}
       <footer
         style={{
-          background: "#060911",
-          borderTop: "1px solid rgba(255, 255, 255, 0.08)",
-          padding: "3.5rem 0 2rem",
+          background: "var(--color-text-primary)",
+          color: "rgba(255, 255, 255, 0.6)",
+          padding: "3rem 0 2rem",
         }}
       >
-        <div style={{ maxWidth: "1240px", margin: "0 auto", padding: "0 1.5rem" }}>
+        <div className="section-container">
           <div
             style={{
               display: "flex",
               justifyContent: "space-between",
               alignItems: "center",
               flexWrap: "wrap",
-              gap: "2rem",
-              paddingBottom: "2.5rem",
-              borderBottom: "1px solid rgba(255, 255, 255, 0.06)",
+              gap: "1.5rem",
+              paddingBottom: "2rem",
+              borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
             }}
           >
             {/* Monogram Brand */}
-            <div style={{ display: "flex", alignItems: "center", gap: "0.85rem" }}>
+            <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
               <div
                 style={{
                   width: "36px",
                   height: "36px",
-                  borderRadius: "0.6rem",
-                  background: "#2563EB",
+                  borderRadius: "0.5rem",
+                  background: "#FFFFFF",
+                  color: "var(--color-text-primary)",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   fontWeight: 800,
                   fontSize: "0.95rem",
-                  color: "#FFFFFF",
                 }}
               >
                 RS
@@ -1204,33 +954,23 @@ export default function FounderPortfolioView() {
                 <div style={{ fontWeight: 800, color: "#FFFFFF", fontSize: "1rem" }}>
                   Rahan Santhosh
                 </div>
-                <div style={{ fontSize: "0.78rem", color: "rgba(241, 245, 249, 0.5)" }}>
+                <div style={{ fontSize: "0.78rem", color: "rgba(255, 255, 255, 0.5)" }}>
                   Founder & CEO, FUNDAUX
                 </div>
               </div>
             </div>
 
-            {/* Quick Links */}
-            <div style={{ display: "flex", gap: "1.75rem", flexWrap: "wrap" }}>
-              {NAV_ITEMS.map((item) => (
-                <a
-                  key={item.href}
-                  href={item.href}
-                  style={{
-                    color: "rgba(241, 245, 249, 0.55)",
-                    textDecoration: "none",
-                    fontSize: "0.88rem",
-                    transition: "color 0.2s ease",
-                  }}
-                  onMouseEnter={(e) => (e.currentTarget.style.color = "#FFFFFF")}
-                  onMouseLeave={(e) =>
-                    (e.currentTarget.style.color = "rgba(241, 245, 249, 0.55)")
-                  }
-                >
-                  {item.label}
-                </a>
-              ))}
-            </div>
+            <Link
+              href="/"
+              style={{
+                fontSize: "0.85rem",
+                color: "#93C5FD",
+                textDecoration: "none",
+                fontWeight: 500,
+              }}
+            >
+              Back to FUNDAUX Main Site &rarr;
+            </Link>
           </div>
 
           <div
@@ -1240,38 +980,27 @@ export default function FounderPortfolioView() {
               alignItems: "center",
               flexWrap: "wrap",
               gap: "1rem",
-              paddingTop: "1.75rem",
+              paddingTop: "1.5rem",
             }}
           >
-            <p style={{ fontSize: "0.82rem", color: "rgba(241, 245, 249, 0.4)", margin: 0 }}>
+            <p style={{ fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.4)", margin: 0 }}>
               &copy; 2026 Rahan Santhosh. All rights reserved.
             </p>
-            <Link
-              href="/"
-              style={{
-                fontSize: "0.82rem",
-                color: "#60A5FA",
-                textDecoration: "none",
-              }}
-            >
-              Back to FUNDAUX Main Site &rarr;
-            </Link>
+            <p style={{ fontSize: "0.82rem", color: "rgba(255, 255, 255, 0.3)", margin: 0 }}>
+              Disciplined Wealth Management & Capital Protection.
+            </p>
           </div>
         </div>
       </footer>
 
-      {/* ── Responsive Styling ── */}
+      {/* ── Responsive Grid Styling ── */}
       <style>{`
         @media (min-width: 1024px) {
-          .hidden-mobile-nav { display: flex !important; }
-          .show-mobile-nav { display: none !important; }
-          .hero-grid { grid-template-columns: 1.25fr 0.75fr !important; }
-          .about-grid { grid-template-columns: 0.9fr 1.1fr !important; }
+          .hero-grid { grid-template-columns: 1.2fr 0.8fr !important; }
+          .about-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 1023px) {
-          .hidden-mobile-nav { display: none !important; }
-          .show-mobile-nav { display: flex !important; }
-          .hero-grid { grid-template-columns: 1fr !important; gap: 3rem !important; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
           .about-grid { grid-template-columns: 1fr !important; }
         }
       `}</style>
