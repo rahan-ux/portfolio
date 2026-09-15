@@ -4,6 +4,7 @@ import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
+import Image from "next/image";
 import { usePathname } from "next/navigation";
 
 const NAV_LINKS = [
@@ -64,18 +65,15 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link
-            href="/"
-            style={{
-              fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-              fontSize: "1.35rem",
-              fontWeight: 800,
-              color: "var(--color-text-primary)",
-              textDecoration: "none",
-              letterSpacing: "0.06em",
-            }}
-          >
-            FUND<span style={{ color: "var(--color-accent-mid)" }}>AUX</span>
+          <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+            <Image
+              src="/logo.png"
+              alt="FUNDAUX"
+              width={44}
+              height={44}
+              style={{ objectFit: "contain" }}
+              priority
+            />
           </Link>
 
           {/* Desktop Nav */}

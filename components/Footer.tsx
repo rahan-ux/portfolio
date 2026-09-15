@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 
 const FOOTER_LINKS = [
   { label: "Home", href: "/" },
@@ -26,20 +27,14 @@ export default function Footer() {
           {/* Top Section */}
           <div className="footer-top">
             <div style={{ flex: 1 }}>
-              <Link
-                href="/"
-                style={{
-                  fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-                  fontSize: "1.5rem",
-                  fontWeight: 800,
-                  color: "#FFFFFF",
-                  textDecoration: "none",
-                  letterSpacing: "0.06em",
-                  display: "inline-block",
-                  marginBottom: "0.75rem",
-                }}
-              >
-                FUND<span style={{ color: "#60A5FA" }}>AUX</span>
+              <Link href="/" style={{ display: "inline-flex", alignItems: "center", marginBottom: "0.75rem" }}>
+                <Image
+                  src="/logo.png"
+                  alt="FUNDAUX"
+                  width={48}
+                  height={48}
+                  style={{ objectFit: "contain", filter: "invert(1)" }}
+                />
               </Link>
               <p style={{ color: "rgba(255,255,255,0.55)", fontSize: "0.92rem", marginBottom: "1rem", maxWidth: "280px", lineHeight: 1.65 }}>
                 Achieve Your Financial Goals Through Strategic, Disciplined Management.
