@@ -431,186 +431,131 @@ export default function FounderPortfolioView() {
         </div>
       </motion.header>
 
-      {/* ── HERO OVERVIEW ── */}
+      {/* ── BREADCRUMB & HEADER BANNER ── */}
       <section
         id="overview"
         className="page-hero"
         style={{
-          paddingTop: "5.75rem",
-          paddingBottom: "3.5rem",
+          paddingTop: "5.5rem",
+          paddingBottom: "2.5rem",
         }}
       >
         <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
           <div
             style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "1.25rem",
+            }}
+          >
+            <div>
+              <span className="page-hero-label">Executive Leadership Profile</span>
+              <h1
+                style={{
+                  fontSize: "clamp(2.2rem, 4.5vw, 3.5rem)",
+                  fontWeight: 800,
+                  lineHeight: 1.15,
+                  letterSpacing: "-0.02em",
+                  marginTop: "0.5rem",
+                  color: "#FFFFFF",
+                }}
+              >
+                Rahan <span style={{ color: "#93C5FD" }}>Santhosh</span>
+              </h1>
+              <p
+                style={{
+                  fontSize: "1.05rem",
+                  color: "rgba(255, 255, 255, 0.8)",
+                  marginTop: "0.35rem",
+                  fontWeight: 500,
+                }}
+              >
+                Founder & CEO — FUNDAUX
+              </p>
+            </div>
+
+            {/* Breadcrumb Links */}
+            <div
+              style={{
+                display: "flex",
+                alignItems: "center",
+                gap: "0.6rem",
+                fontSize: "0.88rem",
+                background: "rgba(255, 255, 255, 0.1)",
+                border: "1px solid rgba(255, 255, 255, 0.2)",
+                padding: "0.5rem 1.1rem",
+                borderRadius: "9999px",
+                color: "rgba(255, 255, 255, 0.75)",
+              }}
+            >
+              <Link href="/" style={{ color: "#93C5FD", textDecoration: "none", fontWeight: 500 }}>
+                Home
+              </Link>
+              <span>/</span>
+              <span>Leadership</span>
+              <span>/</span>
+              <span style={{ color: "#FFFFFF", fontWeight: 600 }}>Rahan Santhosh</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ── EXECUTIVE INTRODUCTION (REFERENCE LAYOUT: team-left & team-right) ── */}
+      <section style={{ padding: "4.5rem 0", background: "var(--color-bg)" }}>
+        <div className="section-container">
+          <div
+            style={{
               display: "grid",
               gridTemplateColumns: "1fr",
               gap: "3.5rem",
-              alignItems: "center",
+              alignItems: "start",
             }}
             className="hero-grid"
           >
-            {/* Left Column */}
+            {/* Left Column: Framed Leader Photo (team-left) */}
             <div>
               <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.6 }}
-              >
-                <span className="page-hero-label">Founder & CEO</span>
-
-                <h1
-                  style={{
-                    fontSize: "clamp(2.4rem, 5vw, 4rem)",
-                    fontWeight: 800,
-                    lineHeight: 1.1,
-                    letterSpacing: "-0.025em",
-                    marginTop: "0.75rem",
-                    marginBottom: "1.25rem",
-                    color: "#FFFFFF",
-                  }}
-                >
-                  Rahan <span style={{ color: "#93C5FD" }}>Santhosh</span>
-                </h1>
-
-                <p
-                  style={{
-                    fontSize: "1.1rem",
-                    lineHeight: 1.7,
-                    color: "rgba(255, 255, 255, 0.75)",
-                    maxWidth: "540px",
-                    marginBottom: "2.25rem",
-                  }}
-                >
-                  Personal portfolio of Rahan Santhosh — Founder & CEO of FUNDAUX. Pioneering quantitative derivatives management, risk mitigation, and structured financial strategies designed for long-term capital preservation.
-                </p>
-
-                <div
-                  style={{
-                    display: "flex",
-                    gap: "1rem",
-                    flexWrap: "wrap",
-                    alignItems: "center",
-                  }}
-                >
-                  {/* Schedule Strategy Meeting Button */}
-                  <button
-                    onClick={scrollToMeeting}
-                    className="btn-primary"
-                    style={{
-                      background: "#FFFFFF",
-                      color: "var(--color-accent)",
-                      borderColor: "#FFFFFF",
-                      boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
-                      cursor: "pointer",
-                    }}
-                  >
-                    <Calendar size={18} /> Schedule Strategy Meeting <ArrowRight size={16} />
-                  </button>
-
-                  {/* Direct Email Button */}
-                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
-                    <button
-                      onClick={handleDirectEmail}
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                        padding: "0.75rem 1.6rem",
-                        borderRadius: "0.5rem",
-                        background: "rgba(255, 255, 255, 0.12)",
-                        border: "1px solid rgba(255, 255, 255, 0.25)",
-                        color: "#FFFFFF",
-                        fontWeight: 500,
-                        fontSize: "0.9rem",
-                        cursor: "pointer",
-                        transition: "background 0.2s ease",
-                      }}
-                    >
-                      <Mail size={16} /> Direct Email
-                    </button>
-
-                    <button
-                      onClick={handleCopyEmail}
-                      title="Copy email address"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        padding: "0.75rem",
-                        borderRadius: "0.5rem",
-                        background: "rgba(255, 255, 255, 0.12)",
-                        border: "1px solid rgba(255, 255, 255, 0.25)",
-                        color: "#FFFFFF",
-                        cursor: "pointer",
-                      }}
-                    >
-                      {copiedEmail ? <Check size={16} color="#34D399" /> : <Copy size={16} />}
-                    </button>
-                  </div>
-                </div>
-
-                {copiedEmail && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 5 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    style={{
-                      fontSize: "0.82rem",
-                      color: "#34D399",
-                      marginTop: "0.6rem",
-                      fontWeight: 600,
-                    }}
-                  >
-                    ✓ Email &ldquo;fundauxin@gmail.com&rdquo; copied to clipboard!
-                  </motion.div>
-                )}
-              </motion.div>
-            </div>
-
-            {/* Right Column: Profile Photo Card */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              style={{ display: "flex", justifyContent: "center" }}
-            >
-              <div
+                initial={{ opacity: 0, scale: 0.96 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ duration: 0.5 }}
                 style={{
                   position: "relative",
-                  width: "100%",
-                  maxWidth: "360px",
                   borderRadius: "1.25rem",
-                  padding: "0.75rem",
-                  background: "rgba(255, 255, 255, 0.1)",
-                  border: "1px solid rgba(255, 255, 255, 0.2)",
-                  boxShadow: "0 20px 40px rgba(15, 30, 75, 0.25)",
+                  overflow: "hidden",
+                  border: "1px solid var(--color-border-strong)",
+                  boxShadow: "var(--shadow-card)",
+                  background: "var(--color-surface)",
                 }}
               >
+                {/* Photo with hover zoom effect */}
                 <div
+                  className="founder-photo-wrapper"
                   style={{
                     position: "relative",
-                    borderRadius: "1rem",
                     overflow: "hidden",
-                    aspectRatio: "1 / 1",
+                    aspectRatio: "4 / 4.5",
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/founder.jpg"
-                    alt="Rahan Santhosh - Founder & CEO"
+                    alt="Rahan Santhosh – Founder & CEO"
                     style={{
                       width: "100%",
                       height: "100%",
                       objectFit: "cover",
                       display: "block",
+                      transition: "transform 0.5s ease",
                     }}
+                    className="founder-photo-img"
                   />
                   <div
                     style={{
                       position: "absolute",
                       inset: 0,
-                      background:
-                        "linear-gradient(to top, rgba(15, 30, 75, 0.85) 0%, rgba(15, 30, 75, 0) 65%)",
+                      background: "linear-gradient(to top, rgba(15, 30, 75, 0.8) 0%, rgba(15, 30, 75, 0) 55%)",
                     }}
                   />
                   <div
@@ -626,53 +571,217 @@ export default function FounderPortfolioView() {
                         display: "inline-flex",
                         alignItems: "center",
                         gap: "0.4rem",
-                        padding: "0.25rem 0.7rem",
-                        borderRadius: "1rem",
-                        background: "rgba(16, 185, 129, 0.2)",
+                        padding: "0.3rem 0.8rem",
+                        borderRadius: "9999px",
+                        background: "rgba(16, 185, 129, 0.25)",
                         border: "1px solid rgba(16, 185, 129, 0.4)",
                         color: "#34D399",
-                        fontSize: "0.75rem",
+                        fontSize: "0.78rem",
                         fontWeight: 600,
-                        marginBottom: "0.4rem",
+                        marginBottom: "0.35rem",
                       }}
                     >
-                      <CheckCircle2 size={13} /> Active Founder & Executive
+                      <CheckCircle2 size={14} /> NISM Certified & Active Founder
                     </div>
-                    <h3
-                      style={{
-                        fontSize: "1.25rem",
-                        fontWeight: 800,
-                        color: "#FFFFFF",
-                        margin: 0,
-                      }}
-                    >
+                    <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
                       Rahan Santhosh
                     </h3>
-                    <p
-                      style={{
-                        fontSize: "0.82rem",
-                        color: "rgba(255,255,255,0.75)",
-                        margin: "0.15rem 0 0",
-                      }}
-                    >
-                      Founder & CEO @ FUNDAUX
+                    <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.8)", margin: "0.15rem 0 0" }}>
+                      Founder & CEO, FUNDAUX
                     </p>
                   </div>
                 </div>
+              </motion.div>
+
+              {/* Fast Consultation Actions under photo */}
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "0.75rem",
+                  marginTop: "1.5rem",
+                }}
+              >
+                <button
+                  onClick={scrollToMeeting}
+                  className="btn-primary"
+                  style={{
+                    width: "100%",
+                    padding: "0.8rem 1.4rem",
+                    justifyContent: "center",
+                    cursor: "pointer",
+                  }}
+                >
+                  <Calendar size={18} /> Schedule Strategy Meeting <ArrowRight size={16} />
+                </button>
+
+                <div style={{ display: "flex", gap: "0.5rem", width: "100%" }}>
+                  <button
+                    onClick={handleDirectEmail}
+                    className="btn-outline"
+                    style={{
+                      flex: 1,
+                      padding: "0.7rem 1rem",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    <Mail size={16} /> Direct Email
+                  </button>
+                  <button
+                    onClick={handleCopyEmail}
+                    title="Copy email address"
+                    className="btn-outline"
+                    style={{
+                      padding: "0.7rem",
+                      justifyContent: "center",
+                      cursor: "pointer",
+                    }}
+                  >
+                    {copiedEmail ? <Check size={16} color="#10B981" /> : <Copy size={16} />}
+                  </button>
+                </div>
               </div>
-            </motion.div>
+            </div>
+
+            {/* Right Column: Executive Biography (team-right) */}
+            <div>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.1 }}
+              >
+                <span className="section-label">Leadership Profile</span>
+                <h2
+                  style={{
+                    fontSize: "clamp(2rem, 4vw, 3rem)",
+                    fontWeight: 800,
+                    color: "var(--color-text-primary)",
+                    margin: "0.25rem 0 0.25rem",
+                    lineHeight: 1.15,
+                  }}
+                >
+                  Rahan Santhosh
+                </h2>
+                <h4
+                  style={{
+                    fontSize: "1.25rem",
+                    fontWeight: 600,
+                    color: "var(--color-accent-mid)",
+                    marginBottom: "1.75rem",
+                  }}
+                >
+                  Founder & Chief Executive Officer
+                </h4>
+
+                <div
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    gap: "1.25rem",
+                    color: "var(--color-text-secondary)",
+                    fontSize: "1.05rem",
+                    lineHeight: 1.8,
+                  }}
+                >
+                  <p style={{ textAlign: "justify" }}>
+                    Mr. Rahan Santhosh is the Chairman, Founder, and Chief Executive Officer of FUNDAUX. He is a forward-thinking quantitative strategist driven by a disciplined purpose of empowering investors through structured wealth architecture and capital protection. Under his leadership, FUNDAUX has pioneered advanced quantitative options management, risk mitigation frameworks, and algorithmic market execution.
+                  </p>
+
+                  <p style={{ textAlign: "justify" }}>
+                    Rahan established FUNDAUX to bridge the crucial gap between traditional wealth management and modern derivatives engineering. Over the years, he has led the design of proprietary covered-call structures, hedged options spreads, and delta/gamma risk control models that prioritize principal protection while generating sustainable, long-term yield. Holding NISM certifications, Rahan upholds institutional governance, data transparency, and strict regulatory compliance in every strategic mandate.
+                  </p>
+                </div>
+
+                {/* Key Leadership Pillars Strip */}
+                <div
+                  style={{
+                    display: "grid",
+                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
+                    gap: "1rem",
+                    marginTop: "2.25rem",
+                    paddingTop: "2rem",
+                    borderTop: "1px solid var(--color-border)",
+                  }}
+                >
+                  <div
+                    style={{
+                      padding: "1rem 1.25rem",
+                      borderRadius: "0.75rem",
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-border)",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                      Governance
+                    </div>
+                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
+                      NISM Series Certified
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "1rem 1.25rem",
+                      borderRadius: "0.75rem",
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-border)",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                      Core Focus
+                    </div>
+                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
+                      100% Capital Focus
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "1rem 1.25rem",
+                      borderRadius: "0.75rem",
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-border)",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                      Specialization
+                    </div>
+                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
+                      Derivatives Architecture
+                    </div>
+                  </div>
+
+                  <div
+                    style={{
+                      padding: "1rem 1.25rem",
+                      borderRadius: "0.75rem",
+                      background: "var(--color-surface)",
+                      border: "1px solid var(--color-border)",
+                    }}
+                  >
+                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                      Auditability
+                    </div>
+                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
+                      Complete Transparency
+                    </div>
+                  </div>
+                </div>
+              </motion.div>
+            </div>
           </div>
         </div>
       </section>
 
       {/* ── KEY METRICS STRIP ── */}
-      <section style={{ padding: "3rem 0", background: "var(--color-surface)", borderBottom: "1px solid var(--color-border)" }}>
+      <section style={{ padding: "2.75rem 0", background: "var(--color-surface)", borderTop: "1px solid var(--color-border)", borderBottom: "1px solid var(--color-border)" }}>
         <div className="section-container">
           <div
             style={{
               display: "grid",
               gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-              gap: "1.5rem",
+              gap: "1.25rem",
             }}
           >
             {METRICS.map((metric, idx) => (
@@ -717,170 +826,6 @@ export default function FounderPortfolioView() {
                 </div>
               </div>
             ))}
-          </div>
-        </div>
-      </section>
-
-      {/* ── ABOUT RAHAN ── */}
-      <section
-        id="about"
-        style={{
-          padding: "4.5rem 0",
-          background: "var(--color-bg)",
-        }}
-      >
-        <div className="section-container">
-          <div style={{ textAlign: "center", maxWidth: "650px", margin: "0 auto 3.5rem" }}>
-            <span className="section-label">Executive Background</span>
-            <h2
-              style={{
-                fontSize: "clamp(2rem, 3.5vw, 2.75rem)",
-                fontWeight: 800,
-                color: "var(--color-text-primary)",
-                marginTop: "0.5rem",
-              }}
-            >
-              About Rahan Santhosh
-            </h2>
-            <p
-              style={{
-                color: "var(--color-text-secondary)",
-                fontSize: "1.05rem",
-                marginTop: "0.75rem",
-                lineHeight: 1.65,
-              }}
-            >
-              A disciplined mindset built on quantitative analysis, risk control, and transparent leadership.
-            </p>
-          </div>
-
-          <div
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "3rem",
-            }}
-            className="about-grid"
-          >
-            {/* Vision Quote Card */}
-            <div
-              className="glass-card"
-              style={{
-                padding: "2.5rem",
-                display: "flex",
-                flexDirection: "column",
-                justifyContent: "space-between",
-              }}
-            >
-              <blockquote
-                style={{
-                  fontSize: "1.25rem",
-                  fontWeight: 500,
-                  fontStyle: "italic",
-                  lineHeight: 1.65,
-                  color: "var(--color-text-primary)",
-                  borderLeft: "4px solid var(--color-accent-mid)",
-                  paddingLeft: "1.5rem",
-                  margin: "0 0 2rem 0",
-                }}
-              >
-                &ldquo;Sustainable wealth accumulation is never an accident. It requires mathematical discipline, relentless downside protection, and absolute transparency.&rdquo;
-              </blockquote>
-
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: "1rem",
-                  paddingTop: "1.5rem",
-                  borderTop: "1px solid var(--color-border)",
-                }}
-              >
-                <div
-                  style={{
-                    width: "48px",
-                    height: "48px",
-                    borderRadius: "50%",
-                    overflow: "hidden",
-                    border: "2px solid var(--color-border)",
-                  }}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src="/founder.jpg"
-                    alt="Rahan Santhosh"
-                    style={{ width: "100%", height: "100%", objectFit: "cover" }}
-                  />
-                </div>
-                <div>
-                  <div style={{ fontWeight: 700, color: "var(--color-text-primary)", fontSize: "1rem" }}>
-                    Rahan Santhosh
-                  </div>
-                  <div style={{ fontSize: "0.85rem", color: "var(--color-accent-mid)", fontWeight: 500 }}>
-                    Founder & Chief Executive Officer
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Background Details */}
-            <div style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
-              <div
-                style={{
-                  padding: "2rem",
-                  borderRadius: "1rem",
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                <h3
-                  style={{
-                    fontSize: "1.2rem",
-                    fontWeight: 700,
-                    color: "var(--color-text-primary)",
-                    marginBottom: "0.75rem",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.6rem",
-                  }}
-                >
-                  <Building size={20} color="var(--color-accent-mid)" />
-                  Building FUNDAUX
-                </h3>
-                <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
-                  Rahan founded FUNDAUX with a singular mission: to strip away the opacity and emotional pitfalls of conventional asset management. Under his direction, FUNDAUX blends systematic derivatives strategies with client-first capital governance.
-                </p>
-              </div>
-
-              <div
-                style={{
-                  padding: "2rem",
-                  borderRadius: "1rem",
-                  background: "var(--color-surface)",
-                  border: "1px solid var(--color-border)",
-                  boxShadow: "var(--shadow-sm)",
-                }}
-              >
-                <h3
-                  style={{
-                    fontSize: "1.2rem",
-                    fontWeight: 700,
-                    color: "var(--color-text-primary)",
-                    marginBottom: "0.75rem",
-                    display: "flex",
-                    alignItems: "center",
-                    gap: "0.6rem",
-                  }}
-                >
-                  <Award size={20} color="var(--color-accent-mid)" />
-                  Professional Certifications
-                </h3>
-                <p style={{ color: "var(--color-text-secondary)", fontSize: "0.95rem", lineHeight: 1.7, margin: 0 }}>
-                  Holding NISM certifications and deep domain knowledge in derivatives, covered options, and equity risk modeling. Rahan ensures that every strategic initiative adheres strictly to Indian regulatory frameworks.
-                </p>
-              </div>
-            </div>
           </div>
         </div>
       </section>
@@ -1869,10 +1814,13 @@ export default function FounderPortfolioView() {
         )}
       </AnimatePresence>
 
-      {/* ── Responsive Styling ── */}
+      {/* ── Responsive & Hover Styling ── */}
       <style>{`
+        .founder-photo-wrapper:hover .founder-photo-img {
+          transform: scale(1.05) !important;
+        }
         @media (min-width: 1024px) {
-          .hero-grid { grid-template-columns: 1.2fr 0.8fr !important; }
+          .hero-grid { grid-template-columns: 0.85fr 1.15fr !important; gap: 4rem !important; }
           .about-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 1023px) {
