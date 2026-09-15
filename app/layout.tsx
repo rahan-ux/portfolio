@@ -55,7 +55,11 @@ export const metadata: Metadata = {
     follow: true,
   },
   icons: {
-    icon: "/logo.png",
+    icon: [
+      { url: "/logo.png", type: "image/png" },
+      { url: "/favicon.ico" },
+    ],
+    shortcut: "/logo.png",
     apple: "/logo.png",
   },
 };
@@ -71,6 +75,12 @@ export default function RootLayout({
       className={`${inter.variable}`}
       suppressHydrationWarning
     >
+      <head>
+        <link rel="icon" type="image/png" href="/logo.png" />
+        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
+        <link rel="shortcut icon" href="/logo.png" />
+        <link rel="apple-touch-icon" href="/logo.png" />
+      </head>
       <body>
         {/* Zero-height anchor at the absolute top — gives Next.js scroll a fixed target at y=0 */}
         <div id="top" style={{ position: "absolute", top: 0, left: 0, height: 0, width: 0 }} aria-hidden="true" />
