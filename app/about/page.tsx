@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import Navbar from "@/components/Navbar";
 import About from "@/components/About";
-import Founder from "@/components/Founder";
 import Footer from "@/components/Footer";
 
 export const metadata: Metadata = {
@@ -46,7 +45,6 @@ export default function AboutPage() {
         </div>
 
         <About />
-        <Founder />
       </main>
       <Footer />
     </>
