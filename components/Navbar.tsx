@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
+  { label: "Rahan Santhosh", href: "/rahan-santhosh" },
 ];
 
 export default function Navbar() {
@@ -65,15 +66,24 @@ export default function Navbar() {
           }}
         >
           {/* Logo */}
-          <Link href="/" style={{ display: "flex", alignItems: "center", textDecoration: "none" }}>
+          <Link href="/" style={{ display: "flex", alignItems: "center", gap: "0.6rem", textDecoration: "none" }}>
             <Image
               src="/logo.png"
               alt="FUNDAUX"
-              width={44}
-              height={44}
+              width={36}
+              height={36}
               style={{ objectFit: "contain" }}
               priority
             />
+            <span style={{
+              fontFamily: "var(--font-inter, 'Inter', sans-serif)",
+              fontSize: "1.35rem",
+              fontWeight: 800,
+              color: "var(--color-text-primary)",
+              letterSpacing: "0.06em",
+            }}>
+              FUND<span style={{ color: "var(--color-accent-mid)" }}>AUX</span>
+            </span>
           </Link>
 
           {/* Desktop Nav */}
