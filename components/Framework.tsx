@@ -14,7 +14,7 @@ export default function Framework() {
   return (
     <section
       id="framework"
-      style={{ padding: "6rem 0", background: "var(--color-surface-2)", borderTop: "1px solid var(--color-border)" }}
+      style={{ padding: "4.5rem 0", background: "var(--color-surface-2)", borderTop: "1px solid var(--color-border)" }}
     >
       <div className="section-container">
         <div style={{ textAlign: "center", marginBottom: "4rem" }}>

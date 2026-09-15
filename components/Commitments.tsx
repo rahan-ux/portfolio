@@ -34,7 +34,7 @@ export default function Commitments() {
   return (
     <section
       id="commitments"
-      style={{ padding: "6rem 0", background: "var(--color-surface-2)", position: "relative", borderTop: "1px solid var(--color-border)" }}
+      style={{ padding: "4.5rem 0", background: "var(--color-surface-2)", position: "relative", borderTop: "1px solid var(--color-border)" }}
     >
       <div className="section-container" style={{ position: "relative", zIndex: 10 }}>
         <AnimatedSection>

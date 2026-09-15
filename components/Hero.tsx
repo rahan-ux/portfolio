@@ -11,13 +11,13 @@ export default function Hero() {
       id="hero"
       style={{
         position: "relative",
-        minHeight: "100vh",
+        minHeight: "calc(100vh - 4rem)",
         display: "flex",
         alignItems: "center",
-        paddingTop: "6rem",
-        paddingBottom: "4rem",
+        paddingTop: "5.5rem",
+        paddingBottom: "3rem",
         overflow: "hidden",
-      background: "linear-gradient(160deg, var(--hero-bg-start) 0%, var(--hero-bg-mid) 50%, var(--hero-bg-end) 100%)",
+        background: "linear-gradient(160deg, var(--hero-bg-start) 0%, var(--hero-bg-mid) 50%, var(--hero-bg-end) 100%)",
       }}
     >
       {/* Decorative blobs */}

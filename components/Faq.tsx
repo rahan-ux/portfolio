@@ -42,7 +42,7 @@ export default function Faq() {
   return (
     <section
       id="faq"
-      style={{ padding: "6rem 0", background: "var(--color-surface-2)", borderTop: "1px solid var(--color-border)" }}
+      style={{ padding: "4.5rem 0", background: "var(--color-surface-2)", borderTop: "1px solid var(--color-border)" }}
     >
       <div className="section-container" style={{ maxWidth: "780px" }}>
         <div style={{ textAlign: "center", marginBottom: "3.5rem" }}>

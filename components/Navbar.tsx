@@ -13,6 +13,7 @@ const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
+  { label: "Founder", href: "/Rahan" },
 ];
 
 export default function Navbar() {
@@ -21,7 +22,7 @@ export default function Navbar() {
   const pathname = usePathname();
 
   useEffect(() => {
-    const handleScroll = () => setScrolled(window.scrollY > 20);
+    const handleScroll = () => setScrolled(window.scrollY > 15);
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -32,25 +33,25 @@ export default function Navbar() {
   }, [pathname]);
 
   const isActive = (href: string) =>
-    href === "/" ? pathname === "/" : pathname.startsWith(href);
+    href === "/" ? pathname === "/" : pathname.toLowerCase().startsWith(href.toLowerCase());
 
   return (
     <motion.header
       initial={{ y: -80, opacity: 0 }}
       animate={{ y: 0, opacity: 1 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+      transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
       style={{
         position: "fixed",
         top: 0,
         left: 0,
         right: 0,
-        zIndex: 50,
+        zIndex: 100,
         transition: "background 0.3s ease, box-shadow 0.3s ease",
         background: scrolled
-          ? "rgba(var(--navbar-rgb, 255, 255, 255), 0.97)"
-          : "rgba(var(--navbar-rgb, 255, 255, 255), 0.87)",
-        backdropFilter: "blur(12px)",
-        WebkitBackdropFilter: "blur(12px)",
+          ? "rgba(var(--navbar-rgb, 255, 255, 255), 0.98)"
+          : "rgba(var(--navbar-rgb, 255, 255, 255), 0.90)",
+        backdropFilter: "blur(16px)",
+        WebkitBackdropFilter: "blur(16px)",
         boxShadow: scrolled ? "var(--shadow-nav)" : "none",
         borderBottom: scrolled ? "1px solid var(--color-border)" : "1px solid transparent",
       }}
@@ -61,7 +62,7 @@ export default function Navbar() {
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
-            height: "4.5rem",
+            height: "4rem",
           }}
         >
           {/* Logo */}
@@ -69,17 +70,17 @@ export default function Navbar() {
             <Image
               src="/logo.png"
               alt="FUNDAUX"
-              width={36}
-              height={36}
+              width={34}
+              height={34}
               style={{ objectFit: "contain" }}
               priority
             />
             <span style={{
               fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-              fontSize: "1.35rem",
+              fontSize: "1.3rem",
               fontWeight: 800,
               color: "var(--color-text-primary)",
-              letterSpacing: "0.06em",
+              letterSpacing: "0.05em",
             }}>
               FUND<span style={{ color: "var(--color-accent-mid)" }}>AUX</span>
             </span>
@@ -100,10 +101,11 @@ export default function Navbar() {
                   className={`nav-link ${active ? "active" : ""}`}
                   style={{
                     position: "relative",
-                    padding: "0.5rem 0.85rem",
+                    padding: "0.45rem 0.8rem",
                     borderRadius: "0.4rem",
                     background: active ? "var(--color-accent-light)" : "transparent",
                     fontWeight: active ? 600 : 500,
+                    fontSize: "0.88rem",
                     color: active ? "var(--color-accent)" : "var(--color-text-secondary)",
                     transition: "background 0.2s ease, color 0.2s ease",
                   }}
@@ -116,11 +118,10 @@ export default function Navbar() {
 
           {/* Right: CTA + Hamburger */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
-
             <Link
               href="/contact"
               className="btn-primary hidden-mobile"
-              style={{ fontSize: "0.85rem", padding: "0.55rem 1.4rem" }}
+              style={{ fontSize: "0.82rem", padding: "0.5rem 1.25rem" }}
             >
               Contact Us
             </Link>
@@ -138,12 +139,12 @@ export default function Navbar() {
                 border: "1px solid var(--color-border-strong)",
                 color: "var(--color-text-primary)",
                 cursor: "pointer",
-                padding: "0.5rem",
+                padding: "0.45rem",
                 borderRadius: "0.5rem",
                 transition: "background 0.2s ease",
               }}
             >
-              {mobileOpen ? <X size={22} /> : <Menu size={22} />}
+              {mobileOpen ? <X size={20} /> : <Menu size={20} />}
             </button>
           </div>
         </div>
@@ -156,10 +157,11 @@ export default function Navbar() {
             initial={{ opacity: 0, height: 0 }}
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.22, ease: "easeInOut" }}
             style={{
               background: "var(--color-surface)",
               borderTop: "1px solid var(--color-border)",
+              boxShadow: "0 10px 25px rgba(0, 0, 0, 0.08)",
               overflow: "hidden",
             }}
           >
@@ -167,8 +169,8 @@ export default function Navbar() {
               style={{
                 display: "flex",
                 flexDirection: "column",
-                gap: "0.25rem",
-                padding: "1.25rem 1.5rem",
+                gap: "0.2rem",
+                padding: "1rem 1.25rem 1.25rem",
               }}
               aria-label="Mobile navigation"
             >
@@ -180,11 +182,11 @@ export default function Navbar() {
                     href={link.href}
                     style={{
                       fontFamily: "var(--font-inter, 'Inter', sans-serif)",
-                      fontSize: "1rem",
+                      fontSize: "0.95rem",
                       fontWeight: active ? 600 : 500,
-                      color: active ? "var(--color-accent)" : "var(--color-text-secondary)",
+                      color: active ? "var(--color-accent)" : "var(--color-text-primary)",
                       textDecoration: "none",
-                      padding: "0.75rem 1rem",
+                      padding: "0.65rem 0.9rem",
                       borderRadius: "0.5rem",
                       background: active ? "var(--color-accent-light)" : "transparent",
                       transition: "background 0.2s ease, color 0.2s ease",
@@ -196,11 +198,10 @@ export default function Navbar() {
                 );
               })}
 
-
               <Link
                 href="/contact"
                 className="btn-primary"
-                style={{ textAlign: "center", marginTop: "0.75rem" }}
+                style={{ textAlign: "center", marginTop: "0.65rem" }}
               >
                 Contact Us
               </Link>

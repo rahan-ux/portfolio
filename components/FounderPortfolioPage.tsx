@@ -350,7 +350,7 @@ export default function FounderPortfolioView() {
         <div className="section-container">
           <div
             style={{
-              height: "4.5rem",
+              height: "4rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
@@ -436,8 +436,8 @@ export default function FounderPortfolioView() {
         id="overview"
         className="page-hero"
         style={{
-          paddingTop: "7.5rem",
-          paddingBottom: "5rem",
+          paddingTop: "5.75rem",
+          paddingBottom: "3.5rem",
         }}
       >
         <div className="section-container" style={{ position: "relative", zIndex: 1 }}>
@@ -725,7 +725,7 @@ export default function FounderPortfolioView() {
       <section
         id="about"
         style={{
-          padding: "6rem 0",
+          padding: "4.5rem 0",
           background: "var(--color-bg)",
         }}
       >
@@ -889,7 +889,7 @@ export default function FounderPortfolioView() {
       <section
         id="methodology"
         style={{
-          padding: "6rem 0",
+          padding: "4.5rem 0",
           background: "var(--color-surface)",
           borderTop: "1px solid var(--color-border)",
           borderBottom: "1px solid var(--color-border)",
@@ -987,7 +987,7 @@ export default function FounderPortfolioView() {
       <section
         id="leadership"
         style={{
-          padding: "6rem 0",
+          padding: "4.5rem 0",
           background: "var(--color-bg)",
         }}
       >
@@ -1090,7 +1090,7 @@ export default function FounderPortfolioView() {
       <section
         id="schedule-meeting"
         style={{
-          padding: "6rem 0",
+          padding: "4.5rem 0",
           background: "var(--color-surface-2)",
           borderTop: "1px solid var(--color-border)",
           scrollMarginTop: "5.5rem",

@@ -9,7 +9,7 @@ export default function About() {
       {/* Introduction Section */}
       <section
         id="introduction"
-        style={{ padding: "6rem 0", background: "var(--color-surface)", position: "relative", overflow: "hidden" }}
+        style={{ padding: "4.5rem 0", background: "var(--color-surface)", position: "relative", overflow: "hidden" }}
       >
         <div
           style={{
@@ -130,7 +130,7 @@ export default function About() {
       <section
         id="mission"
         style={{
-          padding: "6rem 0",
+          padding: "4.5rem 0",
           background: "var(--color-surface-2)",
           borderTop: "1px solid var(--color-border)",
           borderBottom: "1px solid var(--color-border)",

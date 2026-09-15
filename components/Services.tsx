@@ -30,7 +30,7 @@ export default function Services() {
   return (
     <section
       id="services"
-      style={{ padding: "6rem 0", background: "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}
+      style={{ padding: "4.5rem 0", background: "var(--color-surface)", borderTop: "1px solid var(--color-border)" }}
     >
       <div className="section-container">
         <div style={{ display: "flex", flexDirection: "column", alignItems: "center", textAlign: "center", marginBottom: "3.5rem" }}>
