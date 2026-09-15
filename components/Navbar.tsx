@@ -12,7 +12,6 @@ const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
-  { label: "Rahan Santhosh", href: "/rahan-santhosh" },
 ];
 
 export default function Navbar() {
