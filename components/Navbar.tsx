@@ -13,7 +13,6 @@ const NAV_LINKS = [
   { label: "Services", href: "/services" },
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
-  { label: "Founder", href: "/Rahan" },
 ];
 
 export default function Navbar() {
