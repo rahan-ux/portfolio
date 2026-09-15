@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -21,7 +21,8 @@ import {
   Calendar,
   Send,
   AlertCircle,
-  Phone,
+  Copy,
+  Check,
 } from "lucide-react";
 
 const METRICS = [
@@ -100,6 +101,8 @@ const INPUT_STYLE = {
 
 export default function FounderPortfolioView() {
   const [scrolled, setScrolled] = useState(false);
+  const [copiedEmail, setCopiedEmail] = useState(false);
+  const [formHighlighted, setFormHighlighted] = useState(false);
 
   // Strategy Meeting Form State
   const [meetingData, setMeetingData] = useState({
@@ -120,6 +123,36 @@ export default function FounderPortfolioView() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  // Smooth scroll to strategy meeting form with auto-focus
+  const scrollToMeeting = (e?: React.MouseEvent) => {
+    if (e) e.preventDefault();
+    const el = document.getElementById("schedule-meeting");
+    if (el) {
+      el.scrollIntoView({ behavior: "smooth", block: "start" });
+      setFormHighlighted(true);
+      setTimeout(() => setFormHighlighted(false), 2000);
+      setTimeout(() => {
+        const input = document.getElementById("meeting-name");
+        if (input) input.focus();
+      }, 450);
+    }
+  };
+
+  // Direct mailto trigger
+  const handleDirectEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    window.location.href = "mailto:fundauxin@gmail.com?subject=Strategy%20Consultation%20Inquiry%20-%20Rahan%20Santhosh";
+  };
+
+  // Copy email fallback
+  const handleCopyEmail = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    navigator.clipboard.writeText("fundauxin@gmail.com");
+    setCopiedEmail(true);
+    setTimeout(() => setCopiedEmail(false), 3000);
+  };
 
   const validate = () => {
     const newErrors: Record<string, string> = {};
@@ -290,17 +323,18 @@ export default function FounderPortfolioView() {
               </div>
             </a>
 
-            {/* Right: Only Get in Touch Button */}
-            <a
-              href="#schedule-meeting"
+            {/* Right: Only Get in Touch Button (scrolls directly to form) */}
+            <button
+              onClick={scrollToMeeting}
               className="btn-primary"
               style={{
                 fontSize: "0.88rem",
                 padding: "0.55rem 1.4rem",
+                cursor: "pointer",
               }}
             >
               Get in Touch
-            </a>
+            </button>
           </div>
         </div>
       </motion.header>
@@ -367,39 +401,77 @@ export default function FounderPortfolioView() {
                     alignItems: "center",
                   }}
                 >
-                  <a
-                    href="#schedule-meeting"
+                  {/* Schedule Strategy Meeting Button */}
+                  <button
+                    onClick={scrollToMeeting}
                     className="btn-primary"
                     style={{
                       background: "#FFFFFF",
                       color: "var(--color-accent)",
                       borderColor: "#FFFFFF",
                       boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
+                      cursor: "pointer",
                     }}
                   >
                     <Calendar size={18} /> Schedule Strategy Meeting <ArrowRight size={16} />
-                  </a>
+                  </button>
 
-                  <a
-                    href="mailto:fundauxin@gmail.com"
+                  {/* Direct Email Button */}
+                  <div style={{ display: "flex", alignItems: "center", gap: "0.4rem" }}>
+                    <button
+                      onClick={handleDirectEmail}
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        gap: "0.5rem",
+                        padding: "0.75rem 1.6rem",
+                        borderRadius: "0.5rem",
+                        background: "rgba(255, 255, 255, 0.12)",
+                        border: "1px solid rgba(255, 255, 255, 0.25)",
+                        color: "#FFFFFF",
+                        fontWeight: 500,
+                        fontSize: "0.9rem",
+                        cursor: "pointer",
+                        transition: "background 0.2s ease",
+                      }}
+                    >
+                      <Mail size={16} /> Direct Email
+                    </button>
+
+                    <button
+                      onClick={handleCopyEmail}
+                      title="Copy email address"
+                      style={{
+                        display: "inline-flex",
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: "0.75rem",
+                        borderRadius: "0.5rem",
+                        background: "rgba(255, 255, 255, 0.12)",
+                        border: "1px solid rgba(255, 255, 255, 0.25)",
+                        color: "#FFFFFF",
+                        cursor: "pointer",
+                      }}
+                    >
+                      {copiedEmail ? <Check size={16} color="#34D399" /> : <Copy size={16} />}
+                    </button>
+                  </div>
+                </div>
+
+                {copiedEmail && (
+                  <motion.div
+                    initial={{ opacity: 0, y: 5 }}
+                    animate={{ opacity: 1, y: 0 }}
                     style={{
-                      display: "inline-flex",
-                      alignItems: "center",
-                      gap: "0.5rem",
-                      padding: "0.75rem 1.6rem",
-                      borderRadius: "0.5rem",
-                      background: "rgba(255, 255, 255, 0.12)",
-                      border: "1px solid rgba(255, 255, 255, 0.25)",
-                      color: "#FFFFFF",
-                      fontWeight: 500,
-                      fontSize: "0.9rem",
-                      textDecoration: "none",
-                      transition: "background 0.2s ease",
+                      fontSize: "0.82rem",
+                      color: "#34D399",
+                      marginTop: "0.6rem",
+                      fontWeight: 600,
                     }}
                   >
-                    <Mail size={16} /> Direct Email
-                  </a>
-                </div>
+                    ✓ Email &ldquo;fundauxin@gmail.com&rdquo; copied to clipboard!
+                  </motion.div>
+                )}
               </motion.div>
             </div>
 
@@ -929,6 +1001,7 @@ export default function FounderPortfolioView() {
           padding: "6rem 0",
           background: "var(--color-surface-2)",
           borderTop: "1px solid var(--color-border)",
+          scrollMarginTop: "5.5rem",
         }}
       >
         <div className="section-container">
@@ -938,9 +1011,14 @@ export default function FounderPortfolioView() {
               margin: "0 auto",
               background: "var(--color-surface)",
               borderRadius: "1.25rem",
-              border: "1px solid var(--color-border)",
-              boxShadow: "var(--shadow-card)",
+              border: formHighlighted
+                ? "2px solid #3B82F6"
+                : "1px solid var(--color-border)",
+              boxShadow: formHighlighted
+                ? "0 0 25px rgba(59, 130, 246, 0.3)"
+                : "var(--shadow-card)",
               padding: "3rem 2.5rem",
+              transition: "border 0.3s ease, box-shadow 0.3s ease",
             }}
           >
             <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
@@ -1016,7 +1094,11 @@ export default function FounderPortfolioView() {
                 <AlertCircle size={24} color="#EF4444" />
                 <div>
                   Unable to submit meeting request. Please email directly at{" "}
-                  <a href="mailto:fundauxin@gmail.com" style={{ color: "#991B1B", fontWeight: 700 }}>
+                  <a
+                    href="mailto:fundauxin@gmail.com"
+                    onClick={handleDirectEmail}
+                    style={{ color: "#991B1B", fontWeight: 700, textDecoration: "underline" }}
+                  >
                     fundauxin@gmail.com
                   </a>.
                 </div>
