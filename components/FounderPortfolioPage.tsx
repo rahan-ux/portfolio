@@ -2,6 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 import Link from "next/link";
 import {
   ShieldCheck,
@@ -17,6 +18,10 @@ import {
   Lock,
   BarChart3,
   Lightbulb,
+  Calendar,
+  Send,
+  AlertCircle,
+  Phone,
 } from "lucide-react";
 
 const METRICS = [
@@ -80,8 +85,33 @@ const LEADERSHIP_VALUES = [
   },
 ];
 
+const INPUT_STYLE = {
+  width: "100%",
+  padding: "0.85rem 1.1rem",
+  background: "var(--color-surface)",
+  border: "1px solid var(--color-border)",
+  borderRadius: "0.5rem",
+  color: "var(--color-text-primary)",
+  outline: "none",
+  fontSize: "0.95rem",
+  fontFamily: "var(--font-inter), sans-serif",
+  transition: "border-color 0.25s ease, box-shadow 0.25s ease",
+};
+
 export default function FounderPortfolioView() {
   const [scrolled, setScrolled] = useState(false);
+
+  // Strategy Meeting Form State
+  const [meetingData, setMeetingData] = useState({
+    name: "",
+    email: "",
+    phone: "",
+    topic: "Portfolio Strategy Session",
+    preferredDate: "",
+    message: "",
+  });
+  const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
+  const [errors, setErrors] = useState<Record<string, string>>({});
 
   useEffect(() => {
     const handleScroll = () => {
@@ -90,6 +120,76 @@ export default function FounderPortfolioView() {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
+
+  const validate = () => {
+    const newErrors: Record<string, string> = {};
+    if (!meetingData.name.trim()) newErrors.name = "Full Name is required";
+    if (!meetingData.email.trim()) {
+      newErrors.email = "Email is required";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(meetingData.email.trim())) {
+      newErrors.email = "Invalid email address";
+    }
+    if (!meetingData.message.trim()) newErrors.message = "Please share your objectives or notes";
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0;
+  };
+
+  const handleMeetingSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!validate()) return;
+    setStatus("loading");
+
+    try {
+      const data = new FormData();
+      data.append("access_key", "7d4571bb-608c-4430-9c40-ac3336a16196");
+      data.append("name", meetingData.name.trim());
+      data.append("email", meetingData.email.trim());
+      data.append("phone", meetingData.phone.trim());
+      data.append(
+        "subject",
+        `Strategy Meeting Booking: ${meetingData.topic} (${meetingData.name.trim()})`
+      );
+      data.append(
+        "message",
+        `Consultation Topic: ${meetingData.topic}\nPreferred Date/Time: ${meetingData.preferredDate || "Flexible"}\nPhone: ${meetingData.phone || "N/A"}\n\nNotes / Objectives:\n${meetingData.message.trim()}`
+      );
+      data.append("from_name", "Rahan Portfolio - Strategy Meeting");
+
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        body: data,
+      });
+
+      const result = await response.json();
+
+      if (result.success) {
+        setStatus("success");
+        setMeetingData({
+          name: "",
+          email: "",
+          phone: "",
+          topic: "Portfolio Strategy Session",
+          preferredDate: "",
+          message: "",
+        });
+        setTimeout(() => setStatus("idle"), 8000);
+      } else {
+        console.error("Web3Forms error:", result);
+        setStatus("error");
+      }
+    } catch (err) {
+      console.error("Meeting submit error:", err);
+      setStatus("error");
+    }
+  };
+
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    setMeetingData((prev) => ({ ...prev, [name]: value }));
+    if (errors[name]) setErrors((prev) => ({ ...prev, [name]: "" }));
+  };
 
   return (
     <div
@@ -101,7 +201,7 @@ export default function FounderPortfolioView() {
         overflowX: "hidden",
       }}
     >
-      {/* ── Standalone Navigation Bar (Only Name + Get in Touch Button) ── */}
+      {/* ── Header: Logo + Name on Left, Only Get in Touch Button on Right ── */}
       <motion.header
         initial={{ y: -70, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
@@ -131,13 +231,13 @@ export default function FounderPortfolioView() {
               justifyContent: "space-between",
             }}
           >
-            {/* Left: Name & Monogram */}
+            {/* Left: Official FUNDAUX Logo Image + Name */}
             <a
               href="#overview"
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.75rem",
+                gap: "0.85rem",
                 textDecoration: "none",
               }}
             >
@@ -146,18 +246,23 @@ export default function FounderPortfolioView() {
                   width: "40px",
                   height: "40px",
                   borderRadius: "0.6rem",
-                  background: "var(--color-accent)",
+                  overflow: "hidden",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontWeight: 800,
-                  fontSize: "1.05rem",
-                  color: "#FFFFFF",
-                  letterSpacing: "0.04em",
+                  background: "#000000",
+                  padding: "4px",
                   boxShadow: "var(--shadow-sm)",
                 }}
               >
-                RS
+                <Image
+                  src="/logo.png"
+                  alt="FUNDAUX"
+                  width={32}
+                  height={32}
+                  style={{ objectFit: "contain" }}
+                  priority
+                />
               </div>
               <div style={{ display: "flex", flexDirection: "column" }}>
                 <span
@@ -185,9 +290,9 @@ export default function FounderPortfolioView() {
               </div>
             </a>
 
-            {/* Right: Only Get in Touch CTA */}
+            {/* Right: Only Get in Touch Button */}
             <a
-              href="#contact"
+              href="#schedule-meeting"
               className="btn-primary"
               style={{
                 fontSize: "0.88rem",
@@ -219,7 +324,7 @@ export default function FounderPortfolioView() {
             }}
             className="hero-grid"
           >
-            {/* Left Column: Headline & Intro */}
+            {/* Left Column */}
             <div>
               <motion.div
                 initial={{ opacity: 0, y: 20 }}
@@ -263,7 +368,7 @@ export default function FounderPortfolioView() {
                   }}
                 >
                   <a
-                    href="#contact"
+                    href="#schedule-meeting"
                     className="btn-primary"
                     style={{
                       background: "#FFFFFF",
@@ -272,11 +377,11 @@ export default function FounderPortfolioView() {
                       boxShadow: "0 4px 16px rgba(0, 0, 0, 0.15)",
                     }}
                   >
-                    Schedule Strategy Meeting <ArrowRight size={16} />
+                    <Calendar size={18} /> Schedule Strategy Meeting <ArrowRight size={16} />
                   </a>
 
                   <a
-                    href="#methodology"
+                    href="mailto:fundauxin@gmail.com"
                     style={{
                       display: "inline-flex",
                       alignItems: "center",
@@ -292,7 +397,7 @@ export default function FounderPortfolioView() {
                       transition: "background 0.2s ease",
                     }}
                   >
-                    View Strategic Pillars
+                    <Mail size={16} /> Direct Email
                   </a>
                 </div>
               </motion.div>
@@ -817,97 +922,322 @@ export default function FounderPortfolioView() {
         </div>
       </section>
 
-      {/* ── DIRECT CONNECT & CONTACT ── */}
+      {/* ── FULLY FUNCTIONAL "SCHEDULE STRATEGY MEETING" SECTION ── */}
       <section
-        id="contact"
+        id="schedule-meeting"
         style={{
-          padding: "5rem 0",
-          background: "linear-gradient(135deg, #0F1E4B 0%, #1E3A8A 100%)",
-          color: "#FFFFFF",
-          textAlign: "center",
+          padding: "6rem 0",
+          background: "var(--color-surface-2)",
+          borderTop: "1px solid var(--color-border)",
         }}
       >
         <div className="section-container">
-          <div style={{ maxWidth: "750px", margin: "0 auto" }}>
-            <span
-              style={{
-                display: "inline-block",
-                fontSize: "0.72rem",
-                fontWeight: 700,
-                letterSpacing: "0.14em",
-                textTransform: "uppercase",
-                color: "rgba(255,255,255,0.7)",
-                marginBottom: "1rem",
-                padding: "0.3rem 0.9rem",
-                background: "rgba(255,255,255,0.1)",
-                border: "1px solid rgba(255,255,255,0.2)",
-                borderRadius: "9999px",
-              }}
-            >
-              Direct Connect
-            </span>
-            <h2
-              style={{
-                fontSize: "clamp(2rem, 4vw, 2.75rem)",
-                fontWeight: 800,
-                color: "#FFFFFF",
-                marginTop: "0.5rem",
-              }}
-            >
-              Connect with Rahan Santhosh
-            </h2>
-            <p
-              style={{
-                color: "rgba(255, 255, 255, 0.75)",
-                fontSize: "1.05rem",
-                maxWidth: "540px",
-                margin: "1rem auto 2.25rem",
-                lineHeight: 1.65,
-              }}
-            >
-              Whether you wish to discuss quantitative strategies, explore partnerships, or consult on capital management, reach out directly.
-            </p>
+          <div
+            style={{
+              maxWidth: "840px",
+              margin: "0 auto",
+              background: "var(--color-surface)",
+              borderRadius: "1.25rem",
+              border: "1px solid var(--color-border)",
+              boxShadow: "var(--shadow-card)",
+              padding: "3rem 2.5rem",
+            }}
+          >
+            <div style={{ textAlign: "center", marginBottom: "2.5rem" }}>
+              <span className="section-label">Direct Consultation</span>
+              <h2
+                style={{
+                  fontSize: "clamp(1.8rem, 3.5vw, 2.5rem)",
+                  fontWeight: 800,
+                  color: "var(--color-text-primary)",
+                  marginTop: "0.5rem",
+                }}
+              >
+                Schedule Strategy Meeting
+              </h2>
+              <p
+                style={{
+                  color: "var(--color-text-secondary)",
+                  fontSize: "1rem",
+                  marginTop: "0.5rem",
+                  lineHeight: 1.65,
+                  maxWidth: "520px",
+                  margin: "0.5rem auto 0",
+                }}
+              >
+                Book a 1-on-1 strategy consultation directly with Rahan Santhosh to discuss portfolio management, derivatives strategy, or capital protection.
+              </p>
+            </div>
 
-            <div
-              style={{
-                display: "flex",
-                justifyContent: "center",
-                gap: "1.25rem",
-                flexWrap: "wrap",
-              }}
-            >
-              <a
-                href="mailto:fundauxin@gmail.com"
+            {/* Feedback Status Box */}
+            {status === "success" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  padding: "1.25rem",
+                  borderRadius: "0.75rem",
+                  background: "#ECFDF5",
+                  border: "1px solid #10B981",
+                  color: "#065F46",
+                  marginBottom: "2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                }}
+              >
+                <CheckCircle2 size={24} color="#10B981" />
+                <div>
+                  <strong>Meeting Request Received!</strong> Rahan Santhosh or a senior strategy specialist will review your details and contact you shortly.
+                </div>
+              </motion.div>
+            )}
+
+            {status === "error" && (
+              <motion.div
+                initial={{ opacity: 0, y: -10 }}
+                animate={{ opacity: 1, y: 0 }}
+                style={{
+                  padding: "1.25rem",
+                  borderRadius: "0.75rem",
+                  background: "#FEF2F2",
+                  border: "1px solid #EF4444",
+                  color: "#991B1B",
+                  marginBottom: "2rem",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.75rem",
+                  fontSize: "0.95rem",
+                  fontWeight: 500,
+                }}
+              >
+                <AlertCircle size={24} color="#EF4444" />
+                <div>
+                  Unable to submit meeting request. Please email directly at{" "}
+                  <a href="mailto:fundauxin@gmail.com" style={{ color: "#991B1B", fontWeight: 700 }}>
+                    fundauxin@gmail.com
+                  </a>.
+                </div>
+              </motion.div>
+            )}
+
+            {/* Strategy Booking Form */}
+            <form onSubmit={handleMeetingSubmit} style={{ display: "flex", flexDirection: "column", gap: "1.5rem" }}>
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                  gap: "1.25rem",
+                }}
+              >
+                <div>
+                  <label
+                    htmlFor="meeting-name"
+                    style={{
+                      display: "block",
+                      fontSize: "0.88rem",
+                      fontWeight: 600,
+                      color: "var(--color-text-primary)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Full Name <span style={{ color: "#DC2626" }}>*</span>
+                  </label>
+                  <input
+                    id="meeting-name"
+                    type="text"
+                    name="name"
+                    value={meetingData.name}
+                    onChange={handleChange}
+                    placeholder="e.g. Rahan Santhosh"
+                    style={{
+                      ...INPUT_STYLE,
+                      border: `1px solid ${errors.name ? "#DC2626" : "var(--color-border)"}`,
+                    }}
+                  />
+                  {errors.name && (
+                    <span style={{ fontSize: "0.78rem", color: "#DC2626", marginTop: "0.25rem", display: "block" }}>
+                      {errors.name}
+                    </span>
+                  )}
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="meeting-email"
+                    style={{
+                      display: "block",
+                      fontSize: "0.88rem",
+                      fontWeight: 600,
+                      color: "var(--color-text-primary)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Email Address <span style={{ color: "#DC2626" }}>*</span>
+                  </label>
+                  <input
+                    id="meeting-email"
+                    type="email"
+                    name="email"
+                    value={meetingData.email}
+                    onChange={handleChange}
+                    placeholder="name@example.com"
+                    style={{
+                      ...INPUT_STYLE,
+                      border: `1px solid ${errors.email ? "#DC2626" : "var(--color-border)"}`,
+                    }}
+                  />
+                  {errors.email && (
+                    <span style={{ fontSize: "0.78rem", color: "#DC2626", marginTop: "0.25rem", display: "block" }}>
+                      {errors.email}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              <div
+                style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+                  gap: "1.25rem",
+                }}
+              >
+                <div>
+                  <label
+                    htmlFor="meeting-phone"
+                    style={{
+                      display: "block",
+                      fontSize: "0.88rem",
+                      fontWeight: 600,
+                      color: "var(--color-text-primary)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Phone Number (Optional)
+                  </label>
+                  <input
+                    id="meeting-phone"
+                    type="tel"
+                    name="phone"
+                    value={meetingData.phone}
+                    onChange={handleChange}
+                    placeholder="+91 98765 43210"
+                    style={INPUT_STYLE}
+                  />
+                </div>
+
+                <div>
+                  <label
+                    htmlFor="meeting-topic"
+                    style={{
+                      display: "block",
+                      fontSize: "0.88rem",
+                      fontWeight: 600,
+                      color: "var(--color-text-primary)",
+                      marginBottom: "0.4rem",
+                    }}
+                  >
+                    Consultation Subject
+                  </label>
+                  <select
+                    id="meeting-topic"
+                    name="topic"
+                    value={meetingData.topic}
+                    onChange={handleChange}
+                    style={{
+                      ...INPUT_STYLE,
+                      cursor: "pointer",
+                    }}
+                  >
+                    <option value="Portfolio Strategy Session">Portfolio Strategy Session</option>
+                    <option value="Options & Hedging Guidance">Options & Hedging Guidance</option>
+                    <option value="Capital Protection Consultation">Capital Protection Consultation</option>
+                    <option value="General Leadership & Collaboration">General Leadership & Collaboration</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label
+                  htmlFor="meeting-date"
+                  style={{
+                    display: "block",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  Preferred Date / Time Window (Optional)
+                </label>
+                <input
+                  id="meeting-date"
+                  type="text"
+                  name="preferredDate"
+                  value={meetingData.preferredDate}
+                  onChange={handleChange}
+                  placeholder="e.g. Next Monday afternoon or Flexible"
+                  style={INPUT_STYLE}
+                />
+              </div>
+
+              <div>
+                <label
+                  htmlFor="meeting-message"
+                  style={{
+                    display: "block",
+                    fontSize: "0.88rem",
+                    fontWeight: 600,
+                    color: "var(--color-text-primary)",
+                    marginBottom: "0.4rem",
+                  }}
+                >
+                  Notes / Investment Objectives <span style={{ color: "#DC2626" }}>*</span>
+                </label>
+                <textarea
+                  id="meeting-message"
+                  name="message"
+                  rows={4}
+                  value={meetingData.message}
+                  onChange={handleChange}
+                  placeholder="Briefly describe your portfolio goals or topics you would like to discuss..."
+                  style={{
+                    ...INPUT_STYLE,
+                    resize: "vertical",
+                    border: `1px solid ${errors.message ? "#DC2626" : "var(--color-border)"}`,
+                  }}
+                />
+                {errors.message && (
+                  <span style={{ fontSize: "0.78rem", color: "#DC2626", marginTop: "0.25rem", display: "block" }}>
+                    {errors.message}
+                  </span>
+                )}
+              </div>
+
+              <button
+                type="submit"
+                disabled={status === "loading"}
                 className="btn-primary"
                 style={{
-                  background: "#FFFFFF",
-                  color: "var(--color-accent)",
-                  borderColor: "#FFFFFF",
-                  padding: "0.8rem 2rem",
+                  padding: "0.85rem",
+                  fontSize: "1rem",
+                  width: "100%",
+                  opacity: status === "loading" ? 0.7 : 1,
+                  cursor: status === "loading" ? "not-allowed" : "pointer",
+                  marginTop: "0.5rem",
                 }}
               >
-                <Mail size={18} /> Send Direct Email
-              </a>
-
-              <Link
-                href="/contact"
-                style={{
-                  display: "inline-flex",
-                  alignItems: "center",
-                  gap: "0.5rem",
-                  padding: "0.8rem 1.8rem",
-                  borderRadius: "0.5rem",
-                  background: "rgba(255, 255, 255, 0.12)",
-                  border: "1px solid rgba(255, 255, 255, 0.25)",
-                  color: "#FFFFFF",
-                  fontWeight: 500,
-                  fontSize: "0.9rem",
-                  textDecoration: "none",
-                }}
-              >
-                Visit FUNDAUX Contact Page <ChevronRight size={18} />
-              </Link>
-            </div>
+                {status === "loading" ? (
+                  "Scheduling Strategy Meeting..."
+                ) : (
+                  <>
+                    <Calendar size={18} /> Confirm & Schedule Meeting <Send size={16} />
+                  </>
+                )}
+              </button>
+            </form>
           </div>
         </div>
       </section>
@@ -932,23 +1262,28 @@ export default function FounderPortfolioView() {
               borderBottom: "1px solid rgba(255, 255, 255, 0.1)",
             }}
           >
-            {/* Monogram Brand */}
+            {/* Logo Image + Monogram Brand */}
             <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
               <div
                 style={{
                   width: "36px",
                   height: "36px",
                   borderRadius: "0.5rem",
-                  background: "#FFFFFF",
-                  color: "var(--color-text-primary)",
+                  overflow: "hidden",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  fontWeight: 800,
-                  fontSize: "0.95rem",
+                  background: "#000000",
+                  padding: "3px",
                 }}
               >
-                RS
+                <Image
+                  src="/logo.png"
+                  alt="FUNDAUX"
+                  width={28}
+                  height={28}
+                  style={{ objectFit: "contain" }}
+                />
               </div>
               <div>
                 <div style={{ fontWeight: 800, color: "#FFFFFF", fontSize: "1rem" }}>
@@ -993,7 +1328,7 @@ export default function FounderPortfolioView() {
         </div>
       </footer>
 
-      {/* ── Responsive Grid Styling ── */}
+      {/* ── Responsive Styling ── */}
       <style>{`
         @media (min-width: 1024px) {
           .hero-grid { grid-template-columns: 1.2fr 0.8fr !important; }
