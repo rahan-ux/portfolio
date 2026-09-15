@@ -349,11 +349,14 @@ export default function FounderPortfolioView() {
       >
         <div className="section-container">
           <div
+            className="founder-header-inner"
             style={{
               height: "4rem",
               display: "flex",
               alignItems: "center",
               justifyContent: "space-between",
+              gap: "0.75rem",
+              minWidth: 0,
             }}
           >
             {/* Left: Official FUNDAUX Logo Image + Name */}
@@ -362,14 +365,17 @@ export default function FounderPortfolioView() {
               style={{
                 display: "flex",
                 alignItems: "center",
-                gap: "0.85rem",
+                gap: "0.75rem",
                 textDecoration: "none",
+                minWidth: 0,
+                flexShrink: 1,
+                overflow: "hidden",
               }}
             >
               <div
                 style={{
-                  width: "40px",
-                  height: "40px",
+                  width: "38px",
+                  height: "38px",
                   borderRadius: "0.6rem",
                   overflow: "hidden",
                   display: "flex",
@@ -378,36 +384,53 @@ export default function FounderPortfolioView() {
                   background: "#000000",
                   padding: "4px",
                   boxShadow: "var(--shadow-sm)",
+                  flexShrink: 0,
                 }}
               >
                 <Image
                   src="/logo.png"
                   alt="FUNDAUX"
-                  width={32}
-                  height={32}
+                  width={30}
+                  height={30}
                   style={{ objectFit: "contain" }}
                   priority
                 />
               </div>
-              <div style={{ display: "flex", flexDirection: "column" }}>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  minWidth: 0,
+                  overflow: "hidden",
+                  whiteSpace: "nowrap",
+                }}
+              >
                 <span
+                  className="founder-header-name"
                   style={{
-                    fontSize: "1.15rem",
+                    fontSize: "1.1rem",
                     fontWeight: 800,
                     color: "var(--color-text-primary)",
                     letterSpacing: "-0.01em",
                     lineHeight: 1.2,
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   Rahan Santhosh
                 </span>
                 <span
+                  className="founder-header-subtitle"
                   style={{
-                    fontSize: "0.72rem",
+                    fontSize: "0.7rem",
                     fontWeight: 600,
                     color: "var(--color-accent-mid)",
                     letterSpacing: "0.08em",
                     textTransform: "uppercase",
+                    whiteSpace: "nowrap",
+                    overflow: "hidden",
+                    textOverflow: "ellipsis",
                   }}
                 >
                   Founder & CEO
@@ -415,15 +438,10 @@ export default function FounderPortfolioView() {
               </div>
             </a>
 
-            {/* Right: Only Get in Touch Button (scrolls directly to form) */}
+            {/* Right: Get in Touch CTA */}
             <button
               onClick={scrollToMeeting}
-              className="btn-primary"
-              style={{
-                fontSize: "0.88rem",
-                padding: "0.55rem 1.4rem",
-                cursor: "pointer",
-              }}
+              className="btn-header-cta"
             >
               Get in Touch
             </button>
@@ -1817,6 +1835,33 @@ export default function FounderPortfolioView() {
 
       {/* ── Responsive & Hover Styling ── */}
       <style>{`
+        .btn-header-cta {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.4rem;
+          padding: 0.5rem 1.25rem;
+          background: var(--color-accent);
+          color: #FFFFFF;
+          font-family: var(--font-inter), sans-serif;
+          font-weight: 600;
+          font-size: 0.85rem;
+          letter-spacing: 0.01em;
+          border-radius: 0.5rem;
+          border: 1.5px solid var(--color-accent);
+          text-decoration: none;
+          transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          cursor: pointer;
+          white-space: nowrap;
+          flex-shrink: 0;
+          width: auto !important;
+        }
+        .btn-header-cta:hover {
+          background: var(--color-accent-hover);
+          border-color: var(--color-accent-hover);
+          transform: translateY(-1px);
+          box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
+        }
         .founder-photo-wrapper:hover .founder-photo-img {
           transform: scale(1.05) !important;
         }
@@ -1829,12 +1874,38 @@ export default function FounderPortfolioView() {
           .about-grid { grid-template-columns: 1fr !important; }
         }
         @media (max-width: 640px) {
+          .founder-header-inner {
+            height: 3.5rem !important;
+          }
+          .founder-header-name {
+            font-size: 0.98rem !important;
+          }
+          .founder-header-subtitle {
+            font-size: 0.64rem !important;
+          }
+          .btn-header-cta {
+            padding: 0.45rem 0.95rem !important;
+            font-size: 0.8rem !important;
+            min-height: 36px !important;
+          }
           .founder-toast-banner {
             left: 1rem !important;
             right: 1rem !important;
             bottom: 1.25rem !important;
             font-size: 0.82rem !important;
             padding: 0.75rem 1rem !important;
+          }
+        }
+        @media (max-width: 420px) {
+          .founder-header-name {
+            font-size: 0.92rem !important;
+          }
+          .founder-header-subtitle {
+            display: none !important;
+          }
+          .btn-header-cta {
+            padding: 0.4rem 0.85rem !important;
+            font-size: 0.78rem !important;
           }
         }
       `}</style>
