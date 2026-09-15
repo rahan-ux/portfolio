@@ -382,3 +382,29 @@ textarea:-webkit-autofill:active {
   .footer-nav { grid-template-columns: repeat(2, 1fr) !important; gap: 0.5rem 1.25rem !important; }
 }
 
+/* ═══════════════════════════════════════════════════════════════════════════════
+   EXTRA SMALL MOBILE DEVICES (≤ 480px — e.g. iPhone SE, small Androids)
+   ═══════════════════════════════════════════════════════════════════════════════ */
+@media (max-width: 480px) {
+  html { font-size: 14px; }
+  .section-container { padding: 0 0.85rem !important; }
+
+  /* Compact button padding */
+  .btn-primary, .btn-outline {
+    padding: 0.65rem 1.1rem !important;
+    font-size: 0.82rem !important;
+  }
+
+  /* Compact modal popups */
+  [style*="max-width: 540px"] {
+    padding: 1.25rem 1rem !important;
+    border-radius: 1rem !important;
+  }
+
+  /* Small phone stat grids */
+  .hero-stats-row {
+    justify-content: space-around !important;
+    gap: 0.75rem !important;
+  }
+}
+

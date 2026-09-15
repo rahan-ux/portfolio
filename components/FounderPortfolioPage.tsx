@@ -1787,6 +1787,7 @@ export default function FounderPortfolioView() {
       <AnimatePresence>
         {toastMessage && (
           <motion.div
+            className="founder-toast-banner"
             initial={{ opacity: 0, y: 50, scale: 0.9 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.9 }}
@@ -1824,8 +1825,17 @@ export default function FounderPortfolioView() {
           .about-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 1023px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 2.5rem !important; }
+          .hero-grid { grid-template-columns: 1fr !important; gap: 2.25rem !important; }
           .about-grid { grid-template-columns: 1fr !important; }
+        }
+        @media (max-width: 640px) {
+          .founder-toast-banner {
+            left: 1rem !important;
+            right: 1rem !important;
+            bottom: 1.25rem !important;
+            font-size: 0.82rem !important;
+            padding: 0.75rem 1rem !important;
+          }
         }
       `}</style>
     </div>
