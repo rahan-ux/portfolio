@@ -512,7 +512,7 @@ export default function FounderPortfolioView() {
                 Home
               </Link>
               <span>/</span>
-              <Link href="/leadership" style={{ color: "rgba(255,255,255,0.75)", textDecoration: "none", transition: "color 0.2s" }} className="breadcrumb-link">Leadership</Link>
+              <span>Leadership</span>
               <span>/</span>
               <span style={{ color: "#FFFFFF", fontWeight: 600 }}>Rahan Santhosh</span>
             </div>
