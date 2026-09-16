@@ -520,279 +520,226 @@ export default function FounderPortfolioView() {
         </div>
       </section>
 
-      {/* ── EXECUTIVE INTRODUCTION (REFERENCE LAYOUT: team-left & team-right) ── */}
-      <section style={{ padding: "4.5rem 0", background: "var(--color-bg)" }}>
+      {/* ── EXECUTIVE PROFILE ── */}
+      <section style={{ padding: "3.5rem 0 4.5rem", background: "var(--color-bg)" }}>
         <div className="section-container">
-          <div
+
+          {/* ── PROFILE CARD ── editorial hero card */}
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.55 }}
+            className="profile-card"
             style={{
-              display: "grid",
-              gridTemplateColumns: "1fr",
-              gap: "3.5rem",
-              alignItems: "start",
+              position: "relative",
+              borderRadius: "1.5rem",
+              overflow: "hidden",
+              background: "linear-gradient(135deg, #0F1E4B 0%, #1E3A8A 55%, #1D4ED8 100%)",
+              boxShadow: "0 24px 64px rgba(15, 30, 75, 0.28), 0 4px 16px rgba(30, 58, 138, 0.18)",
+              marginBottom: "2.5rem",
             }}
-            className="hero-grid"
           >
-            {/* Left Column: Framed Leader Photo (team-left) */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, scale: 0.96 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.5 }}
-                className="founder-photo-container"
-                style={{
-                  position: "relative",
-                  borderRadius: "1.25rem",
-                  overflow: "hidden",
-                  border: "1px solid var(--color-border-strong)",
-                  boxShadow: "var(--shadow-card)",
-                  background: "var(--color-surface)",
-                }}
-              >
-                {/* Photo with hover zoom effect */}
+            {/* Subtle grid texture */}
+            <div style={{
+              position: "absolute", inset: 0,
+              backgroundImage: "linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to bottom, rgba(255,255,255,0.04) 1px, transparent 1px)",
+              backgroundSize: "3rem 3rem", pointerEvents: "none",
+            }} />
+
+            <div className="profile-card-inner">
+              {/* ── Left: Photo ── */}
+              <div className="profile-photo-col">
                 <div
-                  className="founder-photo-wrapper"
+                  className="profile-photo-frame"
                   style={{
                     position: "relative",
+                    borderRadius: "1.15rem",
                     overflow: "hidden",
-                    aspectRatio: "4 / 4.5",
+                    boxShadow: "0 12px 40px rgba(0,0,0,0.35)",
+                    border: "2px solid rgba(255,255,255,0.15)",
+                    aspectRatio: "3 / 3.6",
                   }}
                 >
                   {/* eslint-disable-next-line @next/next/no-img-element */}
                   <img
                     src="/founder.jpg"
-                    alt="Rahan Santhosh – Founder & CEO"
-                    style={{
-                      width: "100%",
-                      height: "100%",
-                      objectFit: "cover",
-                      display: "block",
-                      transition: "transform 0.5s ease",
-                    }}
+                    alt="Rahan Santhosh – Founder & CEO, FUNDAUX"
+                    style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", transition: "transform 0.6s ease" }}
                     className="founder-photo-img"
                   />
-                  <div
-                    style={{
-                      position: "absolute",
-                      inset: 0,
-                      background: "linear-gradient(to top, rgba(15, 30, 75, 0.8) 0%, rgba(15, 30, 75, 0) 55%)",
-                    }}
-                  />
-                  <div
-                    className="founder-photo-overlay-content"
-                    style={{
-                      position: "absolute",
-                      bottom: "1.25rem",
-                      left: "1.25rem",
-                      right: "1.25rem",
-                    }}
-                  >
-                    <div
-                      className="founder-photo-badge"
-                      style={{
-                        display: "inline-flex",
-                        alignItems: "center",
-                        gap: "0.4rem",
-                        padding: "0.3rem 0.8rem",
-                        borderRadius: "9999px",
-                        background: "rgba(16, 185, 129, 0.25)",
-                        border: "1px solid rgba(16, 185, 129, 0.4)",
-                        color: "#34D399",
-                        fontSize: "0.78rem",
-                        fontWeight: 600,
-                        marginBottom: "0.35rem",
-                      }}
-                    >
-                      <CheckCircle2 size={14} /> NISM Certified & Active Founder
-                    </div>
-                    <h3 className="founder-photo-title" style={{ fontSize: "1.35rem", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
-                      Rahan Santhosh
-                    </h3>
-                    <p className="founder-photo-subtitle" style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.8)", margin: "0.15rem 0 0" }}>
-                      Founder & CEO, FUNDAUX
-                    </p>
+                  {/* Gradient overlay only on bottom 35% */}
+                  <div style={{
+                    position: "absolute", inset: 0,
+                    background: "linear-gradient(to top, rgba(10, 18, 60, 0.82) 0%, rgba(10, 18, 60, 0) 45%)",
+                  }} />
+                  {/* NISM Badge bottom-left */}
+                  <div style={{
+                    position: "absolute", bottom: "0.9rem", left: "0.9rem",
+                    display: "inline-flex", alignItems: "center", gap: "0.35rem",
+                    padding: "0.28rem 0.75rem",
+                    borderRadius: "9999px",
+                    background: "rgba(16, 185, 129, 0.22)",
+                    border: "1px solid rgba(16, 185, 129, 0.45)",
+                    color: "#34D399",
+                    fontSize: "0.72rem",
+                    fontWeight: 700,
+                    backdropFilter: "blur(6px)",
+                    letterSpacing: "0.04em",
+                  }}>
+                    <CheckCircle2 size={12} /> NISM Certified
                   </div>
                 </div>
-              </motion.div>
+              </div>
 
-              {/* Fast Consultation Actions under photo */}
-              <div
-                className="founder-photo-actions"
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "0.75rem",
-                  marginTop: "1.5rem",
-                }}
-              >
-                <button
-                  onClick={scrollToMeeting}
-                  className="btn-primary"
-                  style={{
-                    width: "100%",
-                    padding: "0.8rem 1.4rem",
-                    justifyContent: "center",
-                    cursor: "pointer",
-                  }}
-                >
-                  <Calendar size={18} /> Schedule Strategy Meeting <ArrowRight size={16} />
-                </button>
+              {/* ── Right: Summary ── */}
+              <div className="profile-bio-col">
+                {/* Title block */}
+                <div style={{ marginBottom: "1.5rem" }}>
+                  <div style={{
+                    display: "inline-flex", alignItems: "center", gap: "0.45rem",
+                    fontSize: "0.68rem", fontWeight: 700, letterSpacing: "0.14em",
+                    textTransform: "uppercase", color: "rgba(147, 197, 253, 0.9)",
+                    marginBottom: "0.65rem",
+                    padding: "0.25rem 0.85rem",
+                    borderRadius: "9999px",
+                    background: "rgba(147, 197, 253, 0.1)",
+                    border: "1px solid rgba(147, 197, 253, 0.22)",
+                  }}>
+                    <Building size={11} /> Executive Leadership Profile
+                  </div>
+                  <h2 style={{
+                    fontSize: "clamp(1.75rem, 4vw, 2.65rem)",
+                    fontWeight: 800, color: "#FFFFFF",
+                    lineHeight: 1.15, letterSpacing: "-0.02em",
+                    margin: "0 0 0.25rem",
+                  }}>
+                    Rahan <span style={{ color: "#93C5FD" }}>Santhosh</span>
+                  </h2>
+                  <p style={{
+                    fontSize: "1rem", fontWeight: 600,
+                    color: "rgba(255,255,255,0.72)",
+                    letterSpacing: "0.02em",
+                  }}>
+                    Founder & Chief Executive Officer — FUNDAUX
+                  </p>
+                </div>
 
-                <div style={{ display: "flex", gap: "0.5rem", width: "100%" }}>
-                  <button
-                    onClick={handleDirectEmail}
-                    className="btn-outline"
+                {/* Professional summary */}
+                <div style={{
+                  fontSize: "0.94rem",
+                  color: "rgba(255,255,255,0.76)",
+                  lineHeight: 1.78,
+                  marginBottom: "1.75rem",
+                }}>
+                  <p>
+                    Rahan Santhosh is the Chairman, Founder, and CEO of <strong style={{ color: "#93C5FD", fontWeight: 700 }}>FUNDAUX</strong> — a next-generation quantitative wealth management firm. A disciplined derivatives specialist and NISM-certified strategist, he has pioneered advanced covered-call frameworks, delta/gamma risk models, and structured capital protection strategies that deliver sustainable, long-term yield.
+                  </p>
+                  <p style={{ marginTop: "0.85rem" }}>
+                    Under his leadership, FUNDAUX bridges institutional-grade derivatives engineering with individual investor clarity — combining rigorous data transparency, strict regulatory compliance, and a relentless capital-first philosophy.
+                  </p>
+                </div>
+
+                {/* Credential chips */}
+                <div style={{
+                  display: "flex", flexWrap: "wrap", gap: "0.6rem",
+                  marginBottom: "2rem",
+                }}>
+                  {[
+                    { icon: Award, label: "NISM Series Certified" },
+                    { icon: ShieldCheck, label: "Capital Preservation" },
+                    { icon: BarChart3, label: "Options Specialist" },
+                    { icon: Lock, label: "Risk Architecture" },
+                  ].map(({ icon: Icon, label }) => (
+                    <div key={label} style={{
+                      display: "inline-flex", alignItems: "center", gap: "0.4rem",
+                      padding: "0.35rem 0.85rem",
+                      borderRadius: "9999px",
+                      background: "rgba(255,255,255,0.08)",
+                      border: "1px solid rgba(255,255,255,0.15)",
+                      color: "rgba(255,255,255,0.85)",
+                      fontSize: "0.78rem",
+                      fontWeight: 600,
+                    }}>
+                      <Icon size={13} color="#93C5FD" /> {label}
+                    </div>
+                  ))}
+                </div>
+
+                {/* Action row */}
+                <div className="profile-action-row" style={{ display: "flex", flexWrap: "wrap", gap: "0.75rem", alignItems: "center" }}>
+                  {/* Visit FUNDAUX — primary CTA to main site */}
+                  <Link
+                    href="/"
                     style={{
-                      flex: 1,
-                      padding: "0.7rem 1rem",
-                      justifyContent: "center",
-                      cursor: "pointer",
+                      display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                      padding: "0.7rem 1.5rem",
+                      background: "#FFFFFF",
+                      color: "#0F1E4B",
+                      fontWeight: 700, fontSize: "0.88rem",
+                      borderRadius: "0.6rem",
+                      textDecoration: "none",
+                      letterSpacing: "0.01em",
+                      boxShadow: "0 4px 14px rgba(0,0,0,0.2)",
+                      transition: "transform 0.2s ease, box-shadow 0.2s ease",
+                      border: "none",
                     }}
+                    className="visit-fundaux-btn"
                   >
-                    <Mail size={16} /> Direct Email
-                  </button>
+                    <ExternalLink size={15} /> Visit FUNDAUX
+                  </Link>
+
+                  {/* Schedule CTA */}
                   <button
-                    onClick={handleCopyEmail}
-                    title="Copy email address"
-                    className="btn-outline"
+                    onClick={scrollToMeeting}
                     style={{
-                      padding: "0.7rem",
-                      justifyContent: "center",
+                      display: "inline-flex", alignItems: "center", gap: "0.5rem",
+                      padding: "0.7rem 1.5rem",
+                      background: "rgba(255,255,255,0.1)",
+                      border: "1.5px solid rgba(255,255,255,0.28)",
+                      color: "#FFFFFF",
+                      fontWeight: 600, fontSize: "0.88rem",
+                      borderRadius: "0.6rem",
                       cursor: "pointer",
+                      transition: "background 0.2s ease",
+                      letterSpacing: "0.01em",
                     }}
+                    className="profile-consult-btn"
                   >
-                    {copiedEmail ? <Check size={16} color="#10B981" /> : <Copy size={16} />}
+                    <Calendar size={15} /> Book a Consultation
                   </button>
                 </div>
               </div>
             </div>
+          </motion.div>
 
-            {/* Right Column: Executive Biography (team-right) */}
-            <div>
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: 0.1 }}
-              >
-                <span className="section-label">Leadership Profile</span>
-                <h2
-                  style={{
-                    fontSize: "clamp(2rem, 4vw, 3rem)",
-                    fontWeight: 800,
-                    color: "var(--color-text-primary)",
-                    margin: "0.25rem 0 0.25rem",
-                    lineHeight: 1.15,
-                  }}
-                >
-                  Rahan Santhosh
-                </h2>
-                <h4
-                  style={{
-                    fontSize: "1.25rem",
-                    fontWeight: 600,
-                    color: "var(--color-accent-mid)",
-                    marginBottom: "1.75rem",
-                  }}
-                >
-                  Founder & Chief Executive Officer
-                </h4>
-
-                <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "1.25rem",
-                    color: "var(--color-text-secondary)",
-                    fontSize: "1.05rem",
-                    lineHeight: 1.8,
-                  }}
-                >
-                  <p style={{ textAlign: "justify" }}>
-                    Mr. Rahan Santhosh is the Chairman, Founder, and Chief Executive Officer of FUNDAUX. He is a forward-thinking quantitative strategist driven by a disciplined purpose of empowering investors through structured wealth architecture and capital protection. Under his leadership, FUNDAUX has pioneered advanced quantitative options management, risk mitigation frameworks, and algorithmic market execution.
-                  </p>
-
-                  <p style={{ textAlign: "justify" }}>
-                    Rahan established FUNDAUX to bridge the crucial gap between traditional wealth management and modern derivatives engineering. Over the years, he has led the design of proprietary covered-call structures, hedged options spreads, and delta/gamma risk control models that prioritize principal protection while generating sustainable, long-term yield. Holding NISM certifications, Rahan upholds institutional governance, data transparency, and strict regulatory compliance in every strategic mandate.
-                  </p>
+          {/* ── BOTTOM: Credential Strip + Email CTA ── */}
+          <div className="founder-cred-strip">
+            {[
+              { label: "Governance", value: "NISM Series Certified" },
+              { label: "Core Focus", value: "100% Capital Protection" },
+              { label: "Specialization", value: "Derivatives Architecture" },
+              { label: "Auditability", value: "Complete Transparency" },
+            ].map(({ label, value }) => (
+              <div key={label} className="founder-cred-item">
+                <div style={{ fontSize: "0.72rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  {label}
                 </div>
-
-                {/* Key Leadership Pillars Strip */}
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(220px, 1fr))",
-                    gap: "1rem",
-                    marginTop: "2.25rem",
-                    paddingTop: "2rem",
-                    borderTop: "1px solid var(--color-border)",
-                  }}
-                >
-                  <div
-                    style={{
-                      padding: "1rem 1.25rem",
-                      borderRadius: "0.75rem",
-                      background: "var(--color-surface)",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                      Governance
-                    </div>
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
-                      NISM Series Certified
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: "1rem 1.25rem",
-                      borderRadius: "0.75rem",
-                      background: "var(--color-surface)",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                      Core Focus
-                    </div>
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
-                      100% Capital Focus
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: "1rem 1.25rem",
-                      borderRadius: "0.75rem",
-                      background: "var(--color-surface)",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                      Specialization
-                    </div>
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
-                      Derivatives Architecture
-                    </div>
-                  </div>
-
-                  <div
-                    style={{
-                      padding: "1rem 1.25rem",
-                      borderRadius: "0.75rem",
-                      background: "var(--color-surface)",
-                      border: "1px solid var(--color-border)",
-                    }}
-                  >
-                    <div style={{ fontSize: "0.8rem", fontWeight: 700, color: "var(--color-accent-mid)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                      Auditability
-                    </div>
-                    <div style={{ fontSize: "0.95rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
-                      Complete Transparency
-                    </div>
-                  </div>
+                <div style={{ fontSize: "0.92rem", fontWeight: 700, color: "var(--color-text-primary)", marginTop: "0.2rem" }}>
+                  {value}
                 </div>
-              </motion.div>
+              </div>
+            ))}
+            {/* Quick email action */}
+            <div className="founder-cred-email-col" style={{ display: "flex", alignItems: "center", gap: "0.5rem", justifyContent: "flex-end" }}>
+              <button onClick={handleDirectEmail} className="btn-outline" style={{ padding: "0.6rem 1.1rem", fontSize: "0.84rem", whiteSpace: "nowrap", cursor: "pointer" }}>
+                <Mail size={15} /> Direct Email
+              </button>
+              <button onClick={handleCopyEmail} title="Copy email" className="btn-outline" style={{ padding: "0.6rem 0.75rem", cursor: "pointer" }}>
+                {copiedEmail ? <Check size={15} color="#10B981" /> : <Copy size={15} />}
+              </button>
             </div>
           </div>
+
         </div>
       </section>
 
@@ -1839,109 +1786,143 @@ export default function FounderPortfolioView() {
 
       {/* ── Responsive & Hover Styling ── */}
       <style>{`
+        /* ── Header CTA Button ── */
         .btn-header-cta {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          gap: 0.4rem;
-          padding: 0.5rem 1.25rem;
-          background: var(--color-accent);
-          color: #FFFFFF;
-          font-family: var(--font-inter), sans-serif;
-          font-weight: 600;
-          font-size: 0.85rem;
-          letter-spacing: 0.01em;
-          border-radius: 0.5rem;
-          border: 1.5px solid var(--color-accent);
-          text-decoration: none;
-          transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
-          cursor: pointer;
-          white-space: nowrap;
-          flex-shrink: 0;
-          width: auto !important;
+          display: inline-flex; align-items: center; justify-content: center; gap: 0.4rem;
+          padding: 0.5rem 1.25rem; background: var(--color-accent); color: #FFFFFF;
+          font-family: var(--font-inter), sans-serif; font-weight: 600; font-size: 0.85rem;
+          letter-spacing: 0.01em; border-radius: 0.5rem; border: 1.5px solid var(--color-accent);
+          text-decoration: none; transition: background 0.25s ease, transform 0.2s ease, box-shadow 0.25s ease;
+          cursor: pointer; white-space: nowrap; flex-shrink: 0; width: auto !important;
         }
         .btn-header-cta:hover {
-          background: var(--color-accent-hover);
-          border-color: var(--color-accent-hover);
-          transform: translateY(-1px);
-          box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
+          background: var(--color-accent-hover); border-color: var(--color-accent-hover);
+          transform: translateY(-1px); box-shadow: 0 4px 14px rgba(30, 58, 138, 0.25);
         }
-        .founder-photo-wrapper:hover .founder-photo-img {
-          transform: scale(1.05) !important;
+
+        /* ── Photo zoom ── */
+        .founder-photo-wrapper:hover .founder-photo-img,
+        .profile-photo-frame:hover .founder-photo-img {
+          transform: scale(1.04) !important;
         }
-        .founder-photo-container {
-          width: 100%;
-          transition: max-width 0.3s ease;
+
+        /* ── Visit FUNDAUX btn hover ── */
+        .visit-fundaux-btn:hover {
+          transform: translateY(-2px) !important;
+          box-shadow: 0 8px 24px rgba(0,0,0,0.28) !important;
         }
+        .profile-consult-btn:hover {
+          background: rgba(255,255,255,0.18) !important;
+        }
+
+        /* ── Profile Card: two-column on desktop ── */
+        .profile-card-inner {
+          display: grid;
+          grid-template-columns: 260px 1fr;
+          gap: 2.5rem;
+          align-items: start;
+          padding: 2.5rem;
+        }
+
+        /* ── Credential Strip ── */
+        .founder-cred-strip {
+          display: grid;
+          grid-template-columns: repeat(4, 1fr) auto;
+          gap: 1rem;
+          align-items: center;
+          padding: 1.4rem 1.75rem;
+          background: var(--color-surface);
+          border: 1px solid var(--color-border);
+          border-radius: 1rem;
+          box-shadow: var(--shadow-sm);
+        }
+        .founder-cred-item {
+          padding: 0.25rem 0;
+          border-right: 1px solid var(--color-border);
+          padding-right: 1rem;
+        }
+        .founder-cred-item:last-of-type {
+          border-right: none;
+        }
+
+        /* ── Grid breakpoints ── */
         @media (min-width: 1024px) {
-          .hero-grid { grid-template-columns: 0.85fr 1.15fr !important; gap: 4rem !important; }
           .about-grid { grid-template-columns: 1fr 1fr !important; }
         }
         @media (max-width: 1023px) {
-          .hero-grid { grid-template-columns: 1fr !important; gap: 2.25rem !important; }
+          .profile-card-inner {
+            grid-template-columns: 1fr !important;
+            gap: 1.75rem !important;
+            padding: 1.75rem !important;
+          }
+          .profile-photo-col {
+            display: flex;
+            justify-content: center;
+          }
+          .profile-photo-frame {
+            max-width: 240px;
+            width: 100%;
+          }
+          .founder-cred-strip {
+            grid-template-columns: 1fr 1fr !important;
+          }
+          .founder-cred-email-col {
+            grid-column: 1 / -1;
+            justify-content: center !important;
+          }
           .about-grid { grid-template-columns: 1fr !important; }
-          .founder-photo-container {
-            max-width: 260px !important;
-            margin: 0 auto !important;
-          }
-          .founder-photo-actions {
-            max-width: 320px !important;
-            margin-left: auto !important;
-            margin-right: auto !important;
-          }
         }
         @media (max-width: 640px) {
-          .founder-photo-container {
+          .profile-card-inner {
+            padding: 1.4rem 1.15rem !important;
+            gap: 1.35rem !important;
+          }
+          .profile-photo-frame {
             max-width: 200px !important;
-            border-radius: 1rem !important;
+            border-radius: 0.9rem !important;
           }
-          .founder-photo-overlay-content {
-            bottom: 0.75rem !important;
-            left: 0.75rem !important;
-            right: 0.75rem !important;
+          .profile-action-row {
+            flex-direction: column !important;
+            align-items: stretch !important;
           }
-          .founder-photo-badge {
-            font-size: 0.65rem !important;
-            padding: 0.2rem 0.55rem !important;
+          .profile-action-row a,
+          .profile-action-row button {
+            width: 100% !important;
+            justify-content: center !important;
           }
-          .founder-photo-title {
-            font-size: 1.05rem !important;
+          .founder-cred-strip {
+            grid-template-columns: 1fr 1fr !important;
+            gap: 0.75rem !important;
+            padding: 1.1rem !important;
+            border-radius: 0.85rem !important;
           }
-          .founder-photo-subtitle {
-            font-size: 0.72rem !important;
+          .founder-cred-item {
+            border-right: none !important;
+            padding-right: 0 !important;
+            border-bottom: 1px solid var(--color-border);
+            padding-bottom: 0.65rem;
           }
-          .founder-header-inner {
-            height: 3.5rem !important;
-          }
-          .founder-header-name {
-            font-size: 0.98rem !important;
-          }
-          .founder-header-subtitle {
-            font-size: 0.64rem !important;
-          }
+          .founder-header-inner { height: 3.5rem !important; }
+          .founder-header-name { font-size: 0.98rem !important; }
+          .founder-header-subtitle { font-size: 0.64rem !important; }
           .btn-header-cta {
             padding: 0.45rem 0.95rem !important;
             font-size: 0.8rem !important;
             min-height: 36px !important;
           }
           .founder-toast-banner {
-            left: 1rem !important;
-            right: 1rem !important;
+            left: 1rem !important; right: 1rem !important;
             bottom: 1.25rem !important;
             font-size: 0.82rem !important;
             padding: 0.75rem 1rem !important;
           }
         }
         @media (max-width: 420px) {
-          .founder-photo-container {
-            max-width: 175px !important;
-          }
-          .founder-header-name {
-            font-size: 0.92rem !important;
-          }
-          .founder-header-subtitle {
-            display: none !important;
-          }
+          .profile-photo-frame { max-width: 170px !important; }
+          .profile-card-inner { padding: 1.1rem 0.9rem !important; }
+          .founder-cred-strip { grid-template-columns: 1fr !important; }
+          .founder-header-name { font-size: 0.92rem !important; }
+          .founder-header-subtitle { display: none !important; }
           .btn-header-cta {
             padding: 0.4rem 0.85rem !important;
             font-size: 0.78rem !important;
