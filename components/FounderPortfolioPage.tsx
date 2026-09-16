@@ -538,6 +538,7 @@ export default function FounderPortfolioView() {
                 initial={{ opacity: 0, scale: 0.96 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5 }}
+                className="founder-photo-container"
                 style={{
                   position: "relative",
                   borderRadius: "1.25rem",
@@ -577,6 +578,7 @@ export default function FounderPortfolioView() {
                     }}
                   />
                   <div
+                    className="founder-photo-overlay-content"
                     style={{
                       position: "absolute",
                       bottom: "1.25rem",
@@ -585,6 +587,7 @@ export default function FounderPortfolioView() {
                     }}
                   >
                     <div
+                      className="founder-photo-badge"
                       style={{
                         display: "inline-flex",
                         alignItems: "center",
@@ -601,10 +604,10 @@ export default function FounderPortfolioView() {
                     >
                       <CheckCircle2 size={14} /> NISM Certified & Active Founder
                     </div>
-                    <h3 style={{ fontSize: "1.35rem", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
+                    <h3 className="founder-photo-title" style={{ fontSize: "1.35rem", fontWeight: 800, color: "#FFFFFF", margin: 0 }}>
                       Rahan Santhosh
                     </h3>
-                    <p style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.8)", margin: "0.15rem 0 0" }}>
+                    <p className="founder-photo-subtitle" style={{ fontSize: "0.85rem", color: "rgba(255,255,255,0.8)", margin: "0.15rem 0 0" }}>
                       Founder & CEO, FUNDAUX
                     </p>
                   </div>
@@ -613,6 +616,7 @@ export default function FounderPortfolioView() {
 
               {/* Fast Consultation Actions under photo */}
               <div
+                className="founder-photo-actions"
                 style={{
                   display: "flex",
                   flexDirection: "column",
@@ -1865,6 +1869,10 @@ export default function FounderPortfolioView() {
         .founder-photo-wrapper:hover .founder-photo-img {
           transform: scale(1.05) !important;
         }
+        .founder-photo-container {
+          width: 100%;
+          transition: max-width 0.3s ease;
+        }
         @media (min-width: 1024px) {
           .hero-grid { grid-template-columns: 0.85fr 1.15fr !important; gap: 4rem !important; }
           .about-grid { grid-template-columns: 1fr 1fr !important; }
@@ -1872,8 +1880,36 @@ export default function FounderPortfolioView() {
         @media (max-width: 1023px) {
           .hero-grid { grid-template-columns: 1fr !important; gap: 2.25rem !important; }
           .about-grid { grid-template-columns: 1fr !important; }
+          .founder-photo-container {
+            max-width: 260px !important;
+            margin: 0 auto !important;
+          }
+          .founder-photo-actions {
+            max-width: 320px !important;
+            margin-left: auto !important;
+            margin-right: auto !important;
+          }
         }
         @media (max-width: 640px) {
+          .founder-photo-container {
+            max-width: 200px !important;
+            border-radius: 1rem !important;
+          }
+          .founder-photo-overlay-content {
+            bottom: 0.75rem !important;
+            left: 0.75rem !important;
+            right: 0.75rem !important;
+          }
+          .founder-photo-badge {
+            font-size: 0.65rem !important;
+            padding: 0.2rem 0.55rem !important;
+          }
+          .founder-photo-title {
+            font-size: 1.05rem !important;
+          }
+          .founder-photo-subtitle {
+            font-size: 0.72rem !important;
+          }
           .founder-header-inner {
             height: 3.5rem !important;
           }
@@ -1897,6 +1933,9 @@ export default function FounderPortfolioView() {
           }
         }
         @media (max-width: 420px) {
+          .founder-photo-container {
+            max-width: 175px !important;
+          }
           .founder-header-name {
             font-size: 0.92rem !important;
           }
