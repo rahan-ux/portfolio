@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Menu, X } from "lucide-react";
+import { Menu, X, User } from "lucide-react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
@@ -14,6 +14,9 @@ const NAV_LINKS = [
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
 ];
+
+// Founder profile link — separate from main nav
+const FOUNDER_LINK = { label: "Leadership", href: "/Rahan" };
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -115,6 +118,29 @@ export default function Navbar() {
             })}
           </nav>
 
+          {/* Leadership / Founder Profile Link */}
+          <Link
+            href={FOUNDER_LINK.href}
+            className="hidden-mobile"
+            style={{
+              display: "inline-flex",
+              alignItems: "center",
+              gap: "0.35rem",
+              padding: "0.4rem 0.9rem",
+              borderRadius: "9999px",
+              border: `1px solid ${isActive(FOUNDER_LINK.href) ? "var(--color-accent)" : "var(--color-border-strong)"}`,
+              background: isActive(FOUNDER_LINK.href) ? "var(--color-accent-light)" : "transparent",
+              fontSize: "0.82rem",
+              fontWeight: 600,
+              color: isActive(FOUNDER_LINK.href) ? "var(--color-accent)" : "var(--color-text-secondary)",
+              textDecoration: "none",
+              transition: "background 0.2s ease, border-color 0.2s ease, color 0.2s ease",
+              whiteSpace: "nowrap",
+            }}
+          >
+            <User size={13} /> {FOUNDER_LINK.label}
+          </Link>
+
           {/* Right: CTA + Hamburger */}
           <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
             <Link
@@ -197,10 +223,32 @@ export default function Navbar() {
                 );
               })}
 
+              {/* Founder Profile in mobile menu */}
+              <Link
+                href={FOUNDER_LINK.href}
+                style={{
+                  fontFamily: "var(--font-inter, 'Inter', sans-serif)",
+                  fontSize: "0.95rem",
+                  fontWeight: isActive(FOUNDER_LINK.href) ? 600 : 500,
+                  color: isActive(FOUNDER_LINK.href) ? "var(--color-accent)" : "var(--color-text-primary)",
+                  textDecoration: "none",
+                  padding: "0.65rem 0.9rem",
+                  borderRadius: "0.5rem",
+                  background: isActive(FOUNDER_LINK.href) ? "var(--color-accent-light)" : "rgba(0,0,0,0.03)",
+                  border: "1px solid var(--color-border)",
+                  transition: "background 0.2s ease",
+                  display: "flex",
+                  alignItems: "center",
+                  gap: "0.45rem",
+                }}
+              >
+                <User size={15} /> Leadership — Rahan Santhosh
+              </Link>
+
               <Link
                 href="/contact"
                 className="btn-primary"
-                style={{ textAlign: "center", marginTop: "0.65rem" }}
+                style={{ textAlign: "center", marginTop: "0.5rem" }}
               >
                 Contact Us
               </Link>

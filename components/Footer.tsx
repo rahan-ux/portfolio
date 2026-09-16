@@ -10,6 +10,7 @@ const FOOTER_LINKS = [
   { label: "Performance", href: "/performance" },
   { label: "FAQ", href: "/faq" },
   { label: "Contact", href: "/contact" },
+  { label: "Leadership", href: "/Rahan" },
 ];
 
 export default function Footer() {
