@@ -688,9 +688,9 @@ export default function FounderPortfolioView() {
                     <ExternalLink size={15} /> Visit FUNDAUX
                   </Link>
 
-                  {/* Schedule CTA */}
-                  <button
-                    onClick={scrollToMeeting}
+                  {/* Book a Consultation — navigates to dedicated page */}
+                  <Link
+                    href="/Rahan/consult"
                     style={{
                       display: "inline-flex", alignItems: "center", gap: "0.5rem",
                       padding: "0.7rem 1.5rem",
@@ -699,14 +699,14 @@ export default function FounderPortfolioView() {
                       color: "#FFFFFF",
                       fontWeight: 600, fontSize: "0.88rem",
                       borderRadius: "0.6rem",
-                      cursor: "pointer",
+                      textDecoration: "none",
                       transition: "background 0.2s ease",
                       letterSpacing: "0.01em",
                     }}
                     className="profile-consult-btn"
                   >
                     <Calendar size={15} /> Book a Consultation
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>
